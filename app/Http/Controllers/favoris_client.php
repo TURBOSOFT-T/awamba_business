@@ -17,7 +17,7 @@ class favoris_client extends Controller
             return response()->json(
                 [
                     "statut" => false,
-                    "message" => "Produit introuvable en stock !"
+                    "message" => __("messages.product_not_found"),
                 ]
             );
         }
@@ -27,7 +27,7 @@ class favoris_client extends Controller
             return response()->json(
                 [
                     "statut" => true,
-                    "message" => "Le produit est  déja ajouté aux favoris !"
+                    "message" => __("messages.already_in_favorites"),
                 ]
             );
         }
@@ -38,7 +38,7 @@ class favoris_client extends Controller
         $favoris->save();
         return response()->json([
             "statut" => true,
-            "message" => " Le produit  est ajouté au favorie",
+            "message" => __("messages.product_added_to_favorites"),
             "total" => $count
         ]);
     }
@@ -47,12 +47,29 @@ class favoris_client extends Controller
     public function deleteFavorite($id){
         $favoris = Favoris::find($id);
         if ($favoris) {
-            $favoris->delete();
-            session()->flash('success', 'Favoris supprimé avec succès');
-           // $this->dispatchBrowserEvent('post-deleted', ['message' => 'Post deleted successfully!']);
+            $favoris->delete();  
+            session()->flash('success', __('messages.favorite_deleted_success'));    
            return redirect()->back();
            
            
+        }
+    }
+
+    
+    public function remove_favoris(Request $request)
+    {
+        $id_favoris = $request->get("id_favoris");
+        $favoris = favoris::where("id", $id_favoris)->where("id_user", Auth::user()->id)->first();
+        if ($favoris) {
+            $favoris->delete();
+            $count = favoris::where("id_user", Auth::user()->id)->count();
+            return response()->json(
+                [
+                    "status" => true,
+                    "message" => __('messages.favorite_removed'),
+                    "count" => $count,
+                ]
+            );
         }
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vérification de votre compte AGRIHUB</title>
+    <title>Vérification de votre compte BECKER</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,17 +56,17 @@
 <body>
     <div class="container">
         <div class="header">
-           {{--  <img src="https://agrihub.online/icons/logo%20png.png" alt="AGRIHUB Logo"> --}}
+           {{--  <img src="https://agrihub.online/icons/logo%20png.png" alt="BECKER Logo"> --}}
         </div>
         <div class="content">
             <h1>Vérification de votre compte</h1>
             <p>Bonjour {{ $user->nom  }} ,</p>
-            <p>Merci de vous être inscrit sur HB-DESIGN. Pour finaliser votre inscription et vérifier votre compte, veuillez utiliser le code de vérification ci-dessous :</p>
+            <p>Merci de vous être inscrit sur BECKER. Pour finaliser votre inscription et vérifier votre compte, veuillez utiliser le code de vérification ci-dessous :</p>
             <span class="code">{{$code }}</span>
             <p>Si vous n'avez pas demandé cette vérification, veuillez ignorer cet email.</p>
         </div>
         <div class="footer">
-            <p>&copy; 2024 MIRABELLE. Tous droits réservés.</p>
+            <p>&copy; 2024 BECKER. Tous droits réservés.</p>
         </div>
     </div>
 </body>

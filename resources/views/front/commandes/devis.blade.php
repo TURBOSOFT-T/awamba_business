@@ -107,7 +107,7 @@
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Téléphone <span class="required">*</span></label>
-                                            <input class="form-control" type="number" name="phone"
+                                            <input class="form-control" type="text" name="phone"
                                                 placeholder=" votre numéro  téléphone" required />
                                         </div>
                                     </div>

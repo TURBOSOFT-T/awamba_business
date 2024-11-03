@@ -34,11 +34,20 @@
                         <div class="row">
                             <div class="col-12 col-lg-7 border-right">
                                 <div class="d-md-flex align-items-center">
+                                  
                                     <div class="mb-md-0 mb-3">
-                                        <img src="{{ Auth::user()->avatar() }}" class="rounded-circle shadow" width="130"
-                                            height="130" alt="" />
+                                        {{-- <img src="{{ Auth::user()->avatar() }}" class="rounded-circle shadow" width="130"
+                                            height="130" alt="" /> --}}
+                                            <img src="{{ asset('assets/avatars/' . Auth::user()->avatar) }}"
+                                            class="rounded-circle shadow" width="130"
+                                            height="130" alt="" alt="Avatar">
+                                            
                                     </div>
+                                    
+                                  
                                     <div class="ms-md-4 flex-grow-1">
+
+                                        
                                         <div class="d-flex align-items-center mb-1">
                                             <h4 class="mb-0">
                                                 {{ Auth::user()->nom }}
@@ -48,11 +57,23 @@
                                             Administrateur
                                         </p>
                                         <p class="text-primary">
-                                            <i class='bx bx-buildings'></i>  {{  $ipAddress }}/ {{ Auth::user()->adresse }} 
+                                            <i class='bx bx-buildings'></i> {{ Auth::user()->adresse }}
                                         </p>
                                     </div>
+                                    
                                 </div>
+                                <form   action="{{ url('avatar', auth()->id()) }}" method="POST" enctype="multipart/form-data" class="mt-2">
+                                   
+                                @method('PUT')
+                                @csrf
+                                    <div class="form-group">
+                                        <input type="file" name="avatar" class="form-control-file" accept="image/*">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-2">Modifier photo</button>
+                                </form>
+                                
                             </div>
+                            
                             <div class="col-12 col-lg-5">
                                 <p style="text-align: right;">
                                     <img src="/icons/logo.png" height="50" alt="" srcset="">
@@ -128,7 +149,7 @@
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                {{ $connexion->ip_address }}   {{ request()->ip() }}
+                                                                {{ $connexion->ip_address }}
                                                             </td>
                                                             <td>
                                                                 {{ $connexion->created_at }}
@@ -148,10 +169,6 @@
                                                     @endforelse
                                                 </tbody>
                                             </table>
-                                            <div class="d-flex justify-content-center">
-                                              {{--   {{ $connexions->links() }} --}}
-                                              {{ $connexions->links('pagination::bootstrap-4') }}
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

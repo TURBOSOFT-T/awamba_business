@@ -100,9 +100,9 @@ class DatabaseSeeder extends Seeder
          $cat = new config();
         $cat->frais = '15';
         $cat->tax = '15';
-        $cat->description = 'Nous opérons dans les impressions des produits sécurisés depuis plus de 21 ans. Nous sommes le leader sur le marché tunisien dans le développement de stratégie intégrant le processus de production des chèques bancaires depuis de nombreuses années.';
+        $cat->description = 'Nous opérons dans la commercialisation des produits variés depuis plus de 21 ans. Nous sommes le leader sur le marché tunisien dans le développement de stratégie intégrant le processus de production des chèques bancaires depuis de nombreuses années.';
        $cat->telephone= '56399165';
-       $cat->email='hb-design@gmail.com';
+       $cat->email='contact@gmail.com';
        $cat->addresse='Tunis  Avenue Mohamed Melki 1005 El Omrane';
 
         $cat->save(); 

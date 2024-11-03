@@ -19,7 +19,7 @@
                     <div class="col-lg-8">
                         <div class="all-content">
                             <div class="title-wrapper text-center mb-40">
-                                <h3 class="title">Création de compte</h3>
+                                <h3 class="title">Création de compte....</h3>
 
                             </div>
 
@@ -70,10 +70,9 @@
                                         </div>
                                         <div class="signup-item">
                                             <h6>Mot de passe</h6>
-                                            <input id="password" required type="password" value="{{ old('password') }}"
-                                                placeholder="Votre mot de passe"
-                                                class="form-control @error('password') is-invalid @enderror" name="password"
-                                                required autocomplete="new-password" aria-describedby="basic-addon1">
+                                           
+                                                <input id="password" required type="password" placeholder="Votre mot de passe" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    
 
 
                                             <span class="input-group-text">
@@ -121,8 +120,7 @@
                                             <button type="submit"><span class="sing-btn">Enregistrer</span></button>
                                         </div>
                                     </div>
-                                    {{--  <div class="bottom-button">
-                                    </div> --}}
+                                
 
                                 </form>
 

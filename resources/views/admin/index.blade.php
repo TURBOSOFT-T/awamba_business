@@ -8,22 +8,16 @@
                 <div class="col-sm-6">
                 </div>
                 <div class="col-sm-6">
-                    <form  id="myForm" action="{{ route('filtre-dashboard') }}" method="POST" >
+                    <form action="{{ route('filtre-dashboard') }}" method="POST" >
                         @csrf
                         <div class="input-group mb-3">
-                            <input type="date" name="date_debut" class="form-control"  value="{{ session('date_debut', old('date_debut')) }}">
-                            <input type="date" name="date_fin" class="form-control" value="{{ session('date_fin', old('date_fin')) }}">
-                           
+                            <input type="date" name="date_debut" class="form-control">
+                            <input type="date" name="date_fin" class="form-control">
                             <button type="submit" class="btn btn-primary">
                                 Filtrer
                             </button>
-
-                            <input type="button" onclick="resetForm()" value="Réinitialiser" class="btn btn-secondary">
- 
-                           
                         </div>
                     </form>
-                    
                 </div>
             </div>
             <div class="row">
@@ -408,10 +402,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                           {{--  <div id="chart11" data-profilNet='@json($profilNet)'></div> --}}
-                            <div id="chart11" data-profilNet='@json($ventesPerMonth)'
-                               
-                                ></div>
+                            <div id="chart11" data-profilNet='@json($profilNet)'></div>
                         </div>
                     </div>
                 </div>
@@ -473,10 +464,3 @@
     <!-- App JS -->
    
 @endpush
-<script>
-    function resetForm() {
-        document.querySelector("input[name='date_debut']").value = '';
-        document.querySelector("input[name='date_fin']").value = '';
-        document.getElementById("myForm").submit(); // Optionnel : soumettre le formulaire après réinitialisation
-    }
-</script>

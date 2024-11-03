@@ -115,9 +115,12 @@
                                             <b>Résumé de la commande </b>
                                         </h6>
                                         Montant total : <br>
-                                        @if ($commande->frais )
+                                        @if ($commande->frais && $commande->tax)
+                                            <b>{{ $commande->montantHT() + $config->frais }} DT</b>
+                                        @elseif($commande->frais)
                                             <b>{{ $commande->montant() }} DT</b>
-                                       
+                                        @elseif($commande->tax)
+                                            <b>{{ $commande->montantHT() }} DT</b>
                                         @else
                                             <b>{{ $commande->montant() - $commande->frais }} DT</b>
                                         @endif
@@ -128,9 +131,9 @@
                                             ( Frais de livraison inclu ( {{ $commande->frais ?? 0 }} DT) ) .
                                         @endif
                                         <br>
-                                     {{--    @if ($commande->tax)
+                                        @if ($commande->tax)
                                             ( La TVA: ( {{ $commande->getTVA() ?? 0 }} DT) ) .
-                                        @endif --}}
+                                        @endif
                                         <br>
                                         <i class="ri-calendar-check-line"></i>Date : {{ $commande->created_at }}
                                     </div>

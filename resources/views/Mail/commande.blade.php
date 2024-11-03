@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Confirmation de la commande</title>
+    <title>
+        
+        {{ \App\Helpers\TranslationHelper::TranslateText("Confirmation de la commande chez") }}BECKER</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,7 +69,9 @@
 
 <body>
     <div class="container">
-        <h2>Order Confirmation</h2>
+        <h2>
+            {{ \App\Helpers\TranslationHelper::TranslateText("Confirmation de commande") }}
+        </h2>
         <p>Hello {{ $commande->prenom ?? "" }} {{ $commande->nom }},</p>
         <p>We've received your order. Here are the details:</p>
         <table>
@@ -130,7 +134,7 @@
                 </tr>
             </tbody>
         </table>
-        <p>Your order will be processed soon. Thank you for shopping with us!</p>
+        <p>Your order will be processed soon. Thank you for shopping with BECKER!</p>
     </div>
 </body>
 

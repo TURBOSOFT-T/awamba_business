@@ -20,8 +20,6 @@
                 <table class="w-100">
                     @if ($produits)
                         @forelse ($produits as $key=>$produit)
-                        
-
                             <tr>
                                 <td class="my-auto">
                                     {{ $produit['nom'] }}
@@ -30,23 +28,11 @@
                                         {{ $produit['prix'] }} <x-devise></x-devise>
                                     </div>
                                 </td>
-                               {{--  <td class="text-end">
+                                <td class="text-end">
                                     <div class="input-group mb-3">
                                         <input id="quantite_{{ $key }}" style="width: 50px !important"
                                             wire:model="quantites.{{ $key }}" type="number" min="1"
                                             max="5" class="form-control" placeholder="Qté">
-                                        <button class="btn btn-primary" type="button"
-                                            wire:click="ajouterProduit({{ $produit['id'] }},'{{ $produit['type'] }}','{{ $produit['reference'] }}')">
-                                            <i class="ri-add-circle-line"></i>
-                                        </button>
-                                    </div>
-                                </td> --}}
-                                <td class="text-end">
-                                    <div class="input-group mb-3">
-                                        <input id="quantite_{{ $produit['id'] }}" style="width: 50px !important"
-                                        wire:model="quantites.{{ $produit['id'] }}" type="number" min="1"
-                                        max="5" class="form-control" placeholder="Qté">
-
                                         <button class="btn btn-primary" type="button"
                                             wire:click="ajouterProduit({{ $produit['id'] }},'{{ $produit['type'] }}','{{ $produit['reference'] }}')">
                                             <i class="ri-add-circle-line"></i>

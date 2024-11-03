@@ -23,55 +23,50 @@ class panier_client extends Controller
         // Récupérer le panier de la session
         $panier_temporaire = session('cart');
         $total = count($panier_temporaire);
-        $list = [];
         $montant_total = 0;
+        $Html = "";
+        $produits = [];
 
         foreach ($panier_temporaire as $data) {
-            $produit = produits::select('id','photo','prix','nom')->find($data['id_produit']);
+            $produit = produits::select('id','photo','prix','nom','taille')->find($data['id_produit']);
             if ($produit) {
-                
-                $list[] = [
-                    '
-                     <div class="cart-item">
-                                <div class="cart-item__image">
-                                   <img src="'.Storage::url($produit->photo).'"    width="5 "
-                                height="5 " alt="">
-                                </div>
-                                <div class="cart-item__info">
-                                    <a class="product-name"
-                                       href="#">'. Str::limit($produit->nom, 15) .'</a>
-
-                                    <h5>'.$produit->getPrice().' DT</h5>
-                                    <p>Quantity:<span>'.$data['quantite'].'</span></p>
-                                </div>     
-                                <a href="#"class="cart-item__remove"
-                                   onclick="DeleteToCart('.$produit->id.')">
-                                   
-                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        width="15" style=" fill:red" height="15"
-                                                        fill="currentColor">
-                                                        <path
-                                                            d="M6.45455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.45455ZM13.4142 11L15.8891 8.52513L14.4749 7.11091L12 9.58579L9.52513 7.11091L8.11091 8.52513L10.5858 11L8.11091 13.4749L9.52513 14.8891L12 12.4142L14.4749 14.8891L15.8891 13.4749L13.4142 11Z">
-                                                        </path>
-                                                    </svg>
-                                </a>
-                            </div>
-                  
-                            '
+                $produits[] = [
+                    'id_produit' => $produit->id,
+                    'nom' => $produit->nom,
+                    'photo' => Storage::url($produit->photo),
+                    'quantite' => $data['quantite'],
+                    'taille' => $data['taille'],
+                    'prix' => $produit->prix,
+                    'total' => $data["quantite"] * $produit->prix,
                 ];
-                $montant_total += $data["quantite"] * intval($produit->getPrice());
+                $montant_total += $data["quantite"] * $produit->prix;
             }
+            $Html = view('components.cart',['produits' => $produits])->render();
         }
+       
 
         return response()->json(
             [
                 "total" => $total,
-                "list" => $list,
+                "html" => $Html,
                 "montant_total" => $montant_total
             ]
         );
     }
+/* public function get_panier() {
+    $data = $this->count_panier();
+    $total = $data['total'];
+    $list = $data['list'];
+    $montant_total = $data['montant_total'];
+    $html =  view('front.cart.cart', compact('total', 'list','montant_total'))->render();
 
+    return response()->json([
+        'html' => $html,
+        'total' => $total,
+        'list' => $list,
+       'montant_total' => $montant_total
+    ]);
+} */
 
 
 
@@ -93,19 +88,27 @@ class panier_client extends Controller
         $id_produit = $request->input('id_produit');
         $type = $request->input('type', 'produit');
         $quantite = $request->input('quantite', 1);
+        $taille = $request->input('taille');
 
         $user = Auth::user();
 
-
+       
         $produit = produits::where('id', $id_produit)
             ->first();
 
+   // Vérifier si la taille a été sélectionnée
+   if (empty($taille)) {
+    return response()->json([
+        'statut' => false,
+        'message' => __('messages.size_not_selected'), // Message d'erreur pour taille non sélectionnée
+    ]);
+}
 
-        //verifier que le produit existe et est disponible
+        
         if (!$produit) {
             return response()->json([
                 'statut' => false,
-                'message' => "Le produit est  introuvable !",
+                'message' => __('messages.product_not_found'),
             ]);
         }
 
@@ -113,25 +116,17 @@ class panier_client extends Controller
         if ($produit->statut == "disponible") {
             return response()->json([
                 'statut' => false,
-                'message' => " Le produit est  indisponible !",
+                'message' => __('messages.product_unavailable'), 
             ]);
         }
 
-         //si l'user est un grossite on ajute sa quantite si il a prix moind de la quantite_minimal_grossiste	
-         if ($user && $user->role == "grossiste") {
-            if ($quantite < $produit->quantite_minimal_grossiste) {
-                $quantite = $produit->quantite_minimal_grossiste ;
-            }
-        }else{
-            $quantite = $request->input('quantite', 1);
-        }
 
 
-        //verifier que le stock demander est disponible
+      
         if ($produit->stock < $quantite) {
             return response()->json([
                 'statut' => false,
-                'message' => "Quantité insuffisante en stock !",
+               'message' => __('messages.insufficient_stock'),
             ]);
         }
 
@@ -141,27 +136,41 @@ class panier_client extends Controller
         $panier = session('cart', []);
         $produit_existe = false;
 
-        foreach ($panier as &$item) {
+      /*   foreach ($panier as &$item) {
             if ($item['id_produit'] == $id_produit) {
+                $item['quantite'] += $quantite;
+                $produit_existe = true;
+                break;
+            }
+        } */
+
+
+
+        foreach ($panier as &$item) {
+            if ($item['id_produit'] == $id_produit && $item['taille'] == $taille) {
                 $item['quantite'] += $quantite;
                 $produit_existe = true;
                 break;
             }
         }
 
+
         if (!$produit_existe) {
             $panier[] = [
                 'id_produit' => $id_produit,
                 'quantite' => $quantite,
+                'taille' => $taille,
             ];
         }
 
         session(['cart' => $panier]);
 
-        return response()->json([
+         return response()->json([
             'statut' => true,
-            'message' => " Le produit est  ajouté au panier"
-        ]);
+         
+           'message' => __('messages.product_added_to_cart'),
+        ]); 
+      
     }
 
 
@@ -177,12 +186,12 @@ class panier_client extends Controller
             }
         }
         session(['cart' => $panier]);
-      /*   return response()->json([
+         return response()->json([
             "statut" => true,
-            "message" => "produit supprimé",
-        ]); */
-        session()->flash('success', 'Produit retiré du panier avec succès');
-        return redirect()->back();
+            'message' => __('messages.product_removed'),
+
+        ]); 
+      
     }
 
 
@@ -211,9 +220,12 @@ class panier_client extends Controller
 
         $this->total =0 ;
 
-        return redirect()->back()->with('success', 'Produit retiré du panier avec succès');
+      //  return redirect()->back()->with('success', 'Produit retiré du panier avec succès');
+      return response()->json([
+        "statut" => true,
+        "message" => __('messages.product_deleted'),
+      ]);
     }
-
 
 
 

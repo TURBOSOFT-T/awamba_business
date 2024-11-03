@@ -15,17 +15,8 @@
         </div>
     @endif
     <div class="row">
-        <div class="col-sm-8">
-            <div class="form-check form-switch">
 
-                <input name="sur_devis" class="form-check-input"  class="switch"   type="checkbox" id="sur_devis" wire:model.lazy="sur_devis"
-                   wire:click="sur_devis">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Produit sur devis</label>
-                @error('sur_devis')
-                    <span class="text-danger small"> {{ $message }} </span>
-                @enderror
-            </div>
-        </div>
+
         <br>
         <br>
         <div class="col-sm-8">
@@ -46,6 +37,153 @@
 
 
             <div class="row">
+
+
+                <div>
+                    @php
+
+                        $tailles1 = DB::table('tailles')->get();
+
+                    @endphp
+
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tailles </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $chunkSize = 6;
+                                $chunks = $tailles1->chunk($chunkSize);
+
+                            @endphp
+
+                            @foreach ($chunks as $chunk)
+                                <tr>
+                                    @foreach ($chunk as $taille)
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input @error('taille') is-invalid @enderror"
+                                                    type="checkbox"
+                                                    id="taille{{ $loop->parent->index }}-{{ $loop->index }}"
+                                                    wire:model="selectedSizes" value="{{ $taille->id }}"
+                                                    {{ in_array($taille->id, $selectedSizes) ? 'checked' : '' }}>
+
+
+                                                &nbsp
+                                                <label class="form-check-label"
+                                                    for="taille{{ $loop->parent->index }}-{{ $loop->index }}">
+                                                    {{ $taille->nom }}
+                                                </label>
+                                            </div>
+                                        </td>
+                                    @endforeach
+
+
+                                    @for ($i = count($chunk); $i < $chunkSize; $i++)
+                                        <td></td>
+                                    @endfor
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+
+                    <style>
+                        .table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        .table td {
+                            padding: 0.5rem;
+                            vertical-align: top;
+                        }
+
+                        .form-check {
+                            display: flex;
+                            align-items: center;
+                        }
+                    </style>
+                </div>
+
+
+                
+                <div class="col-sm-12 mb-3">
+                    <div class="form-group">
+                        <table class="table table-bordered color-table">
+                            <thead>
+                                <tr>
+                                    <th>Couleur(s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $chunkSize = 4; // Number of items per row
+                                    $chunks = $couleurs->chunk($chunkSize);
+                                @endphp
+
+                                @foreach ($chunks as $chunk)
+                                    <tr>
+                                        @foreach ($chunk as $color)
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="coleur" type="checkbox"
+                                                        id="color{{ $loop->parent->index }}-{{ $loop->index }}"
+                                                        wire:model="couleur" value="{{ $color['code'] }}">
+                                                        &nbsp &nbsp
+                                                    <label class="form-check-label"
+                                                        for="color{{ $loop->parent->index }}-{{ $loop->index }}">
+                                                        <span class="color-swatch"
+                                                            style="background-color: {{ $color['code'] }};"></span>
+                                                        {{ $color['nom'] }}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        @endforeach
+
+                                       
+                                        @for ($i = count($chunk); $i < $chunkSize; $i++)
+                                            <td></td>
+                                        @endfor
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <style>
+                        .color-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        .color-table td {
+                            padding: 0.5rem;
+                            vertical-align: top;
+                            
+                        }
+
+                        .form-check {
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .color-swatch {
+                            display: inline-block;
+                            width: 20px;
+                            height: 20px;
+                            margin-right: 10px;
+                            border: 1px solid #ddd;
+                            vertical-align: middle;
+                        }
+                    </style>
+                </div>
+ 
+
+
                 <div class="col-sm-6 mb-3">
                     <label for="">Categorie </label>
                     <select wire:model='category_id' class="form-control @error('category_id') is-invalid @enderror">
@@ -58,6 +196,8 @@
                         <span class="text-danger small"> {{ $message }} </span>
                     @enderror
                 </div>
+
+
 
 
 
@@ -104,6 +244,8 @@
             </div>
         </div>
         <div class="col-sm-4">
+
+
             <div class="mb-3">
                 <label for="">Photo d'illustration</label>
                 <div class="preview-produit-illustration" onclick="preview_illustration('new-prosduit')">
@@ -151,9 +293,3 @@
     </div>
     </form>
 </div>
-<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.ckeditor').ckeditor();
-    });
-</script>

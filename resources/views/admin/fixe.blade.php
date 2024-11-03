@@ -8,7 +8,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> @yield('titre') - (Admin) {{ config('app.name') }}</title>
+    <title> @yield('titre') - (Admin)  BECKER {{-- {{ config('app.name') }} --}}</title>
     <!--favicon-->
     <link rel="icon" href="{{ Storage::url($config->logo) }}" type="image/png" />
     <!--plugins-->
@@ -169,15 +169,15 @@
                     </li>
                 @endcan
 
-              {{--   <li>
-                    <a href="{{ route('marques') }}">
+                <li>
+                    <a href="{{ route('tailles') }}">
                         <div class="parent-icon icon-color-3"> <i class="ri-boxing-fill"></i>
                         </div>
                         <div class="menu-title">
-                            Les marques
+                            Les tailles
                         </div>
                     </a>
-                </li> --}}
+                </li> 
 
              {{--    <li>
                     <a href="javascript:;" class="has-arrow">
@@ -262,12 +262,12 @@
                             </a>
                         </li>
                         
-                        <li>
+                        {{-- <li>
                             <a href="{{ route('devisclients') }}">
                                 <i class="bx bx-right-arrow-alt"></i>
                                 Les commandes sur devis
                             </a>
-                        </li>
+                        </li> --}}
                         {{-- <li>
                         <a href="{{ route('packs') }}">
                             <i class="bx bx-right-arrow-alt"></i>
@@ -340,6 +340,13 @@
                                     Bannières
                                 </a>
                             </li>
+
+                           {{--  <li>
+                                <a href="{{ route('backup.download') }}">
+                                    <i class="bx bx-right-arrow-alt"></i>
+                                    Télécharger la sauvegarde
+                                </a>
+                            </li> --}}
                         </ul>
                     </li>
                 @endcan
@@ -449,7 +456,8 @@
                                             Connecté
                                         </p>
                                     </div>
-                                    <img src="{{ Auth::user()->avatar() }}" class="user-img" alt="user avatar">
+                                     <img src="{{ asset('assets/avatars/' . Auth::user()->avatar) }}" class="user-img" alt="user avatar"> 
+                                    
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
@@ -495,9 +503,9 @@
     <!--footer -->
     <div class="footer">
         <p class="mb-0">@ {{ date('Y') }} | Developed By :
-            <a href="https://www.e-build.tn" target="_blank" style="color: #c71f17 !important;">
+            <a href="#" target="_blank" style="color: #c71f17 !important;">
                 <strong>
-                    E-Build
+                    BECKER
                 </strong>
             </a>
         </p>

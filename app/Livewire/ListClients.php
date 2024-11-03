@@ -22,11 +22,10 @@ class ListClients extends Component
                 ->orWhere('prenom', 'like', '%' . $this->key . '%');
         }
         $clients = $clients->paginate(30);
-        $total = clients::count();
+        $total = User::count();
         return view('livewire.list-clients', compact('clients','total'));
     }
-
-
+    
     public function filtrer()
     {
         //reset page
@@ -35,7 +34,7 @@ class ListClients extends Component
 
     public function delete($id){
         //delete client
-        $client = clients::find($id);
+        $client = User::find($id);
         if($client){
             $client->delete();
             //flash message

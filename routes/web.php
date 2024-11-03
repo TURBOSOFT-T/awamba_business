@@ -9,6 +9,7 @@ use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\favoris_client;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\MyAccountController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\{
 
@@ -16,6 +17,8 @@ use App\Http\Controllers\Front\{
 };
 use App\Http\Controllers\panier_client;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\LocaleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,8 +29,19 @@ use App\Http\Controllers\CustomerController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('payment', 'PayPalController@payment')->name('payment');
+Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
+Route::get('payment/success', 'PayPalController@success')->name('payment.success');
+use App\Http\Controllers\BackupController;
 
+Route::get('/download-backup', [BackupController::class, 'export'])->name('backup.download');
+
+//Route::get('lang', [LanguageController::class, 'change'])->name("change.lang");
+Route::post('/locale', [LocaleController::class ,'change'])->name("locale.change");
+//Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+//Route::get('search')->get('', [HomeController::class, 'search']);
 Route::get('contact', [ContactController::class, 'contact'])->name("contact");
+Route::get('search', [HomeController::class, 'search'])->name("search");
 
 Route::resource('contacts', ContactController::class, ['only' => ['create', 'store']]);
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forgot-password');
@@ -52,7 +66,7 @@ Route::get('/decroissant', [HomeController::class, 'decroissant'])
 Route::get('/croissant', [HomeController::class, 'croissant'])
 ->name('croissant');
 
-//Route::get('/search',[HomeController::class,'search'])->name('search');
+//Route::get('/search-product',[HomeController::class,'search_products'])->name('search.products');
 Route::get('/sort-by',[HomeController::class,'sort_by'])->name('sort.by');
 
 
@@ -64,6 +78,7 @@ Route::get('/client/count_panier', [panier_client::class, 'count_panier']);
 Route::get('/client/mon_panier', [panier_client::class, 'contenu_mon_panier']);
 Route::get('/client/delete_produit_au_panier', [panier_client::class, 'delete_produit']);
 Route::get('/paniers/{id}', [panier_client::class, 'deleteProduit'])->name('deleteProduit');
+//Route::post('/update-quantity/{id}', [CartController::class, 'updateQuantity']);
 
 use App\Http\Controllers\ProductController;
 
@@ -97,6 +112,7 @@ Route::middleware('auth')->group(function () {
 
     ///Mon compte
     Route::get('/comptes', [MyAccountController::class, 'comptes'])->name('comptes');
+    Route::put('/avatar/{id}', [MyAccountController::class, 'avatar']);
 
     ///Mon profil
     Route::get('/profile', [MyAccountController::class, 'profile'])->name('profile');
@@ -114,6 +130,17 @@ Route::middleware(['auth'])->group(function () {
         ->name('dashboard');
     Route::post('/dashboard/filtre', [AdminController::class, 'dashboard'])
         ->name('filtre-dashboard');
+
+        ////////////////Tailles////////////////////////////////////     
+        Route::get('/admin/tailles', [AdminController::class, 'tailles'])
+        ->name('tailles');
+       
+    Route::get('/admin/taille/add', [AdminController::class, 'taille_add']);
+    Route::post('/admin/taille/store', [AdminController::class, 'taille_store']);
+    Route::get('/admin/taille/{id}/edit', [AdminController::class, 'taille_edit']);
+    Route::put('/admin/taille/{id}/update', [AdminController::class, 'taille_update']);
+    Route::delete('/admin/taille/{id}/delete', [AdminController::class, 'taille_delete']);
+
 
     ////////////Les categories/////////////////////////////////////////////////////
     Route::get('/admin/categories', [AdminController::class, 'categories'])
@@ -180,12 +207,9 @@ Route::post('/notifications/mark-as-read', [NotificationController::class, 'mark
 
             Route::get('/devisclients', [AdminController::class, 'devisclients'])
             ->name('devisclients')
-        
-            ->middleware('permission:order_view');
 
-            Route::get('admin/new_devis', [AdminController::class, 'new_devis'])
-            ->name('new_devis');
-           
+            
+            ->middleware('permission:order_view');
              Route::get('/admin/devis/{id}/edit_devis', [AdminController::class, 'edit_devis'])->name('edit_devis');
         Route::get('/parametres', [AdminController::class, 'parametres'])
             ->name('parametres');

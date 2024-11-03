@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 //require './vendor/autoload.php';
 
 
-use App\Models\{commandes,config, User,produits, Category, Service,Marque};
+use App\Models\{commandes,config,favoris, User,produits, Category, Service,Marque};
 use App\Models\Banners;
 use App\Models\templates;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -15,10 +15,14 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Front\SearchRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
+use App\Http\Traits\ListColor;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class HomeController extends Controller
 {
-
+    use  ListColor;
     
 
     public function home(Request $request)
@@ -36,17 +40,25 @@ class HomeController extends Controller
  
        $configs= config::all();
        $banners = Banners::select("titre","sous_titre","image")->get();
-
-       $services = Service::all();
-      return view('front.index', compact('produits','configs','banners','services','key', 'categoryProducts'));
+       $favoris = DB::table('favoris')
+      ->where('id_user', auth()->id() )->get();
+     
+ 
+ $couleurs = $this->getListColor();
+ //$id_produit = $request->input('id_produit');
+ //$produit = produits::find($id_produit);
+// $favorited = favoris::where('id_user', Auth::user()->id)->where("id_produit", $id_produit)->count();
+//$favorited = favoris::where('id_user', Auth::user()->id)->where("id_produit", $id_produit)->count();
+      
+      return view('front.index', compact('couleurs','produits','configs','banners','key', 'categoryProducts', 'favoris'));
 
     }
      
       public function detailsServices($id, $slug){
         $service =Service:: findOrFail($id);
         $configs= config::all();
-        $services = Service::all();
-        return view('front.services.details', compact('service','services','configs'));
+       
+        return view('front.services.details', compact('services','configs'));
       }
 
 
@@ -81,16 +93,32 @@ class HomeController extends Controller
         }
         
 
+      //  $produits = $produits->paginate(24);
         $produits = $produits->paginate(24);
         
         $total_produit = produits::count();
         $max_prix = produits::max('prix');
+      //  dd($max_prix);
       // $categories = Category::with('produits')->get();
       $categories =Category::has('produits')->get();
+
+      
+      $query = produits::query();
+      // Filter by price range
+      if ($request->has('min_price') && $request->has('max_price')) {
+          $query->whereBetween('prix', [$request->min_price, $request->max_price]);
+      }
+  
+      // Other filters...
+      $produits = $query->get();
+  
     
-   
+  
+
+    
+
         $configs= config::all();
-        return view('front.shop.index',compact('produits', 'categories', 'configs','key','total_produit','max_prix','ordre_affichage'));
+        return view('front.shop.index',compact('produits' ,'categories', 'configs','key','total_produit','max_prix','ordre_affichage'));
     }
 
     public function search_products(Request $request)
@@ -124,13 +152,23 @@ class HomeController extends Controller
         return view('front.shop.index',compact('produits','categories', 'configs'))->render();
 
     }
-
+    public function search(SearchRequest $request)
+    {
+        $search = $request->search;
+      
+        $produits = produits::where('nom', 'like', '%'.$search.'%')
+            ->orWhere('description', 'like', '%'.$search.'%')
+            ->paginate(10);
+        $title = __('Produits nont trouvé avec la recherche: ') . '<strong>' . $search . '</strong>';
+     
+        return view('front.shop.index', compact('produits', 'title'));
+    }
 
     public function decroissant(){
         $produits= produits:: select('*')
         ->orderBy('prix','DESC')
         ->get();
-      //  $categories = Category::with('produits')->get();
+     
       $categories =Category::has('produits')->get();
         $configs= config::all();
         return view('front.shop.index',compact('produits', 'categories','configs'));
@@ -141,7 +179,7 @@ class HomeController extends Controller
         $produits= produits:: select('*')
         ->orderBy('prix','ASC')
         ->get();
-      //  $categories = Category::with('produits')->get();
+      
       $categories =Category::has('produits')->get();
         $configs= config::all();
         return view('front.shop.index',compact('produits', 'categories','configs'));
@@ -156,17 +194,13 @@ class HomeController extends Controller
 
     public function produits($id)
     {
-        $categories = Category::with('produits')->get();
+      //  $categories = Category::with('produits')->get();
+        $categories =Category::has('produits')->get();
         $current_category = Category::with('produits')->findOrFail($id);
         $produits = $current_category->produits;
 
-        $marques = Marque::with('produits')->get();
-        $current_marque = Marque::with('produits')->findOrFail($id);
-        $produits = $current_marque->produits;
-        $users = User::all();
-
-        //dd($produits);
-        return view('front.shop.index', compact('current_category','current_marque','marques', 'users', 'categories', 'produits'));
+    
+        return view('front.shop.index', compact('current_category',  'categories', 'produits'));
     }
 
     public function details($id){
@@ -181,20 +215,10 @@ class HomeController extends Controller
         $current_category = Category::with('produits')->findOrFail($id);
         $produits = $current_category->produits;
         $users = User::all();  
-        return view('front.shop.index', compact('current_category','marques', 'users', 'categories', 'produits'));
+        return view('front.shop.index', compact('current_category', 'users', 'categories', 'produits'));
     }
 
-    public function search(SearchRequest $request)
-    {
-        $search = $request->search;
-      
-        $produits = produits::where('nom', 'like', '%'.$search.'%')
-            ->orWhere('description', 'like', '%'.$search.'%')
-            ->paginate(10);
-        $title = __('Produits nont trouvé avec la recherche: ') . '<strong>' . $search . '</strong>';
-     
-        return view('front.shop.index', compact('produits', 'title'));
-    }
+
 
     ///////////Login///////////////////////////////////////////////////
     public function login()

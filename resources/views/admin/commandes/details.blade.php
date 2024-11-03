@@ -62,6 +62,7 @@
                                         <tr>
                                             <th></th>
                                             <th>Product</th>
+                                            <th>Taille</th>
                                             <th>Type</th>
                                             <th>Prix</th>
                                             <th>Qty</th>
@@ -81,6 +82,7 @@
                                                             height="40" class="rounded shadow" alt="photo">
                                                     @endif
                                                 </td>
+                                               
                                                 <td>
                                                     @if ($contenu->type == 'produit')
                                                         {{ $contenu->produit->nom }}
@@ -88,6 +90,13 @@
                                                         {{ $contenu->pack->nom }}
                                                     @endif
                                                 </td>
+                                                <td>
+                                                    @foreach ($contenu->produit->tailles as $taille )
+                                                        
+                                                    {{ $taille->nom }}  
+                                                    @endforeach
+                                                    
+                                                   </td>
                                                 <td>
                                                     <b class="text-capitalize">
                                                         {{ $contenu->type }}
@@ -115,9 +124,12 @@
                                             <b>Résumé de la commande </b>
                                         </h6>
                                         Montant total : <br>
-                                        @if ($commande->frais)
+                                        @if ($commande->frais && $commande->tax)
+                                        <b>{{ $commande->montantHT() + $commande->frais }} DT</b>
+                                    @elseif($commande->frais)
                                         <b>{{ $commande->montant() }} DT</b>
-                                    
+                                    @elseif($commande->tax)
+                                        <b>{{ $commande->montantHT() }} DT</b>
                                     @else
                                         <b>{{ $commande->montant() - $commande->frais }} DT</b>
                                     @endif
@@ -125,12 +137,12 @@
 
 
                                         @if ($commande->frais)
-                                            ( Frais de livraison inclu ( {{ $commande->frais ?? 0 }} DT) )
+                                            ( Frais de livraison inclu ( {{ $commande->frais ?? 0 }} DT) ) .
                                         @endif
                                         <br>
-                                       {{--  @if ($commande->tax)
+                                        @if ($commande->tax)
                                             ( La TVA: ( {{ $commande->getTVA() ?? 0 }} DT) ) .
-                                        @endif --}}
+                                        @endif
                                         <br>
                                         <i class="ri-calendar-check-line"></i>Date : {{ $commande->created_at }}
                                     </div>

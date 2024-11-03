@@ -9,8 +9,8 @@
                 <div class="col-xl-12">
                     <div class="signup-item">
 
-                        <label class="small mb-1" for="RePassword">Ancien mot de passe</label>
-                        <input type="password" value=" {{ Auth::user()->old_password }}"placeholder="8 - 15 Characters"
+                        <label class="small mb-1" for="RePassword">{{ \App\Helpers\TranslationHelper::TranslateText("Ancien mot de passe") }}</label>
+                        <input type="password" value=" {{ Auth::user()->old_password }}"placeholder="8 - 15 {{ \App\Helpers\TranslationHelper::TranslateText("Caratères") }}"
                             wire:model="old_password" class= "form-control" >
                         @error('old_password')
                             <span class="text-danger small"> {{ $message }} </span>
@@ -20,8 +20,8 @@
 
                 <div class="col-xl-12">
                     <div class="signup-item">
-                        <label class="small mb-1" for="RePassword">Nouveau mot de passe</label>
-                        <input type="password" placeholder="8 - 15 caractères" wire:model="password"
+                        <label class="small mb-1" for="RePassword">{{ \App\Helpers\TranslationHelper::TranslateText("Nouveau mode passe") }}</label>
+                        <input type="password" placeholder="8 - 15 {{ \App\Helpers\TranslationHelper::TranslateText("Caractères") }}" wire:model="password"
                             class= "form-control">
                         @error('password')
                             <span class="text-danger small"> {{ $message }} </span>
@@ -31,7 +31,7 @@
                 <div class="col-xl-12">
                     <div class="signup-item">
                         <label class="small mb-1"  for="RePassword">Confirmation</label>
-                        <input type="password" placeholder="8 - 15 Caractères" wire:model="password_confirmation"
+                        <input type="password" placeholder="8 - 15 {{ \App\Helpers\TranslationHelper::TranslateText("Caractères") }}" wire:model="password_confirmation"
                             class= "form-control" >
                         @error('password_confirmation')
                             <span class="text-danger small"> {{ $message }} </span>
@@ -45,12 +45,16 @@
     font-size: 18px; /* Adjust the font size as needed */
 }
             </style>
+            <br><br><br>
+            <br><br><br>
+            <br><br>
+            <br>
             <div class="row gutters" style="font-size: 24%">
-                <button class="btn btn-success custom-button" style=" background-color: #3015e222;" type="submit">
-
-                    <i class="fa fa-save mr-1"></i>
-                    Enregistrer les modifications
-                </button>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark">{{ \App\Helpers\TranslationHelper::TranslateText("Enregistrer les changements") }}</button>
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -1,5 +1,5 @@
 @extends('front.fixe')
-@section('titre', 'Mes commandes ')
+@section('titre', '{{ __('commandes') }}')
 @section('body')
 
 
@@ -23,14 +23,14 @@
                     <div class="col-12">
                         <div class="breadcrumb__content text-center">
                             <div class="breadcrumb__title-wrapper mb-15 mb-sm-10 mb-xs-5">
-                                <h1 class="breadcrumb__title color-white wow fadeIn animated" data-wow-delay=".1s">Mes
-                                    commandes</h1>
+                                <h1 class="breadcrumb__title color-white wow fadeIn animated" data-wow-delay=".1s">
+                                    {{ \App\Helpers\TranslationHelper::TranslateText("Mes commandes") }} </h1>
                             </div>
                             <div class="breadcrumb__menu wow fadeIn animated" data-wow-delay=".5s">
                                 <nav>
                                     <ul>
-                                        <li><span><a href="{{ route('home') }}">Accueil</a></span></li>
-                                        <li class="active"><span>Commandes</span></li>
+                                        <li><span><a href="{{ route('home') }}">{{ __('accueil') }}</a></span></li>
+                                        <li class="active"><span>{{ __('commandes') }}</span></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -48,11 +48,11 @@
                                 <thead style=" background-color: #380aee22;">
                                     <tr>
                                        
-                                        <th class="cart-product-name">Article</th>
-                                       
-                                        <th class="product-quantity">Frais transport</th>
-                                        <th class="product-price"> Date commande</th>
-                                        <th class="product-price"> Status</th>
+                                        <th class="cart-product-name"> {{ \App\Helpers\TranslationHelper::TranslateText("Article") }}</th>
+                                        <th class="product-price">  {{ \App\Helpers\TranslationHelper::TranslateText("Montant") }}</th>
+                                        <th class="product-quantity"> {{ \App\Helpers\TranslationHelper::TranslateText("Frais transport") }}</th>
+                                        <th class="product-price">  {{ \App\Helpers\TranslationHelper::TranslateText("Date commande") }}</th>
+                                        <th class="product-price">  {{ \App\Helpers\TranslationHelper::TranslateText("Status") }}</th>
                                         <th class="product-subtotal">Action</th>
                                     </tr>
                                 </thead>
@@ -63,7 +63,18 @@
                                            
                                             {{ $commande->contenus->count() }}
                                         </td>
-                                     
+                                        <td >
+                                            {{-- {{ $commande->montant() }} DT --}}
+                                            @if ($commande->frais && $commande->tax)
+                                            <b>{{ $commande->montantHT() + $commande->frais }} DT</b>
+                                        @elseif($commande->frais)
+                                            <b>{{ $commande->montant()}} DT</b>
+                                        @elseif($commande->tax)
+                                            <b>{{ $commande->montantHT() }} DT</b>
+                                        @else
+                                            <b>{{ $commande->montant() - $commande->frais }} DT</b>
+                                        @endif
+                                        </td>
                                         <td>
                                             {{ $commande->frais ?? 0}} DT
                                         </td>
@@ -71,17 +82,11 @@
                                             {{ $commande->created_at }}
                                            
                                         </td>
-                                        <td>{{-- @if(!$commande->statut =='crée')
+                                        <td>
+                                            
                                             {{ $commande->statut }}
-                                            @else
-                                            {{ $commande->etat }}
-                                            
-                                        @endif --}}
-                                        {{ $commande->statut }}
-                                            
-                                           
                                         </td>
-                                    {{--     <td>
+                                        <td>
                                             <a href="{{ route('print_commande',['id'=> $commande->id ]) }}" class="btn btn-sm btn-dark">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width=" 26" height="26" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
                                                     <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
@@ -89,7 +94,7 @@
                                                   </svg>
                                                 Facture
                                             </a>
-                                        </td> --}}
+                                        </td>
                                        
                                     </tr>
                                     @empty

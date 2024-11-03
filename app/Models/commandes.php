@@ -17,8 +17,6 @@ class commandes extends Model
         'adresse',
         'note',
         'message',
-        'livraison',
-        'attente',
         'statut',
         'image',
         'photo',
@@ -41,12 +39,14 @@ class commandes extends Model
         return $this->hasMany(contenu_commande::class, 'id_commande');
     }
 
+    
+
     public function client(){
         return $this->belongsTo(clients::class, 'phone','phone');
     }
 
     public function modifiable(){
-        if ($this->statut === 'retournée' || $this->statut === 'payée' || $this->statut === 'livrée' || $this->statut === 'li') {
+        if ($this->statut === 'retournée' || $this->statut === 'payée' || $this->statut === 'livrée') {
             return false;
         } else {
             return true;
@@ -58,7 +58,6 @@ class commandes extends Model
     {
         return $this->belongsTo(User::class);
     }
-///////calcul avec les frais de de transport
 
     public function montant(){
         $config = config::first();
@@ -67,13 +66,15 @@ class commandes extends Model
         foreach ($this->contenus as $contenu){
             $total += $contenu->prix_unitaire * $contenu->quantite  ;  
         }
+  //  $vatAmount = ($total - $this->frais) * ($config->tax)/100;
+   // $totalWithVAT = $total + $vatAmount ;
 
    
     return $total ?? 0;
   
     }
 
-    ///// calcul  du pric hors tax 
+    
     public function montantHT(){
         $config = config::first();
         $totalTTC = 0 ;
@@ -90,7 +91,7 @@ class commandes extends Model
 
 
 
-//////le montant du TVA 
+
 public function getTVA()
 {
     $config = config::first();

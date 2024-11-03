@@ -25,6 +25,22 @@ class Favoris extends Component
         }
     }
 
+    public function remove_favoris(Request $request)
+    {
+        $id_favoris = $request->get("id_favoris");
+        $favoris = favoris::where("id", $id_favoris)->where("id_user", Auth::user()->id)->first();
+        if ($favoris) {
+            $favoris->delete();
+            $count = favoris::where("id_user", Auth::user()->id)->count();
+            return response()->json(
+                [
+                    "status" => true,
+                    "message" => "Article retiré de mes favoris !",
+                    "count" => $count,
+                ]
+            );
+        }
+    }
 
 
 }

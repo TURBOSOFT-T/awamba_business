@@ -21,4 +21,9 @@ class favoris extends Model
         return $this->belongsTo(produits::class ,'id_produit');
     }
 
+    
+    public function user(){
+        return $this->belongsTo(User::class ,'id_user');
+    }
+
 }

@@ -37,7 +37,7 @@
                             </h5>
                             <div>
                                 @can('order_add')
-                                    <button class="btn btn-sm btn-primary" onclick="url('{{ route('new_devis') }}')">
+                                    <button class="btn btn-sm btn-primary" onclick="url('{{ route('new_commande') }}')">
                                         <i class="ri-folder-add-fill"></i> Ajouter un devis
                                     </button>
                                 @endcan

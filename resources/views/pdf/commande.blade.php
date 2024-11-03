@@ -8,7 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Reçu de commande</title>
+    <title>
+        {{ \App\Helpers\TranslationHelper::TranslateText("Reçu de commande") }}
+    </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -82,22 +84,31 @@
         <h1 style="color: #000000">
             {{ config('app.name') }}</h1>
            
-            Matricule: {{ $config->matricule ?? ' ' }}
+            
+            {{ \App\Helpers\TranslationHelper::TranslateText("Matricule") }}: {{ $config->matricule ?? ' ' }}
             <br>
             <br>
-            Téléphone: {{ $config->telephone ??  ' '}}
+            
+            {{ \App\Helpers\TranslationHelper::TranslateText(" Téléphone ") }}: {{ $config->telephone ??  ' '}}
         
-        <h5>Informations sur la commande : #{{ $commande->id }}</h5>
-        <p><strong>Date de commande:</strong> {{ $commande->created_at }}</p>
+        <h5>
+            {{ \App\Helpers\TranslationHelper::TranslateText(" Informations sur la commande") }} : #{{ $commande->id }}</h5>
+        <p><strong>
+            {{ \App\Helpers\TranslationHelper::TranslateText(" Date de commande ") }}:</strong> {{ $commande->created_at }}</p>
 
-        <h3>Produits commandés :</h3>
+        <h3>
+            {{ \App\Helpers\TranslationHelper::TranslateText("Produits Commandés ") }}:</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Produit</th>
-                    <th>Quantité</th>
-                    <th>Prix unitaire</th>
-                    <th>Total</th>
+                    <th>
+                        {{ \App\Helpers\TranslationHelper::TranslateText("Produit ") }}
+                    </th>
+                    <th>
+                        {{ \App\Helpers\TranslationHelper::TranslateText("Quantité ") }}
+                    </th>
+                    <th> {{ \App\Helpers\TranslationHelper::TranslateText("Prix unitaire ") }}</th>
+                    <th> {{ \App\Helpers\TranslationHelper::TranslateText(" Total ") }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -117,15 +128,22 @@
                         <td>
                             {{ $item->quantite }}</td>
                         <td>
-                        
-                              {{ $item->prix_unitaire }} DT 
-                              
+                            @if ( $commande->tax)
+                                <b>{{number_format( $commande->getPrix() * $item->quantite, 2, ',', ' ') }} DT</b>
+                                @else
+                              {{--   {{ $item->prix_unitaire }} DT --}}
+                                <b>{{number_format(  $item->prix_unitaire  * $item->quantite, 2, ',', ' ') }} DT</b>
+                            @endif
+                           
                         </td>
                         <td>{{-- {{ $item->prix_unitaire * $item->quantite }} DT --}}
 
-                            {{-- <b> {{ $item->prix_unitaire * $item->quantite }} DT </b> --}}
-                            <b>{{number_format( $item->prix_unitaire * $item->quantite, 2, ',', ' ') }} DT</b>
+                                @if ( $commande->tax)
+                            <b>{{number_format( $commande->getPrix() * $item->quantite, 2, ',', ' ') }} DT</b>
                        
+                        @else
+                            <b> {{ $item->prix_unitaire * $item->quantite }} DT </b>
+                        @endif 
                         </td>
                     </tr>
                     @php
@@ -134,14 +152,16 @@
                 @endforeach
                 <tr>
                     <td>
-                        <b>Frais de livraison </b>
+                        <b>
+                            {{ \App\Helpers\TranslationHelper::TranslateText("Frais de livraison ") }}
+                        </b>
                     </td>
                     <td>1</td>
                     <td> {{number_format( $commande->frais ?? 0, 2, ',', ' ') }} DT </td>
                     <td> {{number_format( $commande->frais ?? 0, 2, ',', ' ') }} DT </td>
                 </tr>
 
-       {{--          <tr>
+                <tr>
                     <td>
                         <b>TVA </b>
                     </td>
@@ -156,10 +176,11 @@
                     @endif
 
 
-                </tr> --}}
+                </tr>
                 <tr>
                     <td>
-                        <b>Frais de timbre </b>
+                        <b>
+                            {{ \App\Helpers\TranslationHelper::TranslateText("Frais de timbre ") }} </b>
                     </td>
                     <td>1</td>
                     <td> 1 DT </td>
@@ -167,12 +188,16 @@
                 </tr>
                 <tr class="tr-montant">
                     <td colspan="3">
-                        <b>Total net à payer:</b>
+                        <b>
+                            {{ \App\Helpers\TranslationHelper::TranslateText(" Total net à payer ") }}:</b>
                     </td>
                     <td>
-                        @if ($commande->frais)
-                            <b>{{number_format( $commande->montant() + + 1, 2, ',', ' ') }} DT</b>
-                      
+                        @if ($commande->frais && $commande->tax)
+                            <b>{{number_format( $commande->montantHT() + $commande->frais + 1, 2, ',', ' ') }} DT</b>
+                        @elseif($commande->frais)
+                            <b>{{ number_format($commande->montant() + 1, 2, ',',' ') }} DT</b>
+                        @elseif($commande->tax)
+                            <b>{{ number_format($commande->montantHT() + 1, 2, ',', ' ') }} DT</b>
                         @else
                             <b>{{ number_format($commande->montant() - $commande->frais + 1), 2, ',', ' ' }} DT</b>
                         @endif
@@ -189,18 +214,26 @@
         </table>
 
 
-        <h4>Informations de livraison :</h4>
-        <p><strong>Nom complet:</strong> {{ $commande->prenom }} {{ $commande->nom }}</p>
-        <p><strong>Adresse de livraison:</strong> {{ $commande->adresse ?? 'N/A' }}</p>
-        <p><strong>Numéro de téléphone:</strong> {{ $commande->phone ?? 'N/A' }}</p>
-        <p><strong>Pays:</strong> {{ $commande->pays ?? 'N/A' }}</p>
-        <p><strong>Gouvernorat:</strong> {{ $commande->gouvernorat ?? 'N/A' }} </p>
+        <h4>
+            {{ \App\Helpers\TranslationHelper::TranslateText(" Informations de livraison ") }}:</h4>
+        <p><strong>
+            {{ \App\Helpers\TranslationHelper::TranslateText("Nom complet ") }}:</strong> {{ $commande->prenom }} {{ $commande->nom }}</p>
+        <p><strong>
+            {{ \App\Helpers\TranslationHelper::TranslateText("Adresss de livraison") }}:</strong> {{ $commande->adresse ?? 'N/A' }}</p>
+        <p><strong>
+            {{ \App\Helpers\TranslationHelper::TranslateText(" Numéro de téléphone ") }}:</strong> {{ $commande->phone ?? 'N/A' }}</p>
+        <p><strong>
+            {{ \App\Helpers\TranslationHelper::TranslateText("Pays") }}:</strong> {{ $commande->pays ?? 'N/A' }}</p>
+        <p><strong>
+            {{ \App\Helpers\TranslationHelper::TranslateText(" Gouvernorat ") }}:</strong> {{ $commande->gouvernorat ?? 'N/A' }} </p>
         <hr>
 
         <p>
-            Nous vous remercions pour votre commande !
-            <br> Si vous avez des questions ou des préoccupations, n'hésitez
-            pas à nous contacter .
+           
+            {{ \App\Helpers\TranslationHelper::TranslateText(" Nous vous remercions pour votre commande") }}  !
+            <br> 
+            {{ \App\Helpers\TranslationHelper::TranslateText("Si vous avez des questions ou des préoccupations, n'hésitez
+            pas à nous contacter") }}.
         </p>
     </div>
 </body>

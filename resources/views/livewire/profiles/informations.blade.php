@@ -11,7 +11,7 @@
               <hr>
               <div class="tp-footer-input-box mb-20 p-relative">
                   <label class="form-label" for="FullName">
-                      Nom
+                    {{ __('nom') }}
                   </label>
                   <input type="text" value=" {{ Auth::user()->nom }}" wire:model="nom"  class="form-control">
                   @error('nom')
@@ -33,7 +33,7 @@
                   @enderror
               </div>
               <div class="tp-footer-input-box mb-20 p-relative">
-                  <label class="form-label" for="Email">Téléphone</label>
+                  <label class="form-label" for="Email">{{ __('telephone') }}</label>
                   <input type="text"   value=" {{ Auth::user()->phone }}" wire:model="phone" class="form-control" >
                   @error('phone')
                       <span class="text-danger small"> {{ $message }} </span>
@@ -44,13 +44,14 @@
 
         
           <div class="modal-footer">
-              <button class="btn btn-success" type="submit">
-                  <span wire:loading>
-                      <img src="https://i.gifer.com/ZKZg.gif" height="15" alt="" srcset="">
-                  </span>
-                  <i class="fa fa-save mr-1"></i>
-                  Enregistrer les changements
-              </button>
+           
+
+              
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark">{{ \App\Helpers\TranslationHelper::TranslateText("Enregistrer les modifications") }}</button>
+                </div>
+            </div>
           </div>
       </div>
   </form>

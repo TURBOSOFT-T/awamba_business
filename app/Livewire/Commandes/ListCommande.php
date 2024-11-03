@@ -68,40 +68,15 @@ class ListCommande extends Component
         return view('livewire.commandes.list-commande', compact("commandes", "total"));
     }
 
-    public function updateStatus1($commandeId, $newStatus)
-    {
-        $commande = commandes::findOrFail($commandeId);
-    
-        if ($commande) {
-            $commande->statut = $newStatus;
-    
-            if ($newStatus == "retournée") {
-                foreach ($commande->contenus as $contenus) {
-                    $article = produits::find($contenus->id_produit);
-                    if ($article) {
-                        $article->retourner_stock($contenus->quantite);
-                    }
-                }
-            }
-    
-            // Envoyer l'e-mail de confirmation pour les statuts spécifiés
-            if (in_array($newStatus, ["retournée", "En cours livraison", "traitement", "planification"])) {
-                $this->sendOrderConfirmationMail($commande);
-            }
-    
-            $commande->save();
-        }
-    }
-    
-   
+
     public function updateStatus($commandeId, $newStatus)
     {
-       
+        // Mettre à jour le statut de la commande dans la base de données
         $commande = commandes::findOrFail($commandeId);
         if ($commande) {
             $commande->statut = $newStatus;
 
-       
+            //retourner le stock si l'etat de dla command epasser a retourner
             if ($newStatus == "retournée") {
                 foreach ($commande->contenus as $contenus) {
                     $article = produits::find($contenus->id_produit);
@@ -111,81 +86,59 @@ class ListCommande extends Component
                 }
                 $this->sendOrderConfirmationMail($commande);
             }
- if($newStatus == "En cours livraison"){
- 
-    $this->sendOrderConfirmationMail($commande);
-} 
-
             if ($newStatus == "traitement") {
-             
+                foreach ($commande->contenus as $contenus) {
+                    $article = produits::find($contenus->id_produit);
+                    if ($article) {
+                        $article->retourner_stock($contenus->quantite);
+                    }
+                }
                 $this->sendOrderConfirmationMail($commande);
             }
             if ($newStatus == "planification") {
-            
+                foreach ($commande->contenus as $contenus) {
+                    $article = produits::find($contenus->id_produit);
+                    if ($article) {
+                        $article->retourner_stock($contenus->quantite);
+                    }
+                }
                 $this->sendOrderConfirmationMail($commande);
             }
-        
-           
+
+            //enregistrer le chagement de l'etat de la commande
             $commande->save();
         }
     }
 
-   
 
-    public function sendOrderConfirmationMail($commande)
-    {
-        try {
-            Mail::to($commande->email)->send(new OrderChangeStatut($commande));
-        } catch (\Exception $e) {
-   
-            \Log::error('Erreur lors de l\'envoi de l\'email de confirmation de commande : ' . $e->getMessage());
-         
-        }
-    }
-      
-    
+    public function sendOrderConfirmationMail($commande){
+        Mail::to ($commande->email)->send(new OrderChangeStatut($commande));
+      }
 
     public function delete($id)
     {
         $commande = commandes::find($id);
-        
-       // $commande->delete();
-         if ( $commande->statut =="attente" || $commande->statut =="créé" || $commande->statut == "traitement" || $commande->statut == "planification" || $commande->statut == "livrée") {
-            
-               foreach ($commande->contenus as $contenus) {
-                    $article = produits::find($contenus->id_produit);
-                    if ($article) {
-                        $article->retourner_stock($contenus->quantite);
-                    }
-               
-            }
-          
-          
-           $commande->delete();
+        if ($commande) {
+            $commande->delete();
 
             //flash message
             session()->flash('success', 'Commande supprimée avec succès');
-        } 
+        }
         return view('livewire.commandes.list-commande');
     }
+
     public function filtrer()
     {
         //reset page
         $this->resetPage();
     }
 
+
     public function confirmer($id)
     {
         $commande = commandes::find($id);
         if ($commande) {
-           /*  foreach ($commande->contenus as $contenus) {
-                $article = produits::find($contenus->id_produit);
-                if ($article) {
-                    $article->diminuer_stock($contenus->quantite);
-                }
-            } */
             $commande->etat = "confirmé";
-
             $commande->save();
             $this->sendOrderConfirmationMail($commande);
         }
@@ -209,6 +162,7 @@ class ListCommande extends Component
             
         }
     }
+
 
     public function toggleCommandeSelection($commandeId)
     {

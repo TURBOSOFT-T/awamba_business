@@ -3,53 +3,43 @@
 @section('body')
 
 <main>
-    <div class="breadcrumb__area breadcrumb-space overflow-hidden banner-home-bg ">
-        <div class="banner-home__middel-shape inner-top-shape"></div>
-        <div class="container">
-            <div class="banner-all-shape-wrapper">
-                <div class="banner-home__banner-shape-1 first-shape">
-                    <img class="upDown-top" src="assets/imgs/banner-1/banner-shape-1.svg" alt="img not found">
-                </div>
-                <div class="banner-home__banner-shape-2 second-shape">
-                    <img class="upDown-bottom" src="assets/imgs/banner-1/banner-shape-2.svg" alt="img not found">
-                </div>
-                <div class="right-shape">
-                    <img class="zooming" src="assets/imgs/inner-img/inner-right-shape.svg" alt="img not found">
-                </div>
-            </div>
-            <div class="row align-items-center justify-content-between">
-                <div class="col-12">
-                    <div class="breadcrumb__content text-center">
-                        <div class="breadcrumb__title-wrapper mb-15 mb-sm-10 mb-xs-5">
-                            <h1 class="breadcrumb__title color-white wow fadeIn animated" data-wow-delay=".1s">Mes favoris</h1>
-                        </div>
-                        <div class="breadcrumb__menu wow fadeIn animated" data-wow-delay=".5s">
-                            <nav>
-                                <ul>
-                                    <li><span><a  href="{{ route('home') }}">Accueil</a></span></li>
-                                    <li class="active"><span>Favoris</span></li>
-                                </ul>
-                            </nav>
+    
+                <!-- ======================= Top Breadcrubms ======================== -->
+                <div class="gray py-3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="colxl-12 col-lg-12 col-md-12">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('accueil') }}</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{ \App\Helpers\TranslationHelper::TranslateText("Mes favoris") }}</li>
+                                    </ol>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+                <section class="middle">
+                    <div class="container">
+                        <div class="row justify-content-center justify-content-between">
+                        
+                          @include('front.comptes.sidebar')
+                            
+                          @livewire('Front.Favoris')
+                            
+                        </div>
+                    </div>
+                </section>
 
-    <div class="page-content-wrapper">
-        <div class="page-content">
-           
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            @livewire('Front.Favoris')
-                        </div>
-                    </div>
-                </div>
-           
-        </div>
-    </div>
+
+
+
+                
+			<!-- Product View Modal -->
+		
+			
+			<!-- End Modal -->
 
 
 </main>

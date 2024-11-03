@@ -34,7 +34,7 @@
                         <option value="">Etat</option>
                         <option value="créé">Créé</option>
                         <option value="traitement">Traitement</option>
-                        {{--     <option value="Livraison">Livraison</option> --}}
+                    {{--     <option value="Livraison">Livraison</option> --}}
                         <option value="livrée">Livré</option>
                         <option value="payée">Payée</option>
                         <option value="planification">Planification de retour</option>
@@ -78,109 +78,91 @@
 
             <tbody>
                 @forelse ($commandes as $commande)
-                    @php
-                        //  dd($commandes);
-                    @endphp
-                    @if ($commande->message === null || $commande->photo === null || $commande->sur_devis === false)
-                        <tr>
-                            <td>
-                                <input type="checkbox" wire:click="toggleCommandeSelection({{ $commande->id }})">
-                            </td>
-                            <td>
-                                <button class="btn btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#qr-code-{{ $commande->id }}">
-                                    <i class="ri-qr-scan-2-line"></i>
-                                </button>
-                                <!-- Center modal content -->
-                                <div class="modal fade" id="qr-code-{{ $commande->id }}" tabindex="-1" role="dialog"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="myCenterModalLabel">
-                                                    Commande #{{ $commande->id }}
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                @php
+                 //  dd($commandes);
+                @endphp
+                @if($commande->message === null || $commande->photo === null || $commande->sur_devis === false)
+                    <tr>
+                        <td>
+                            <input type="checkbox" wire:click="toggleCommandeSelection({{ $commande->id }})">
+                        </td>
+                        <td>
+                            <button class="btn btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#qr-code-{{ $commande->id }}">
+                                <i class="ri-qr-scan-2-line"></i>
+                            </button>
+                            <!-- Center modal content -->
+                            <div class="modal fade" id="qr-code-{{ $commande->id }}" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="myCenterModalLabel">
+                                                Commande #{{ $commande->id }}
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6 class="text-muted">
+                                                Veuillez scanner ce code Qr pour impprimer le Reçu de commande .
+                                            </h6>
+                                            <div class="text-center p-2">
+                                                {!! QrCode::size(100)->generate(route('print_commande', ['id' => $commande->id])) !!}
                                             </div>
-                                            <div class="modal-body">
-                                                <h6 class="text-muted">
-                                                    Veuillez scanner ce code Qr pour impprimer le Reçu de commande .
-                                                </h6>
-                                                <div class="text-center p-2">
-                                                    {!! QrCode::size(100)->generate(route('print_commande', ['id' => $commande->id])) !!}
-                                                </div>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                            </td>
-                            <td>{{ $commande->id }}</td>
-                            <td>
-                                {{ $commande->nom }}
-                                @if ($commande->note)
-                                    <i class="ri-message-2-fill" title="Une note a été ajouté"></i>
-                                @endif
-                            </td>
-                            <td>{{ $commande->phone }}</td>
-                            <td>
-                                {{ $commande->gouvernorat ?? 'N/A' }}
-                            </td>
-
-
-                            <td>
-                                @if ($commande->frais)
-                                    {{ $commande->montant() }}
-                                @else
-                                    {{ $commande->montant() - $commande->frais }}
-                                @endif
-                                <x-devise></x-devise>
-                            </td>
-
-
-                            <td>
-                                @can('order_edit')
-                                    @if ($commande->statut === 'payée')
-                                        <b class="text-success">
-                                            <i class="ri-check-double-fill"></i>
-                                            Payée
-                                        </b>
-                                    @elseif($commande->statut == 'retournée')
-                                        <b class="text-danger">
-                                            @if ($commande->etat == 'confirmé')
-                                                <i class="ri-text-wrap"></i>
-                                                retournée
-                                            @else
-                                                <i class="ri-close-circle-line"></i>
-                                                Annulé
-                                            @endif
-                                        </b>
-                                    @else
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                        <td>{{ $commande->id }}</td>
+                        <td>
+                            {{ $commande->nom }}
+                            @if ($commande->note)
+                                <i class="ri-message-2-fill" title="Une note a été ajouté"></i>
+                            @endif
+                        </td>
+                        <td>{{ $commande->phone }}</td>
+                        <td>
+                            {{ $commande->gouvernorat ?? 'N/A' }}
+                        </td>
+                    
+                       
+                        <td>
+                            @if($commande->frais && $commande->tax)
+                            {{ $commande->montant()   }} 
+                           
+                            @elseif ($commande->frais)
+                            {{ $commande->montantHT()  }} 
+                            @elseif ($commande->tax)
+                            {{ $commande->montant() - $commande->frais   }}
+                            @else
+                            {{ $commande->montantHT()}}
+                            
+                            @endif
+                            <x-devise></x-devise> </td>
+                       
+                        
+                        <td>
+                            @can('order_edit')
+                                @if ($commande->statut === 'payée')
+                                    <b class="text-success">
+                                        <i class="ri-check-double-fill"></i>
+                                        Payée
+                                    </b>
+                                @elseif($commande->statut == 'retournée')
+                                    <b class="text-danger">
                                         @if ($commande->etat == 'confirmé')
-                                            <select class="form-control-sm"
-                                                onchange="confirmStatusChange(event, {{ $commande->id }})"
-                                                data-current-status="{{ $commande->statut }}">
-                                                <option value="créé"
-                                                    {{ $commande->statut === 'créé' ? 'selected' : '' }}>Créé</option>
-                                                <option value="traitement"
-                                                    {{ $commande->statut === 'traitement' ? 'selected' : '' }}>Traitement
-                                                </option>
-                                                <option value="En cours livraison"
-                                                    {{ $commande->statut === 'En cours livraison' ? 'selected' : '' }}>En
-                                                    cours de Livraison</option>
-                                                <option value="livrée"
-                                                    {{ $commande->statut === 'livrée' ? 'selected' : '' }}>Livrée</option>
-                                                <option value="payée"
-                                                    {{ $commande->statut === 'payée' ? 'selected' : '' }}>Payée</option>
-                                                <option value="planification"
-                                                    {{ $commande->statut === 'planification' ? 'selected' : '' }}>
-                                                    Planification retour</option>
-                                                <option value="retournée"
-                                                    {{ $commande->statut === 'retournée' ? 'selected' : '' }}>Retournée
-                                                </option>
-                                            </select>
-
-                                            {{--   <select class="form-control-sm"
+                                            <i class="ri-text-wrap"></i>
+                                            retournée
+                                        @else
+                                            <i class="ri-close-circle-line"></i>
+                                            Annulé
+                                        @endif
+                                    </b>
+                                @else
+                                    @if ($commande->etat == 'confirmé')
+                                        <select class="form-control-sm"
                                             wire:change="updateStatus({{ $commande->id }}, $event.target.value)">
                                             <option value="créé" {{ $commande->statut === 'créé' ? 'selected' : '' }}>
                                                 Créé
@@ -188,12 +170,10 @@
                                             <option value="traitement"
                                                 {{ $commande->statut === 'traitement' ? 'selected' : '' }}>
                                                 Traitement</option>
-                                             <option value="En cours livraison"
-                                                {{ $commande->statut === 'En cours livraison' ? 'selected' : '' }}>
-                                              En cours de  Livraison
-                                            </option>
-
-
+                                           {{--  <option value="Livraison"
+                                                {{ $commande->statut === 'livraison' ? 'selected' : '' }}>
+                                                Livraison
+                                            </option> --}}
                                             <option value="livrée" {{ $commande->statut === 'livrée' ? 'selected' : '' }}>
                                                 Livré
                                             </option>
@@ -208,75 +188,75 @@
                                                 {{ $commande->statut === 'retournée' ? 'selected' : '' }}>
                                                 Retournée
                                             </option>
-                                        </select> --}}
-                                        @elseif($commande->etat == 'attente')
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-sm btn-primary"
-                                                    wire:click="confirmer({{ $commande->id }})">
-                                                    <i class="ri-checkbox-circle-line"></i>
-                                                    Valider
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-danger"
-                                                    wire:click="annuler({{ $commande->id }})">
-                                                    <i class="ri-close-line"></i>
-                                                    Annluer
-                                                </button>
-                                            </div>
-                                        @else
-                                            <i class="ri-close-circle-line"></i>
-                                            Annulé
-                                        @endif
+                                        </select>
+                                    @elseif($commande->etat == 'attente')
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-sm btn-primary"
+                                                wire:click="confirmer({{ $commande->id }})">
+                                                <i class="ri-checkbox-circle-line"></i>
+                                                Valider
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                wire:click="annuler({{ $commande->id }})">
+                                                <i class="ri-close-line"></i>
+                                                Annluer
+                                            </button>
+                                        </div>
+                                    @else
+                                        <i class="ri-close-circle-line"></i>
+                                        Annulé
+                                    @endif
+                                @endif
+                            @endcan
+
+                        </td>
+                        <td>
+                            <span class="text-capitalize">
+                                {{ $commande->mode }}
+                            </span>
+                        </td>
+                        <td>{{ $commande->created_at }} </td>
+                        <td style="text-align: right;">
+                            <div class="btn-group">
+                                @can('order_edit')
+                                    @if ($commande->modifiable())
+                                        <button class="btn btn-sm btn-warning"
+                                            onclick="url('{{ route('edit_commande', ['id' => $commande->id]) }}')">
+                                            <i class="ri-edit-2-line"></i>
+                                        </button>
                                     @endif
                                 @endcan
-
-                            </td>
-                            <td>
-                                <span class="text-capitalize">
-                                    {{ $commande->mode }}
-                                </span>
-                            </td>
-                            <td>{{ $commande->created_at }} </td>
-                            <td style="text-align: right;">
-                                <div class="btn-group">
-                                    @can('order_edit')
-                                        @if ($commande->modifiable())
-                                            <button class="btn btn-sm btn-warning"
-                                                onclick="url('{{ route('edit_commande', ['id' => $commande->id]) }}')">
-                                                <i class="ri-edit-2-line"></i>
-                                            </button>
-                                        @endif
-                                    @endcan
-                                    @can('order_edit')
-                                        <button class="btn btn-sm btn-primary"
-                                            onclick="add_note({{ $commande->id }},'{{ $commande->nom }}')">
-                                            <i class="ri-sticky-note-add-line"></i> Note
-                                        </button>
-                                    @endcan
-                                    <button class="btn btn-info btn-sm" type="button" title="Imprimer la commande"
-                                        onclick="url('{{ route('print_commande', ['id' => $commande->id]) }}')">
-                                        <i class="ri-printer-line"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-dark"
-                                        onclick="url('{{ route('details_commande', ['id' => $commande->id]) }}')">
-                                        <i class="ri-eye-line"></i>
-                                    </button>
-                                    @can('order_delete')
-                                        <button class="btn btn-sm btn-danger"
-                                            onclick="toggle_confirmation({{ $commande->id }})">
-                                            <i class="ri-delete-bin-6-line"></i>
-                                        </button>
-                                    @endcan
-                                </div>
-                                @can('order_delete')
-                                    <button class="btn btn-sm btn-success d-none" type="button"
-                                        id="confirmBtn{{ $commande->id }}" wire:click="delete({{ $commande->id }})">
-                                        <span class="hide-tablete">
-                                            Confirmer
-                                        </span>
+                                @can('order_edit')
+                                    <button class="btn btn-sm btn-primary"
+                                        onclick="add_note({{ $commande->id }},'{{ $commande->nom }}')">
+                                        <i class="ri-sticky-note-add-line"></i> Note
                                     </button>
                                 @endcan
-                            </td>
-                        </tr>
+                                <button class="btn btn-info btn-sm" type="button" title="Imprimer la commande"
+                                    onclick="url('{{ route('print_commande', ['id' => $commande->id]) }}')">
+                                    <i class="ri-printer-line"></i>
+                                </button>
+                                <button class="btn btn-sm btn-dark"
+                                    onclick="url('{{ route('details_commande', ['id' => $commande->id]) }}')">
+                                    <i class="ri-eye-line"></i>
+                                </button>
+                                @can('order_delete')
+                                    <button class="btn btn-sm btn-danger"
+                                        onclick="toggle_confirmation({{ $commande->id }})">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                @endcan
+                            </div>
+                            @can('order_delete')
+                                <button class="btn btn-sm btn-success d-none" type="button"
+                                    id="confirmBtn{{ $commande->id }}" wire:click="delete({{ $commande->id }})">
+                                    <span class="hide-tablete">
+                                        Confirmer
+                                    </span>
+                                </button>
+                            @endcan
+                        </td>
+                    </tr>
                     @endif
                 @empty
                     <tr>
@@ -294,7 +274,7 @@
                             </div>
                         </td>
                     </tr>
-                @endforelse {{ $commandes->links() }}
+                @endforelse {{ $commandes->links() }} 
 
             </tbody>
 
@@ -304,35 +284,7 @@
 
     {{ $commandes->links('pagination::bootstrap-4') }}
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        function confirmStatusChange(event, commandeId) {
-            const newStatus = event.target.value;
-
-            Swal.fire({
-                title: 'Etes vous sûr de changer de status?',
-                text: ` Voulez vous réellement changer le tatus à: ${newStatus}?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, change it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    @this.call('updateStatus', commandeId, newStatus);
-                    Swal.fire(
-                        'Changed!',
-                        'Le status a été changé avec succès.',
-                        'success'
-                    );
-                } else {
-                    // Reset the dropdown to the original value if the user cancels
-                    event.target.value = event.target.getAttribute('data-current-status');
-                }
-            });
-        }
-    </script>
 
 
 </div>

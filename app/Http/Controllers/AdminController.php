@@ -225,9 +225,6 @@ class AdminController extends Controller
         $json_commandes = '[' . implode(',', [$commandes['créé'] ?? 0, $commandes['traitement'] ?? 0, $commandes['livraison'] ?? 0, $commandes['livré'] ?? 0, $commandes['payée'] ?? 0, $commandes['planification retour'] ?? 0, $commandes['retournée'] ?? 0]) . ']';
 
 
-        $request->session()->flash('date_debut', $request->input('date_debut'));
-        $request->session()->flash('date_fin', $request->input('date_fin'));
-     
 
       //  $notifications = auth()->user()->unreadNotifications;
 
@@ -274,10 +271,6 @@ class AdminController extends Controller
         return view("admin.commandes.ajouter");
     }
 
-    public function  new_devis(){
-        return view("admin.devis.ajouter");
-    }
-
 
     public function add_note(Request $request)
     {
@@ -307,7 +300,7 @@ class AdminController extends Controller
 
     public function export_clients()
     {
-        $users = User::select('nom','prenom' ,'phone', 'adresse')
+        $users = clients::select('nom', 'phone', 'adresse', 'pays', 'gouvernorat')
             ->get();
         return Excel::download(new ExportUser($users), 'users.xlsx');
     }
@@ -377,6 +370,13 @@ public function categories()
 {
     return view('admin.categories.list');
 }
+//////////////////////////tailles/////////////      
+public function tailles()
+{
+    return view('admin.tailles.list');
+}
+
+
 
 public function categories_update($id)
 {
@@ -466,12 +466,10 @@ public function service_update($id)
     {
         $connexions = historiques_connexion::Orderby("id", "Desc")
             ->where('user_id', Auth::id())
-            ->paginate(50);
+            ->get();
 
         $ipAddress = request()->ip();
-        
-      //  dd($connexions);
-        return view('admin.parametres.index', compact('connexions','ipAddress'));
+        return view('admin.parametres.index', compact('connexions'));
     }
 
 

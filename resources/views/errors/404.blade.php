@@ -5,29 +5,27 @@
       
         <!-- error area start -->
         <br><br><br>
-        <section class="error section-space">
+       
+
+         <section class="middle">
             <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="error__content">
-    
-                            <div class="error__content-medias mb-40 mb-sm-35 mb-xs-30">
-                                <img class="upDown-bottom" src="assets/imgs/404/404.png" alt="image not found" style=" height:50; width:50 ">
-                            </div>
-    
-                            <div class="section__title-wrapper text-center">
-                                <h3 class="section__title mb-15 mb-xs-10 wow fadeIn animated" data-wow-delay=".3s">Désolé, page introuvable</h3>
-                                <p class="mb-40 mb-sm-25 mb-xs-20 wow fadeIn animated" data-wow-delay=".5s">La page que vous recherchez ne se ferme pas. Veuillez l'essayer.</p>
-    
-                                <div class="error-btn-wrap">
-                                    <a href="{{ route('home') }}" class="error-btn wow fadeIn animated" data-wow-delay=".7s"> Retour a l'Accueil</a>
-                                </div>
-                            </div>
-                        </div>
+            
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10 col-lg-8 col-xl-6 text-center">
+
+                        <!-- Icon -->
+                        <div class="p-4 d-inline-flex align-items-center justify-content-center circle bg-light-danger text-danger mx-auto mb-4"><i class="ti-face-smile fs-lg"></i></div>
+                        <!-- Heading -->
+                        <h2 class="mb-2 ft-bold">Désolé, page introuvable.</h2>
+                        <!-- Text -->
+                        <p class="ft-regular fs-md mb-5">La page que vous recherchez ne se ferme pas. Veuillez l'essayer</p>
+                        <!-- Button -->
+                        <a class="btn btn-dark"  href="{{ route('home') }}">Retour a l'Accueil</a>
                     </div>
                 </div>
+                
             </div>
-         </section>
+        </section>
    
     </main>
 

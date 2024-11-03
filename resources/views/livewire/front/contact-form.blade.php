@@ -28,7 +28,7 @@
             </div>
             <div class="col-sm-6 pb-3">
                 <input wire:model="email" type="email" id="email" class="form-control   "
-                    placeholder="Votre Email">
+                    placeholder=" Email">
                 @error('email')
                     <span class="small text-danger">
                         {{ $message }}
@@ -37,7 +37,7 @@
             </div>
             <div class="col-sm-6 pb-3">
                 <input wire:model="telephone" type="number" id="telephone" class="form-control    "
-                    placeholder="Votre téléphone">
+                    placeholder="{{ __('telephone') }}">
                 @error('telephone')
                     <span class="small text-danger">
                         {{ $message }}
@@ -45,7 +45,7 @@
                 @enderror
             </div>
             <div class="col-sm-6 pb-3">
-                <input wire:model="sujet" id="suject" type="text" class="form-control  " placeholder="Subject">
+                <input wire:model="sujet" id="suject" type="text" class="form-control  " placeholder="{{ __('sujet') }}">
                 @error('sujet')
                     <span class="small text-danger">
                         {{ $message }}
@@ -54,7 +54,7 @@
             </div>
             <div class="col-12">
                 <div class="contact-us__textarea ">
-                    <textarea wire:model="message" cols="5" id="message" class="form-control " placeholder="Votre message"></textarea>
+                    <textarea wire:model="message" cols="5" id="message" class="form-control " placeholder=" {{ \App\Helpers\TranslationHelper::TranslateText("Votre message") }}"></textarea>
                     @error('message')
                         <span class="small text-danger">
                             {{ $message }}
@@ -73,16 +73,41 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                <br>
 
-                <button class="rr-btn mt-30" type="submit">
+                <button class="rr-btn mt-50" type="submit">
                     <span wire:loading>
                         <img src="/icons/kOnzy.gif" class="loading-btn" alt="loading" srcset="">
                     </span>
-                    <span>Envoyer</span>
+                    <span> {{ \App\Helpers\TranslationHelper::TranslateText("Envoyer") }}</span>
                 </button>
+
+           
+
             </div>
 
         </div>
+        <style>
+            .rr-btn {
+            background-color: #007bff; /* Button background color */
+            color: white; /* Text color */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Button padding */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+        
+        .rr-btn:hover {
+            background-color: #4f5458; /* Darker background on hover */
+        }
+        
+        .loading-btn {
+            width: 30px; /* Adjust size of the spinner */
+            height: 20px;
+        }
+        
+        </style>
     </form>
 
 </div>
+

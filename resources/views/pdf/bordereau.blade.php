@@ -8,7 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>borderau des commandes</title>
+    <title>
+        {{ \App\Helpers\TranslationHelper::TranslateText("Bordereau des commandes") }}
+    </title>
     <style>
         body {
             font-family: Arial, sans-serif, 'bangla';
@@ -48,7 +50,7 @@
                 <div>
                     <br>
                     <center>
-                        <h3>Informations sur le client</h3>
+                        <h3>{{ \App\Helpers\TranslationHelper::TranslateText("Les informations sur le client") }}</h3>
                     </center>
                     <table>
                         <tr>
@@ -68,24 +70,28 @@
                 </div>
                 <br>
                 <center>
-                    <h3>Informations de la commande</h3>
+                    <h3>{{ \App\Helpers\TranslationHelper::TranslateText("Les information de la commande") }}</h3>
                 </center>
                 <div>
-                    <b>Date de reception de la commande : </b> {{ $commande->created_at ?? '/' }}
+                    <b>
+                        {{ \App\Helpers\TranslationHelper::TranslateText("Date de reception de la commande") }} : </b> {{ $commande->created_at ?? '/' }}
                 </div>
                 <center>
                     <h3>
-                        Contenu de la commande
+                        
+                        {{ \App\Helpers\TranslationHelper::TranslateText("Contenu de la commande") }}
                     </h3>
                 </center>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Référence</th>
-                            <th>Article</th>
-                            <th>Prix u</th>
-                            <th>Quantité</th>
-                            <th>Montant</th>
+                            <th>
+                                {{ \App\Helpers\TranslationHelper::TranslateText("Référence") }}
+                            </th>
+                            <th>{{ \App\Helpers\TranslationHelper::TranslateText("Article") }}</th>
+                            <th>{{ \App\Helpers\TranslationHelper::TranslateText("Prix unitaire") }}</th>
+                            <th>{{ \App\Helpers\TranslationHelper::TranslateText("Quantité") }}</th>
+                            <th>{{ \App\Helpers\TranslationHelper::TranslateText("Montant") }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,13 +108,16 @@
                 </table>
                 <br>
                 <div>
-                    <b>Frais de livraison :</b> {{ $commande->frais ?? 0 }} <x-devise></x-devise> <br>
+                    <b>
+                        {{ \App\Helpers\TranslationHelper::TranslateText("Frais de livraison") }} :</b> {{ $commande->frais ?? 0 }} <x-devise></x-devise> <br>
                     <b>TVA :</b> {{ $commande-> getTVA() ?? 0 }} <x-devise></x-devise> <br>
-                    <b>Montant a payer :</b> {{$commande-> getTVA() +  $commande->montant() ?? '/' }} <x-devise></x-devise>
+                    <b>
+                        {{ \App\Helpers\TranslationHelper::TranslateText("Montant à payer") }} :</b> {{$commande-> getTVA() +  $commande->montant() ?? '/' }} <x-devise></x-devise>
                 </div>
                 <br><br><br>
                 <i>
-                    Merci pour votre commande !
+                    
+                    {{ \App\Helpers\TranslationHelper::TranslateText("Merci pour votre commande") }} !
                 </i>
             </div>
         @endif

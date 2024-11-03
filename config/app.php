@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Facade;
 
+
+
 return [
 
     /*
@@ -15,7 +17,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'BECKER'),
     'auteur_url' => env('APP_AUTEUR_URL', 'Laravel auteur'),
     'auteur' => env('APP_AUTEUR', 'Laravel url'),
     'app_url' => env('APP_URL','url'),
@@ -87,6 +89,16 @@ return [
 
    
     'locale' => 'fr',
+    'locales' => [
+        'fr',
+        'en',
+        'es',
+        'de',
+        'it',
+        'ja',
+        'pt_BR',
+       'ar',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -99,7 +111,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'fr',
 
     /*
     |--------------------------------------------------------------------------
@@ -186,6 +198,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
         
         
         
@@ -239,7 +252,7 @@ return [
 
     
     'nbrPages' => [
-        'produis' => 6,
+        'produis' => 16,
     ],
 
     /*
@@ -248,7 +261,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'description' => 'Entreprise pour les impressions  et  leader sur le marché tunisien ',
-    'author' => 'HB-DESIGN',
+    'description' => 'Plateforme pour le shopping des vêtements de qualité',
+    'author' => 'BECKER',
 
 ];

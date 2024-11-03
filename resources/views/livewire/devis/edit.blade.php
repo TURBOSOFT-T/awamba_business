@@ -69,7 +69,7 @@
                         <td> {{ $commande->frais ?? 0 }} DT </td>
                         <td></td>
                     </tr>
-                   {{--  <tr>
+                    <tr>
                         <td colspan="2">
                             <b>La Taxe sur la Valeur Ajoutée:</b>
                         </td>
@@ -91,7 +91,7 @@
                         @endif
 
                         <td></td>
-                    </tr> --}}
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -151,13 +151,13 @@
                         @enderror
                     </div>
                 </div>
-                {{-- div class="mt-3 mb-1">
+                <div class="mt-3 mb-1">
                     <input type="checkbox" class="form-check-input" @checked($tax) wire:model="tax">
                     Appliquer la TVA sur le devis.
                     @error('tax')
                         <br> <span class="small text-danger" role="alert"> {{ $message }} </span>
                     @enderror
-                </div> --}}
+                </div>
                 <div class="mt-3 mb-1">
                     <input type="checkbox" class="form-check-input" @checked($frais) wire:model="frais">
                     Appliquer les frais de livraison sur cette commande.

@@ -6,9 +6,9 @@
 
             <div class="row gutters">
 
-                <div class="col-xl-6">
+                <div class="col-xl-12">
                     <div class="signup-item">
-                        <label class="small mb-1" for="nom">Nom</label>
+                        <label class="small mb-1" for="nom">{{ __('nom') }}</label>
                         <input wire:model="nom" type="text" {{ Auth::user()->nom }} class= "form-control"
                             style="font-size: 18px; color:black">
                         @error('nom')
@@ -18,9 +18,9 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-xl-6 ">
+                <div class="col-xl-12 ">
                     <div class="signup-item">
-                        <label class="small mb-1" for="prenom">Prénon</label>
+                        <label class="small mb-1" for="prenom">{{ __('Prenom') }}</label>
                         <input wire:model="prenom" type="text" {{ Auth::user()->prenom }} class= "form-control">
                         @error('prenom')
                             <span class="small text-danger">
@@ -29,7 +29,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-xl-6">
+                <div class="col-xl-12">
                     <div class="signup-item">
                         <label class="small mb-1" for="email">Email</label>
                         <input type="text" value=" {{ Auth::user()->email }}" wire:model="email"
@@ -40,9 +40,9 @@
 
                     </div>
                 </div>
-                <div class="col-xl-6">
+                <div class="col-xl-12">
                     <div class="signup-item">
-                        <label class="small mb-1" for="telephone">Téléphone</label>
+                        <label class="small mb-1" for="telephone">{{ __('telephone') }}</label>
                         <input value=" {{ Auth::user()->phone }}" wire:model="phone" id="inputLocation" type="text"
                             class= "form-control">
                         @error('phone')
@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-xl-12">
                     <div class="signup-item">
-                        <label class="small mb-1" for="adresse">Addresse</label>
+                        <label class="small mb-1" for="adresse">{{ __('adresse') }}</label>
                         <input type="text" value=" {{ Auth::user()->adresse }}" wire:model="adresse"
                             class= "form-control">
                         @error('adresse')
@@ -68,16 +68,23 @@
                 .custom-button {
                     background-color: #3015e222;
                     font-size: 18px;
-                    /* Adjust the font size as needed */
+                   
                 }
             </style>
+            <br>
+            <br>
 
             <div class="row gutters  " style="font-size: 24%">
-                <button class="btn btn-success custom-button" style=" background-color: #7115e222;" type="submit">
+            
 
-                    <i class="fa fa-save mr-1"></i>
-                    Confirmer les changements
-                </button>
+                
+									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+										<div class="form-group">
+											<button type="submit" class="btn btn-dark">
+                                                {{ \App\Helpers\TranslationHelper::TranslateText("Enregistrer les changements") }}
+                                            </button>
+										</div>
+									</div>
             </div>
         </div>
 

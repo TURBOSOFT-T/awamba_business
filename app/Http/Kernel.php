@@ -37,7 +37,9 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\LogUserLogin::class,
+            \App\Http\Middleware\Language::class,
+            \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\Localization :: class , /* <--- Ajouter ceci */
         ],
 
         'api' => [
@@ -70,11 +72,4 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         'checkDomain' => \App\Http\Middleware\CheckDomain::class,
     ];
-
-    protected function schedule(Schedule $schedule)
-{
-    // Exécute la commande tous les jours à minuit
-    $schedule->command('cleanup:old-sessions')->daily();
-}
-
 }

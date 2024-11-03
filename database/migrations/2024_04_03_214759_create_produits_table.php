@@ -22,12 +22,14 @@ return new class extends Migration
             $table->string('photo');
             $table->unsignedBigInteger('id_promotion')->nullable()->default(null);
             $table->unsignedBigInteger("category_id")->nullable();
-            $table->integer("stock")->default(10);
+            $table->integer("stock")->default(0);
             $table->enum("statut",["disponible","indisponible"])->default("indisponible");
             $table->json('photos')->nullable();
             $table->boolean('top')->default(false);
             $table->boolean('sur_devis')->default(false);
             $table->integer('stock_alert')->default(10);
+            $table->string('taille')->nullable();
+            $table->string('couleur')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

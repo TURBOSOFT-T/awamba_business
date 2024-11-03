@@ -24,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer(['front.fixe', 'front.index', 'front.shop.index'], HomeComposer::class);
         setlocale(LC_TIME, config('app.locale'));
+        view()->composer('components.language_switcher', function ($view) {
+            $view->with('current_locale', app()->getLocale());
+            $view->with('available_locales', config('app.available_locales'));
+        });
 
     }
 }

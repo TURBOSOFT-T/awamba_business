@@ -1,4 +1,4 @@
-@section('titre', 'Liste des commandes')
+@section('titre', '{{ __('commandes') }}')
 @extends('admin.fixe')
 
 @section('body')
@@ -17,7 +17,7 @@
                                     <a href="javascript: void(0);">{{ config('app.name') }}</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('commandes') }}">Commandes</a>
+                                    <a href="{{ route('commandes') }}">{{ __('commandes') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active">Liste</li>
                             </ol>

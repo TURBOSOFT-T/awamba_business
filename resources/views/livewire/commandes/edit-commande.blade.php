@@ -46,6 +46,7 @@
                             </td>
                             <td>
                                 {{ $contenu->quantite * $contenu->prix_unitaire }} DT
+                                
                             </td>
                             <td>
                                 <button class="btn btn-sm btn-danger" type="button"
@@ -68,7 +69,7 @@
                         <td></td>
                         
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         <td colspan="2">
                             <b>La Taxe sur la Valeur Ajoutée:</b>
                         </td>
@@ -90,7 +91,7 @@
                         @endif
                        
                         <td></td>
-                    </tr> --}}
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -159,13 +160,13 @@
                 </div>
                 <br>
                 <hr>
-              {{--   <div class="mt-3 mb-1">
+                <div class="mt-3 mb-1">
                     <input type="checkbox" class="form-check-input" @checked($tax) wire:model="tax">
                     Appliquer  la TVA.
                     @error('tax')
                         <br> <span class="small text-danger" role="alert"> {{ $message }} </span>
                     @enderror
-                </div> --}}
+                </div>
                 <br>
                 <hr>
                 <div class="d-flex justify-content-between">
