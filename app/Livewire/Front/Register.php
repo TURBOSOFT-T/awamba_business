@@ -24,7 +24,7 @@ class Register extends Component
             'prenom' =>'required|string',
             'email' =>'required|email|unique:users',
             'password' =>'required|string|min:8',
-            'telephone' =>'required|string',
+           // 'telephone' =>'required|string',
         ],[
             'nom.required' => 'Veuillez entrer votre nom',
             'prenom.required' => 'Veuillez entrer votre prénom',
@@ -42,7 +42,7 @@ class Register extends Component
         $user->prenom = $this->prenom;
         $user->email = $this->email;
         $user->password =  $this->password;
-        $user->phone = $this->telephone;
+    //    $user->phone = $this->telephone;
         $user->role = "client";
         $user->save();
 
