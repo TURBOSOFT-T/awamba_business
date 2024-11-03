@@ -13,7 +13,7 @@ class ForgotPasswordController extends Controller
 
 
     public function showForgetPasswordForm(){
-        return view('front.froget-password');
+        return view('front.froget');
     }
 
     
