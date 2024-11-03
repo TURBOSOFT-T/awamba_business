@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue chez BECKER</title>
+    <title>Bienvenue chez AWAMBA BUSINESS</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,7 +59,7 @@
             <img src="https://agrihub.online/icons/logo%20png.png" alt="AGRIHUB Logo">
         </div> --}}
         <div class="content">
-            <h1>Bienvenue chez  BECKER !</h1>
+            <h1>Bienvenue chez  AWAMBA BUSINESS !</h1>
             <p>Bonjour {{ $user->nom }} ,</p>
             <p>Votre mail est : {{ $user->email }} ,</p>
             <p>Votre mot de passe est : {{ $user->phone }} ,</p>
@@ -69,7 +69,7 @@
             <a href="#" class="button">Découvrir nos produits</a>
         </div>
         <div class="footer">
-            <p>&copy; 2024  BECKER. Tous droits réservés.</p>
+            <p>&copy; 2024  AWAMBA BUSINESS. Tous droits réservés.</p>
         </div>
     </div>
 </body>

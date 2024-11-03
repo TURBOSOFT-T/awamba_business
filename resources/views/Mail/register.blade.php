@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue chez BECKER</title>
+    <title>Bienvenue chez AWAMBA BUSINESS</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,14 +57,14 @@
     <div class="container">
       
         <div class="content">
-            <h1>Bienvenue chez  BECKER !</h1>
+            <h1>Bienvenue chez  AWAMBA BUSINESS !</h1>
             <p>Bonjour {{ $user->nom }} ,</p>
             <p>Merci de vous être inscrit et de rejoindre notre communauté de passionnés de mode. Nous sommes ravis de vous accueillir et avons hâte de vous aider à découvrir les dernières tendances et les pièces uniques qui feront briller votre style</p>
             <p>Votre inscription a été réalisée avec succès. Vous pouvez dès à présent explorer notre large gamme de produits et profiter de nos offres exclusives réservées aux membres.</p>
             <a href="{{ url('/shop') }}" class="button">Découvrir nos produits</a>
         </div>
         <div class="footer">
-            <p>&copy; 2024  BECKER. Tous droits réservés.</p>
+            <p>&copy; 2024  AWAMBA BUSINESS. Tous droits réservés.</p>
         </div>
     </div>
 </body>

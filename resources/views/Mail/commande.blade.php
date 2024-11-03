@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
         
-        {{ \App\Helpers\TranslationHelper::TranslateText("Confirmation de la commande chez") }}BECKER</title>
+        {{ \App\Helpers\TranslationHelper::TranslateText("Confirmation de la commande chez") }}AWAMBA BUSINESS</title>
     <style>
         body {
             font-family: Arial, sans-serif;
