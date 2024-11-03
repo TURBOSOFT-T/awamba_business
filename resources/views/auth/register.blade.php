@@ -51,6 +51,9 @@ $produit = DB::table('produits')->get();
                     <div class="singin-header-btn">
                         <p>Vous avez un compte?</p>
                         <a href="{{ url('login') }}" class="axil-btn btn-bg-secondary sign-up-btn">Connexion</a>
+                        &nbsp &nbsp
+                        <a href="{{ route('home') }}" class="axil-btn btn-bg-secondary2 sign-in-btn">Accueil</a>
+                      
 
                         <style>
                             .btn-bg-secondary2 {
