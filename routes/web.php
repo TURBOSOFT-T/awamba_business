@@ -44,7 +44,7 @@ Route::get('contact', [ContactController::class, 'contact'])->name("contact");
 Route::get('search', [HomeController::class, 'search'])->name("search");
 
 Route::resource('contacts', ContactController::class, ['only' => ['create', 'store']]);
-Route::get('forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forgot-password');
+Route::get('forgot_password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forgot_password');
 Route::get('/confirmation', [HomeController::class, 'confirmation'])->name('confirmation');
 Route::get('/logout', [HomeController::class, 'logout']);
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -116,6 +116,11 @@ Route::middleware('auth')->group(function () {
 
     ///Mon profil
     Route::get('/profile', [MyAccountController::class, 'profile'])->name('profile');
+
+     ///Mon compte
+     Route::get('/comptes', [MyAccountController::class, 'comptes'])->name('comptes');
+     Route::get('/account', [MyAccountController::class, 'account'])->name('account');
+ 
 
      /////////Devis///////
      Route::get('/mesdevis', [MyAccountController::class, 'mesdevis'])->name('mesdevis');

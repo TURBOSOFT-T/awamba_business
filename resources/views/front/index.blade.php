@@ -18,61 +18,213 @@
     <main class="main-wrapper">
 
         <!-- Start Slider Area -->
-        <div class="axil-main-slider-area main-slider-style-2">
+        <div class="axil-categorie-area pt--30 bg-color-white">
             <div class="container">
-                <div class="slider-offset-left">
-                    <div class="row row--20">
-                        <div class="col-lg-9">
-                            <div class="slider-box-wrap">
-                                <div class="slider-activation-one axil-slick-dots">
-                                    <div class="single-slide slick-slide">
-                                        <div class="main-slider-content">
-                                            <span class="subtitle"><i class="fal fa-watch"></i> Smartwatch</span>
-                                            <h1 class="title">Bloosom Smat Watch</h1>
-                                            <div class="shop-btn">
-                                                <a href="shop.html" class="axil-btn">Shop Now <i class="fal fa-long-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="main-slider-thumb">
-                                            <img src="assets/images/product/product-40.png" alt="Product">
-                                        </div>
-                                    </div>
-                                    <div class="single-slide slick-slide">
-                                        <div class="main-slider-content">
-                                            <span class="subtitle"><i class="fal fa-watch"></i> Smartwatch</span>
-                                            <h1 class="title">Delux Brand Watch</h1>
-                                            <div class="shop-btn">
-                                                <a href="shop.html" class="axil-btn">Shop Now <i class="fal fa-long-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="main-slider-thumb">
-                                            <img src="assets/images/product/product-46.png" alt="Product">
-                                        </div>
-                                    </div>
-                                    <div class="single-slide slick-slide">
-                                        <div class="main-slider-content">
-                                            <span class="subtitle"><i class="fal fa-watch"></i> Smartwatch</span>
-                                            <h1 class="title">Bloosom Smat Watch</h1>
-                                            <div class="shop-btn">
-                                                <a href="shop.html" class="axil-btn">Shop Now <i class="fal fa-long-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="main-slider-thumb">
-                                            <img src="assets/images/product/product-40.png" alt="Product">
-                                        </div>
-                                    </div>
+                <div class="categrie-product-activation-2 categorie-product-two slick-layout-wrapper--15">
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-1.png" alt="product categorie">
+                                <h6 class="cat-title">Sofa</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-2.png" alt="product categorie">
+                                <h6 class="cat-title">Desk Table</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-3.png" alt="product categorie">
+                                <h6 class="cat-title">Long Chair</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-4.png" alt="product categorie">
+                                <h6 class="cat-title">Arm Chair</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-5.png" alt="product categorie">
+                                <h6 class="cat-title">Mirror Table</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-6.png" alt="product categorie">
+                                <h6 class="cat-title">Vintage Table</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-7.png" alt="product categorie">
+                                <h6 class="cat-title">Round Table</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-8.png" alt="product categorie">
+                                <h6 class="cat-title">Neon Sofa</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-9.png" alt="product categorie">
+                                <h6 class="cat-title">Reading</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-11.png" alt="product categorie">
+                                <h6 class="cat-title">Wear Drove</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-12.png" alt="product categorie">
+                                <h6 class="cat-title">Sofa Set</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-7.png" alt="product categorie">
+                                <h6 class="cat-title">Round Table</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-8.png" alt="product categorie">
+                                <h6 class="cat-title">Neon Sofa</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-9.png" alt="product categorie">
+                                <h6 class="cat-title">Reading</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-11.png" alt="product categorie">
+                                <h6 class="cat-title">Wear Drove</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                    <!-- End .slick-single-layout -->
+                    <div class="slick-single-layout slick-slide">
+                        <div class="categrie-product-2">
+                            <a href="#">
+                                <img class="img-fluid" src="./assets/images/product/categories/furni-12.png" alt="product categorie">
+                                <h6 class="cat-title">Sofa Set</h6>
+                            </a>
+                        </div>
+                        <!-- End .categrie-product -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Slider Area -->
+
+        
+        <!-- Start Slider Area -->
+        <div class="axil-main-slider-area main-slider-style-5">
+            <div class="container">
+                <div class="slider-box-wrap">
+                    <div class="slider-activation-two axil-slick-dots">
+                        <div class="single-slide slick-slide">
+                            <div class="main-slider-content">
+                                <span class="subtitle"><i class="fas fa-fire"></i> Hot Deal In This Week</span>
+                                <h1 class="title">Neon Stylish Sofa Chair</h1>
+                                <div class="shop-btn">
+                                    <a href="shop.html" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i> Shop Now</a>
                                 </div>
                             </div>
+                            <div class="main-slider-thumb">
+                                <img src="assets/images/product/product-47.png" alt="Product">
+                            </div>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="slider-product-box">
-                                <div class="product-thumb">
-                                    <a href="single-product.html">
-                                        <img src="assets/images/product/product-41.png" alt="Product">
-                                    </a>
+                        <div class="single-slide slick-slide">
+                            <div class="main-slider-content">
+                                <span class="subtitle"><i class="fas fa-fire"></i> Hot Deal In This Week</span>
+                                <h1 class="title">Sofa Chair with Lamp</h1>
+                                <div class="shop-btn">
+                                    <a href="shop.html" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i> Shop Now</a>
                                 </div>
-                                <h6 class="title"><a href="single-product.html">Yantiti Leather Bags</a></h6>
-                                <span class="price">$29.99</span>
+                            </div>
+                            <div class="main-slider-thumb">
+                                <img src="assets/images/product/product-48.png" alt="Product">
+                            </div>
+                        </div>
+                        <div class="single-slide slick-slide">
+                            <div class="main-slider-content">
+                                <span class="subtitle"><i class="fas fa-fire"></i> Hot Deal In This Week</span>
+                                <h1 class="title">Neon Stylish Sofa Chair</h1>
+                                <div class="shop-btn">
+                                    <a href="shop.html" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i> Shop Now</a>
+                                </div>
+                            </div>
+                            <div class="main-slider-thumb">
+                                <img src="assets/images/product/product-47.png" alt="Product">
                             </div>
                         </div>
                     </div>

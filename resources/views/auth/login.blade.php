@@ -1,123 +1,144 @@
-@extends('front.fixe')
-@section('titre', 'Connexion')
-@section('body')
-
-    <main>
-        @php
-            $config = DB::table('configs')->first();
-            $service = DB::table('services')->get();
-            $produit = DB::table('produits')->get();
-        @endphp
+@include('sweetalert::alert')
+@php
+$config = DB::table('configs')->first();
+$service = DB::table('services')->get();
+$produit = DB::table('produits')->get();
+@endphp
 
 
-        <br><br>
-        <!-- register area start  -->
 
-        <div class="register-area pt-120 pb-120">
-            <div class="container container-small">
-                <div class="row">
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
+<!doctype html>
+<html class="no-js" lang="en">
 
-                        <div class="all-content">
-                            <div class="title-wrapper text-center mb-40">
-                                <h3 class="title">Se connecter</h3>
-                                
-                            </div>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Connexion</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ Storage::url($config->icon ?? ' ') }}">
 
+    <!-- CSS
+    ============================================ -->
 
-                            @if (session()->has('error'))
-                                <div class="alert alert-danger p-3 small">
-                                    {{ session('error') }}
-                                </div>
-                            @endif
-                            @if (session()->has('success'))
-                                <div class="alert alert-success p-3 small">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <div class="signup-form-wrapper">
-                                    <div class="item-thumb">
-                                        <div class="signup-item">
-                                        <label for="">Adresse mail</label>
-                                            <input type="email" class="form-control"
-                                                value="{{ old('email') }}"id="email" name="email"
-                                                placeholder="Email" />
-                                                @if ($errors->has('email'))
-                                                <span class="text-danger">{{ $errors->first('email') }}</span>
-                                                @endif
-                                        </div>
-                                        <label for="">Mot de passe</label>
-                                        <div class="signup-item mb-1">
-                                            <input type="password" class="form-control" placeholder="Password"
-                                                name="password" value="" id="password" />
-                                            <span class="input-group-text" id="togglePassword">
-                                                <i class="fa fa-eye"></i>
-                                            </span>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/vendor/font-awesome.css">
+    <link rel="stylesheet" href="assets/css/vendor/flaticon/flaticon.css">
+    <link rel="stylesheet" href="assets/css/vendor/slick.css">
+    <link rel="stylesheet" href="assets/css/vendor/slick-theme.css">
+    <link rel="stylesheet" href="assets/css/vendor/jquery-ui.min.css">
+    <link rel="stylesheet" href="assets/css/vendor/sal.css">
+    <link rel="stylesheet" href="assets/css/vendor/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/vendor/base.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
 
-                                            @if ($errors->has('password'))
-                                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                                            @endif
-                                        </div>
-                                        <div class="d-flex justify-content-end mb-2">
-                                        <a href="{{ route('forgot-password') }}">Mot de passe oublié</a>
-                                        </div>
-                                        <style>
-                                            .signup-item {
-                                                position: relative;
-                                            }
+</head>
 
 
-                                            .input-group-text {
-                                                cursor: pointer;
-                                                position: absolute;
-                                                right: 10px;
-                                                top: 20px;
-                                            }
-                                        </style>
+<body>
+    <div class="axil-signin-area">
 
-                                    </div>
-                                    <div class="button">
+        <!-- Start Header -->
+        <div class="signin-header">
+            <div class="row align-items-center">
+                <div class="col-sm-4">
+                   {{--  <a href="{{ url('home') }}" class="site-logo"><img src="{{ Storage::url($config->logo) }}" width="50" height="50" alt="logo"></a>
+            --}}     </div>
+                <div class="col-sm-8">
+                    <div class="singin-header-btn">
+                        <p>Pas de compte?</p>
+                        <a href="{{ url('register') }}" class="axil-btn btn-bg-secondary sign-up-btn">S'inscrire</a>
+                       <style>
+                        .btn-bg-secondary2 {
+    background-color: #5EA13C; /* Couleur de fond, bleu dans cet exemple */
+    color: #ffffff; /* Couleur du texte, blanc dans cet exemple */
+    border: none;
+    padding: 10px 20px; /* Optionnel, ajuste la taille */
+    border-radius: 5px; /* Optionnel, arrondit les coins */
+    text-decoration: none; /* Supprime le soulignement */
+}
 
-                                        <div class="sing-buttom mb-20">
-                                            <button class="sign-btn"type="submit"><span>Connexion</span></button>
-                                        </div>
-                                    </div>
-                                    {{--  <div class="bottom-button">
-                                    </div> --}}
-                                </div>
-                            </form>
-                                <div class="text-center mt-3">
-                                    Vous n'avez pas de compte ? 
-                                    <a href="{{ url('register') }}">
-                                    <b class="color" >M'inscrire</b>
-                                    </a>
-                                </div>
-                        </div>
+.btn-bg-secondary2:hover {
+    background-color: #5EA13C; /* Couleur au survol */
+    color: #ffffff; /* Couleur du texte au survol */
+}
+
+                       </style>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- register area end  -->
+        <!-- End Header -->
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const togglePassword = document.getElementById('togglePassword');
-                const password = document.getElementById('password');
-                if (togglePassword && password) {
-                    togglePassword.addEventListener('click', function() {
-                        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                        password.setAttribute('type', type);
-                        this.firstElementChild.classList.toggle('fa-eye-slash');
-                    });
-                } else {
-                    console.error("Element with id 'togglePassword' or 'password' not found!");
-                }
-            });
-        </script>
+        <div class="row">
+            <div class="col-xl-4 col-lg-6">
+                <style>
+                    .bg_image--9 {
+    background-image: url('{{ Storage::url($config->image_login ?? '') }}'); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
 
-    </main>
-@endsection
+.axil-signin-banner .title {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    color: #EFB121; /* Exemple : couleur orange/rouge */
+}
+
+
+                </style>
+                <div class="axil-signin-banner bg_image bg_image--9">
+                     <h3 class="title">Nous offrons les mellieurs produits.</h3> 
+                </div>
+            </div>
+            <div class="col-lg-6 offset-xl-2">
+                <div class="axil-signin-form-wrap">
+                    <div class="axil-signin-form">
+                        <h3 class="title">Connectez-vous à AWAMBA BUSNESS </h3>
+                        <p class="b2 mb--55">Entrez vos coordonnées ci-dessous</p>
+
+
+                        @livewire('connexion')
+                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS
+============================================ -->
+    <!-- Modernizer JS -->
+    <script src="assets/js/vendor/modernizr.min.js"></script>
+    <!-- jQuery JS -->
+    <script src="assets/js/vendor/jquery.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/slick.min.js"></script>
+    <script src="assets/js/vendor/js.cookie.js"></script>
+    <!-- <script src="assets/js/vendor/jquery.style.switcher.js"></script> -->
+    <script src="assets/js/vendor/jquery-ui.min.js"></script>
+    <script src="assets/js/vendor/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/vendor/jquery.countdown.min.js"></script>
+    <script src="assets/js/vendor/sal.js"></script>
+    <script src="assets/js/vendor/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/vendor/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
+    <script src="assets/js/vendor/counterup.js"></script>
+    <script src="assets/js/vendor/waypoints.min.js"></script>
+
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
