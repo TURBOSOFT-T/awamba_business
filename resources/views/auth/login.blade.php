@@ -52,7 +52,7 @@ $produit = DB::table('produits')->get();
                         <p>Pas de compte?</p>
                         <a href="{{ url('register') }}" class="axil-btn btn-bg-secondary sign-up-btn">S'inscrire</a>
                         &nbsp &nbsp
-                        <a href="{{ route('home') }}" class="axil-btn btn-bg-secondary sign-in-btn">Accueil</a>
+                        <a href="{{ route('home') }}" class="axil-btn btn-bg-secondary2 sign-in-btn">Accueil</a>
                         <style>
                             .btn-bg-secondary2 {
                                 background-color: #5EA13C;
