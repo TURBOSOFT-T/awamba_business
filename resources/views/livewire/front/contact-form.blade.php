@@ -1,60 +1,56 @@
 <div>
 
-    <style>
-        .form-control {
-            width: 100% !important;
-            background-color: #ffffff !important;
-            border: solid 1px rgba(0, 0, 0, 0.096) !important;
-            min-height: 50px !important;
-            margin-left: 0px !important;
-            font-size: 16px !important;
-        }
+    @livewireStyles
+    @if (session()->has('error'))
+        <div class="alert alert-danger p-3 small">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if (session()->has('success'))
+        <div class="alert alert-success p-3 small">
+            {{ session('success') }}
+        </div>
+    @endif
+    <form wire:submit="save" class="axil-contact-form">
+        <div class="row row--10">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Nom*</label>
+                    <input wire:model="nom" type="text" id="nom" placeholder="Votre nom">
+                    @error('nom')
+                        <span class="small text-danger">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Email*</label>
+                    <input wire:model="email" type="email" id="email" placeholder="Votre Email">
+                    @error('email')
+                        <span class="small text-danger">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+            </div>
 
-        .loading-btn {
-            height: 20px !important;
-            width: 20px !important;
-        }
-    </style>
-
-    <form wire:submit="save">
-        <div class="row wow fadeInLeft animated" data-wow-delay=".9s">
-            <div class="col-sm-6 pb-3">
-                <input wire:model="nom" type="text" id="nom" class="form-control    " placeholder="Votre nom">
-                @error('nom')
-                    <span class="small text-danger">
-                        {{ $message }}
-                    </span>
-                @enderror
-            </div>
-            <div class="col-sm-6 pb-3">
-                <input wire:model="email" type="email" id="email" class="form-control   "
-                    placeholder=" Email">
-                @error('email')
-                    <span class="small text-danger">
-                        {{ $message }}
-                    </span>
-                @enderror
-            </div>
-            <div class="col-sm-6 pb-3">
-                <input wire:model="telephone" type="number" id="telephone" class="form-control    "
-                    placeholder="{{ __('telephone') }}">
-                @error('telephone')
-                    <span class="small text-danger">
-                        {{ $message }}
-                    </span>
-                @enderror
-            </div>
-            <div class="col-sm-6 pb-3">
-                <input wire:model="sujet" id="suject" type="text" class="form-control  " placeholder="{{ __('sujet') }}">
-                @error('sujet')
-                    <span class="small text-danger">
-                        {{ $message }}
-                    </span>
-                @enderror
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Subjet*</label>
+                    <input wire:model="sujet" type="text" id="sujet" placeholder="Sujet">
+                    @error('sujet')
+                        <span class="small text-danger">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
             </div>
             <div class="col-12">
-                <div class="contact-us__textarea ">
-                    <textarea wire:model="message" cols="5" id="message" class="form-control " placeholder=" {{ \App\Helpers\TranslationHelper::TranslateText("Votre message") }}"></textarea>
+                <div class="form-group">
+                    <label>Message*</label>
+                    <textarea wire:model="message" rows="10" cols="30" id="message" placeholder="Votre message"></textarea>
                     @error('message')
                         <span class="small text-danger">
                             {{ $message }}
@@ -63,51 +59,40 @@
                 </div>
             </div>
             <div class="col-12">
-                @if (session()->has('error'))
-                    <div class="alert alert-danger p-3 small">
-                        {{ session('error') }}
-                    </div>
-                @endif
-                @if (session()->has('success'))
-                    <div class="alert alert-success p-3 small">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                <br>
+                <div class="form-group mb--0">
 
-                <button class="rr-btn mt-50" type="submit">
-                    <span wire:loading>
-                        <img src="/icons/kOnzy.gif" class="loading-btn" alt="loading" srcset="">
-                    </span>
-                    <span> {{ \App\Helpers\TranslationHelper::TranslateText("Envoyer") }}</span>
-                </button>
 
-           
-
+                    <button class="axil-btn btn-bg-primary" type="submit">
+                        <span wire:loading>
+                            <img src="/icons/kOnzy.gif" height="20" width="20" alt="" srcset="">
+                        </span>
+                        <span>Envoyer</span>
+                    </button>
+                </div>
             </div>
 
+
+            <style>
+                .btn-bg-primary2 {
+                    background-color: #5EA13C;
+                    color: #ffffff;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                }
+            
+                .btn-bg-secondary2 {
+                background-color: #EFB121; /* Couleur de fond, bleu dans cet exemple */
+                color: #ffffff; /* Couleur du texte, blanc dans cet exemple */
+                border: none;
+                padding: 10px 20px; /* Optionnel, ajuste la taille */
+                border-radius: 5px; /* Optionnel, arrondit les coins */
+                text-decoration: none; /* Supprime le soulignement */
+            }
+            </style>
+
+
         </div>
-        <style>
-            .rr-btn {
-            background-color: #007bff; /* Button background color */
-            color: white; /* Text color */
-            border: none; /* Remove border */
-            padding: 10px 20px; /* Button padding */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Pointer cursor on hover */
-        }
-        
-        .rr-btn:hover {
-            background-color: #4f5458; /* Darker background on hover */
-        }
-        
-        .loading-btn {
-            width: 30px; /* Adjust size of the spinner */
-            height: 20px;
-        }
-        
-        </style>
     </form>
-
 </div>
-

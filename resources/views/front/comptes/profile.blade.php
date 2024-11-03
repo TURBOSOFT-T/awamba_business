@@ -6,72 +6,123 @@
 
 
 
-    <main>
+<main>
 
-                 <!-- ======================= Top Breadcrubms ======================== -->
-                 <div class="gray py-3">
-                    <div class="container">
-                        <div class="row">
-                            <div class="colxl-12 col-lg-12 col-md-12">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
-                                      
-                                        <li class="breadcrumb-item active" aria-current="page">Mes paramètres</li>
-                                    </ol>
-                                </nav>
-                            </div>
+  
+       
+    <div class="breadcrumb-section">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Compte</li>
+                    <li class="breadcrumb-item active" aria-current="page">Mes paramètres</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+        <div class="container-xl px-4 mt-4">
+        <div class="row">
+
+            <div class="col-xl-7">
+                
+                <div class=" mb-4">
+                    <div class="card-header">Mon profile</div>
+                    <br>
+                    <div class="">
+                        @livewire('Profiles.Information')
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col">
+
+                <div class="col-xl-24">
+                   
+                    <div class=" mb-4">
+                        <div class="card-header primary"> Sécurité</div>
+                        <br>
+                        <div class="">
+                            @livewire('Profiles.UpdateProfile')
                         </div>
                     </div>
                 </div>
-              	<!-- ======================= Dashboard Detail ======================== -->
-			<section class="middle">
-				<div class="container">
-					<div class="row align-items-start justify-content-between">
-					
-					@include('front.comptes.sidebar')
-						
-						<div class="col-12 col-md-12 col-lg-8 col-xl-8">
-						
-							<!-- row -->
-							<div class="card h-100">
-								<div class="row">
-									<div class="col-xl-6">
-										<div class="container-xl px-4 mt-4">
-											
-											<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-												<h6 class="card-header mb-2 text-success">{{ \App\Helpers\TranslationHelper::TranslateText("Informations Personnelles") }}</h6>
-											</div>
-	
-											@livewire('Profiles.Information')
-	
-										</div>
-									</div>
-	
-	
-									<div class="col-xl-6">
-										<div class="container-xl px-4 mt-4">
-	
-											<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-													<h6 class="card-header mb-2 text-success">{{ \App\Helpers\TranslationHelper::TranslateText("Sécurité") }}</h6>
-												</div>
-	
-												@livewire('Profiles.UpdateProfile')
-								  
-										</div>
-									</div>
-	
-								</div>
-						</div>
-						
-					</div>
-				</div>
-			</section>
-			<!-- ======================= Dashboard Detail End ======================== -->
-			
+            </div>
+        </div>
 
+        <style>
+            body {
+             /*    margin-top: 20px; */
+             /*    background-color: #f4f2fc; */
+               /*  color: #69707a; */
+            }
 
-    </main>
+         
+            .card {
+                box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+            }
+
+            .card .card-header {
+                font-weight: 500;
+            }
+
+            .card-header:first-child {
+                border-radius: 0.35rem 0.35rem 0 0;
+            }
+
+            .card-header {
+                padding: 1rem 1.35rem;
+                margin-bottom: 0;
+              
+                 background-color: #b2e21522;
+               /*  background-color: rgba(239, 134, 14, 0.03); */
+                border-bottom: 1px solid rgba(221, 119, 23, 0.125);
+            }
+            
+            .form-control,
+            .dataTable-input {
+                display: block;
+                width: 100%;
+                padding: 0.875rem 1.125rem;
+                font-size: 0.875rem;
+                font-weight: 400;
+                line-height: 1;
+                color: #e4e9ee;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #c5ccd6;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                border-radius: 0.35rem;
+                transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            }
+
+          /*   .nav-borders .nav-link.active {
+                color: #1a69e0;
+                border-bottom-color: #0061f2;
+            } */
+
+            .nav-borders .nav-link {
+                color: #0b0b0b;
+                border-bottom-width: 0.125rem;
+                border-bottom-style: solid;
+                border-bottom-color: transparent;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                padding-left: 0;
+                padding-right: 0;
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+        </style>
+       
+    </div> 
+    <br>
+</main>
 
 
 @endsection
+
+<!-- error area end -->

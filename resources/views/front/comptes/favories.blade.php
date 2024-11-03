@@ -3,44 +3,20 @@
 @section('body')
 
 <main>
-    
-                <!-- ======================= Top Breadcrubms ======================== -->
-                <div class="gray py-3">
-                    <div class="container">
-                        <div class="row">
-                            <div class="colxl-12 col-lg-12 col-md-12">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('accueil') }}</a></li>
-                                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">{{ \App\Helpers\TranslationHelper::TranslateText("Mes favoris") }}</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
+    <main class="main-wrapper">
+
+        
+        <div class="axil-wishlist-area axil-section-gap">
+            <div class="container">
+                <div class="product-table-heading">
+                    <h4 class="title">Liste de mes favoris sur Ben Mahmoud Market</h4>
                 </div>
-                <section class="middle">
-                    <div class="container">
-                        <div class="row justify-content-center justify-content-between">
-                        
-                          @include('front.comptes.sidebar')
-                            
-                          @livewire('Front.Favoris')
-                            
-                        </div>
-                    </div>
-                </section>
-
-
-
-
-                
-			<!-- Product View Modal -->
-		
-			
-			<!-- End Modal -->
-
+                @livewire('Front.Favoris')
+          
+            </div>
+        </div>
+       
+    </main>
 
 </main>
 @endsection

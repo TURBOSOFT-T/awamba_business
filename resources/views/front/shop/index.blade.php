@@ -3,503 +3,439 @@
 @section('body')
 
 
-
-    <!-- Body main wrapper start -->
     <main>
+        @php
+            $config = DB::table('configs')->first();
+            $service = DB::table('services')->get();
+            $produit = DB::table('produits')->get();
+        @endphp
 
-        
-                    <!-- ======================= Shop Style 1 ======================== -->
-                    <section class="bg-cover" style="background:url(/icons/bg-shop1.jpg) repeat; " {{--  data-background="/icons/bg-shop.jpg" --}}>
-                        <div class="container">
-                            <div class="row align-items-center justify-content-center">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    <div class="text-left py-5 mt-3 mb-3">
-                                        <h1 style="color: white" class="ft-medium mb-3">  {{ __('boutique') }}</h1>
-                                        
+        <body class="sticky-header">
+            <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+            <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
+
+            <main class="main-wrapper">
+                <!-- Start Breadcrumb Area  -->
+                <div class="axil-breadcrumb-area">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 col-md-8">
+                                <div class="inner">
+                                    <ul class="axil-breadcrumb">
+                                        <li class="axil-breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
+                                        <li class="separator"></li>
+                                        <li class="axil-breadcrumb-item1 active" aria-current="page">Boutique</li>
+                                    </ul>
+
+                                    <style>
+                                        .axil-breadcrumb-item1 {
+                font-size: 14px;
+                color: #EFB121; /* Default breadcrumb color */
+            }
+            
+            .axil-breadcrumb-item.active {
+                font-weight: bold;
+                color: #EFB121; /* Distinct color for active item */
+            }
+            
+
+            
+                                    </style>
+                                    <h1 class="title">Explorez tous les produits</h1>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-4">
+                                <div class="inner">
+                                    <div class="bradcrumb-thumb">
+                                        <img src="{{ Storage::url($config->image_shop ?? ' ') }}" alt="Image">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    <!-- ======================= Shop Style 1 ======================== -->
-                    
-                    
-                    <!-- ======================= Filter Wrap Style 1 ======================== -->
-                    <section class="py-3 br-bottom br-top">
-                        <div class="container">
-                            <div class="row align-items-center justify-content-between">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="{{ url('/home') }}">{{ __('accueil') }}</a></li>
-                                            <li class="breadcrumb-item"><a href="{{ url('/shop') }}">{{ __('boutique') }}</a></li>
-                                           
-                                        </ol>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- ============================= Filter Wrap ============================== -->
-                    
-                    
-                    <!-- ======================= All Product List ======================== -->
-                    <section class="middle">
-                        <div class="container">
-                            <div class="row">
-                                
-                                
-                                <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 p-xl-0">
-                                    <div class="search-sidebar sm-sidebar border">
-                                        <div class="search-sidebar-body">
-                                        
-                                     
-                                            <div class="single_search_boxed">
-                                                <div class="widget-boxed-header px-3">
-                                                   
-                                                    
-                                                </div>
-                                                <div class="widget-boxed-body">
-                                                    <div class="side-list no-border">
-                                                        <div class="filter-card" id="shop-categories">
-                                                            
-                                                        
-                                                            <div class="single_filter_card">
-                                                                <h5><a href="#shoes" data-toggle="collapse" class="collapsed" aria-expanded="false" role="button">{{ \App\Helpers\TranslationHelper::TranslateText("Categories") }}<i class="accordion-indicator ti-angle-down"></i></a></h5>
-                                                                 
-                                                                <div class="collapse" id="shoes" data-parent="#shop-categories">
-                                                                    <div class="card-body">
-                                                                        <div class="inner_widget_link">
-                                                                            <ul>
-                                                                                @foreach ($categories as $category)
-                                                                                <li><a  href="/category/{{ $category->id }}"
-                                                                                    class="{{ isset($current_category) && $current_category->id === $category->id ? 'selected' : '' }}">  {{ Str::limit($category->nom,25) }}<span>{{ $category->produits->count() }}</span></a></li>
-                                                                          @endforeach
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div> 
-                                                            </div>
-                                                            
-                                                           
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    </div>
+                </div>
+                <!-- End Breadcrumb Area  -->
 
-                                       
-                                            @php
-                                                
-                                                $max = DB::table('produits')->max('prix');
-                                            @endphp
-                                            
-                                                <div class="single_search_boxed">
-                                                   
-                                                    <div class="widget-boxed-header">
-                                                        <h4><a href="#pricing" data-toggle="collapse" aria-expanded="false" role="button">  {{ \App\Helpers\TranslationHelper::TranslateText("Prix") }}</a></h4>
-                                                    </div>
-                                                    <div class="widget-boxed-body collapse show" id="pricing"data-min='0' data-parent="{{ $max }}">
-
-                                                        <div class="side-list no-border mb-4">
-                                                            <form action="/shop" method="post">
-                                                                @csrf
-                                                            <input class="form-control" type="number" name="min_price" placeholder="  {{ \App\Helpers\TranslationHelper::TranslateText("Prix Min") }}">
-                                                            <input class="form-control" type="number" name="max_price" placeholder="  {{ \App\Helpers\TranslationHelper::TranslateText("Prix Max") }} ">
-                                                            <button class="btn btn-success" type="submit">
-                                                                {{ \App\Helpers\TranslationHelper::TranslateText("Filtrer par prix") }}
-                                                            </button>
-                                                            </form>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    
-                                                </div>
-                                          
-
-                              
-                                           
-                                         
-                                          
-                                        </div>
+                <!-- Start Shop Area  -->
+                <div class="axil-shop-area axil-section-gap bg-color-white">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="axil-shop-sidebar">
+                                    <div class="d-lg-none">
+                                        <button class="sidebar-close filter-close-btn"><i class="fas fa-times"></i></button>
                                     </div>
-                                </div>
-                                
-                                <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12">
-                                    
-                                    <div class="row">
-                                        <div class="col-xl-12 col-lg-12 col-md-12">
-                                            <div class="border mb-3 mfliud">
-                                                <div class="row align-items-center py-2 m-0">
-                                                    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12">
-                                                        <h6 class="mb-0"></h6>
+                                    <div class="toggle-list product-categories active">
+                                        <h6 class="title">CATEGORIES</h6>
+                                        <div class="shop-submenu">
+                                            <ul>
+                                                <li class="current-cat"><a href="/shop">Tous les produits</a></li>
 
-                                                        <form class="form m-0 p-0" role="search" action="{{ url('search') }}" method="get">
-                                                            @csrf
-                                                            <div class="form-group d-flex align-items-center">
-                                                                <input id="search"  type="search" name="search" class="form-control col-xl-12"
-                                                                    value="{{ $nom ?? '' }}"
-                                                                    placeholder="  {{ \App\Helpers\TranslationHelper::TranslateText("Rechercher un produit") }}" required>
-                                
-                                
-                                                            
-                                
-                                                                <button type="submit" w-100 value="Search" class="btn d-block full-width btn-dark">  {{ \App\Helpers\TranslationHelper::TranslateText("Recherche") }}
-                                                                </button>
-                                                            </div>
-                                
-                                
-                                                        </form>
-                                                    </div>
-                                                    
-                                                    <div class="col-xl-9 col-lg-8 col-md-7 col-sm-12">
-                                                        <div class="filter_wraps d-flex align-items-center justify-content-end m-start">
-                                                            <div class="single_fitres mr-2 br-right">
-                                                                <label for="">  {{ \App\Helpers\TranslationHelper::TranslateText("Filtrer par") }}:</label>
-                                                                <select class="lan-5" name="sort_by" id="sort_by"
-                                                                onchange="window.location.href=this.value;">
-                                                                <option value="{{ url('shop') }}">  {{ \App\Helpers\TranslationHelper::TranslateText("Defaut") }}</option>
-                                                                <option value="{{ url('croissant') }}">  {{ \App\Helpers\TranslationHelper::TranslateText("Croissant") }}</option>
-        
-                                                                <option value="{{ url('decroissant') }}">  {{ \App\Helpers\TranslationHelper::TranslateText("Décroissant") }}</option>
-        
-        
-        
-                                                            </select>
-                                                            </div>
-                                                            <div class="single_fitres">{{-- 
-                                                                <a href="shop-style-5.html" class="simple-button active mr-1"><i class="ti-layout-grid2"></i></a>
-                                                                <a href="shop-list-sidebar.html" class="simple-button"><i class="ti-view-list"></i></a>
-                                                            --}} </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- row -->
-                                    <div class="row align-items-center rows-products">
-                                        
-                                        <!-- Single -->
-                                        @if ($produits)
-                                        @foreach ( $produits as $key => $produit )
-                                        <div class="col-xl-4 col-lg-4 col-md-6 col-6">
-                                            <div class="product_grid card b-0">
-                                                 @if ($produit->inPromotion())
-                                                <div class="badge bg-info text-white position-absolute ft-regular ab-left text-upper"> - {{ $produit->inPromotion()->pourcentage }} %</div>
-                                                @endif
-                                   
-                                  
-                                
-                                                <div class="card-body p-0">
-                                                    <div class="shop_thumb position-relative">
-                                                        <a class="card-img-top d-block overflow-hidden"href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}"><img class="card-img-top"  src="{{ Storage::url($produit->photo) }}" alt="..."></a>
-                                                        
-                                                       
-                                                        <div class="product-hover-overlay bg-dark d-flex align-items-center justify-content-center">
-                                                            <div class="edlio"><a href="#" data-toggle="modal" data-target="#{{ $produit->id }}" class="text-white fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer b-0 p-0 pt-2 bg-white">
-                                                    <div class="d-flex align-items-start justify-content-between">
-                                                        <div class="text-left">
-                                                            @foreach ($produit->couleur ?? [] as $key => $value)
-                                                            <div class="form-check form-option form-check-inline mb-1">
-                                                                <input class="form-check-input" type="radio" name="color2" id="white2">
-                                                                <label class="form-option-label small rounded-circle" for="white2"><span class="form-option-color rounded-circle blc5"   style="background-color: {{ $value }} ;color:{{ $value }};"></span></label>
-                                                            </div>
-                                                            @endforeach
-                                                         
-                                                        </div>
-                                                        @if (Auth()->user())
-                                                        <div class="text-right">
-                                                            <button  onclick="AddFavoris({{ $produit->id }})" class="btn auto btn_love snackbar-wishlist"><i class="far fa-heart"></i></button> 
-                                                        </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="text-left">
-                                                        <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a  href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">{{ $produit->nom }}</a></h5>
-                                                        <div class="elis_rty">
-                                                            <span class="ft-bold text-dark fs-sm">
-                                                                @if ($produit->inPromotion())
-                                                            <span class=" small">
-                                                                - {{ $produit->inPromotion()->pourcentage }} %
-                                                            </span>
-                                                            <b class="text-success">
-                                                                {{ $produit->getPrice() }} DT
-                                                            </b>
-                                                            <br>
-                                                            <strike>
-                                                                <span class="text-danger small">
-                                                                    {{ $produit->prix }} DT
-                                                                </span>
-                                                            </strike>
-                                                        @else
-                                                            {{ $produit->getPrice() }} DT
-                                                        @endif
-                                                    </span>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                 
-                                        @endforeach
-
-                                        @endif
-                                    
-                                        
-                                    </div>
-                                    <!-- row -->
-                                
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </section>
-                    <!-- ======================= All Product List ======================== -->
-                    
-                
-                    <!-- Product View Modal -->
-                    @if ($produits)
-                    @foreach ($produits as $key => $produit)
-                    <div class="modal fade lg-modal" id="{{ $produit->id }}" tabindex="-1" role="dialog" aria-labelledby="quickviewmodal" aria-hidden="true">
-                        <div class="modal-dialog modal-xl login-pop-form" role="document">
-                            <div class="modal-content" id="quickviewmodal">
-                                <div class="modal-headers">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span class="ti-close"></span>
-                                    </button>
-                                  </div>
-                            
-                                <div class="modal-body">
-                                    <div class="quick_view_wrap">
-                            
-                                        <div class="quick_view_thmb">
-                                            <div class="quick_view_slide">
-                                                <a  href="{{ Storage::url($produit->photo) }}"  data-lightbox="roadtrip"
-                                                    class="d-block mb-4">
-                            
-                                                    <img src="{{ Storage::url($produit->photo) }}"
-                                                        {{-- class="img-fluid rounded" --}}class="img-responsive m-auto"  alt="" />
-                            
-                                                </a>
-                                                @foreach (json_decode($produit->photos) ?? [] as $photo)
-                                                <div class="single_view_slide"><img src="{{ Storage::url($photo) }}" class="img-fluid" alt="" /></div>
+                                                @foreach ($categories as $category)
+                                                    <li><a href="/category/{{ $category->id }}"
+                                                            class="{{ isset($current_category) && $current_category->id === $category->id ? 'selected' : '' }}">
+                                                            {{ Str::limit($category->nom, 25) }}<span>({{ $category->produits->count() }})</span></a>
+                                                    </li>
                                                 @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {{--   <div class="toggle-list product-categories product-gender active">
+                                        <h6 class="title">MARQUES</h6>
+                                        <div class="shop-submenu">
+                                            <ul>
+                                                @foreach ($marques as $marque)
+                                                    <li><a href="/marque/{{ $marque->id }}"
+                                                            class="{{ isset($current_marque) && $current_marque->id === $marque->id ? 'selected' : '' }}">{{ $marque->nom }}
+                                                            ({{ $marque->produits->count() }})</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div> --}}
+
+
+
+                                </div>
+                                <!-- End .axil-shop-sidebar -->
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="axil-shop-top mb--40">
+                                            <div
+                                                class="category-select align-items-center justify-content-lg-end justify-content-between">
+                                                <!-- Start Single Select  -->
+                                                <span class="filter-results">Filtrez</span>
+                                                <select class="single-select" name="sort_by" id="sort_by"
+                                                    onchange="window.location.href=this.value;">
+
+                                                    <option value="{{ url('shop') }}">Default</option>
+                                                    <option value="{{ url('croissant') }}">Croissant</option>
+
+                                                    <option value="{{ url('decroissant') }}">Décroissant</option>
+                                                </select>
+                                                <!-- End Single Select  -->
+                                            </div>
+                                            <div class="d-lg-none">
+                                                <button class="product-filter-mobile filter-toggle"><i
+                                                        class="fas fa-filter"></i> FILTER</button>
                                             </div>
                                         </div>
-                                        
-                                        <div class="quick_view_capt">
-                                            <div class="prd_details">
-                                                
-                                                <div class="prt_01 mb-1"><span class="text-light bg-info rounded px-2 py-1">  {{ \App\Helpers\TranslationHelper::TranslateText("Categorie") }}: {{ $produit->categories->nom }}</span></div>
-                                                <div class="prt_02 mb-2">
-                                                    <h2 class="ft-bold mb-1">{{ $produit->nom }}</h2>
-                                                    <div class="text-left">
-                                                        <div class="star-rating align-items-center d-flex justify-content-left mb-1 p-0">
-                                                           
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                                <div class="row row--15">
+                                    @if ($produits)
+
+                                        @foreach ($produits as $key => $produit)
+                                            <div class="col-xl-4 col-sm-6">
+                                                <div class="axil-product product-style-one mb--30">
+                                                    <div class="thumbnail">
+                                                        <a
+                                                            href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">
+                                                            <img src="{{ Storage::url($produit->photo) }}"
+                                                                alt="{{ $produit->nom }}"
+                                                                style="max-width: 300px; max-height: 300px;">
+
+                                                        </a>
+                                                        <style>
+                                                            .top-left {
+                                                                position: absolute;
+                                                                top: 8px;
+                                                                right: 18px;
+                                                                color:#EFB121;
+                                                            }
+                                                        </style>
+                                                        @if ($produit->inPromotion())
+                                                            <div class="top-left"
+                                                                style="background-color:#EFB121;color: white;">
+                                                                <div class="product-badget">
+                                                                    -{{ $produit->inPromotion()->pourcentage }}%</div>
+                                                            </div>
+                                                        @endif
+                                                        <div class="product-hover-action">
+                                                            <ul class="cart-action">
+                                                                @if (Auth()->user())
+                                                                    <li class="wishlist"><a
+                                                                            onclick="AddFavoris({{ $produit->id }})"><i
+                                                                                class="far fa-heart"></i></a></li>
+                                                                @endif
+                                                                <li class="select-option2"><a
+                                                                        onclick="AddToCart( {{ $produit->id }} )">Ajouter
+                                                                        au panier</a></li>
+                                                                            <style>
+                                                                    .select-option2 {
+                                                                        background-color: #5EA13C;
+                                                                        color: #ffffff;
+                                                                        border: none;
+                                                                        padding: 10px 20px;
+                                                                        border-radius: 5px;
+                                                                        text-decoration: none;
+                                                                    }
+                                                                </style>
+                                                            </ul>
                                                         </div>
-                                                        <div class="elis_rty">
-                                                           
+                                                    </div>
+                                                    <div class="product-content">
+                                                        <div class="inner">
+                                                            <h5 class="title"><a
+                                                                    href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">{{ Str::limit($produit->nom, 15) }}</a>
+                                                            </h5>
+                                                            {{--   <div class="product-price-variant">
+                                                <span class="price current-price">$30</span>
+                                                <span class="price old-price">$30</span>
+                                            </div> --}}
+                                                            <div class="product-price-variant">
+                                                                <h6 class="product-price--main">
+
+
+                                                                    @if ($produit->inPromotion())
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6 col-6">
+
+                                                                                <b class="text-success"
+                                                                                    style="color: #4169E1">
+                                                                                    {{ $produit->getPrice() }} DT
+                                                                                </b>
+                                                                            </div>
+
+                                                                            <div class="col-sm-6 col-6 text-end">
+
+
+
+                                                                                {{--  <span style="font-size: 1.2rem; color: #dc3545; font-weight: bold;">
+                                                                    {{ $produit->prix }} DT
+                                                                </span> --}}
+                                                                                <span class="price old-price"
+                                                                                    style="position: relative; font-size: 1.5rem; color: #dc3545; font-weight: bold;">
+                                                                                    {{ $produit->prix }} DT
+                                                                                    <span
+                                                                                        style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background-color: black;"></span>
+                                                                                </span>
+
+
+                                                                            </div>
+                                                                        @else
+                                                                            {{ $produit->getPrice() }}DT
+                                                                    @endif
+
+
+
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+
+                                    <!-- End Single Product  -->
+                                </div>
+                                <div class="text-center pt--20">
+                                    <ul class="pagination-list">
+                                       {{--  {{ $produits->links('pagination::bootstrap-4') }} --}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End .container -->
+                </div>
+                <!-- End Shop Area  -->
+
+                <!-- End Axil Newsletter Area  -->
+            </main>
+
+
+
+
+            <!-- Product Quick View Modal Start -->
+            @if ($produits)
+                @foreach ($produits as $key => $produit)
+                    <div class="modal fade quick-view-product" id="{{ $produit->id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
+                                            class="far fa-times"></i></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="single-product-thumb">
+                                        <div class="row">
+                                            <div class="col-lg-7 mb--40">
+                                                {{--  <div class="col-lg-6"> --}}
+                                                <div class="shop-details-img">
+                                                    <div class="tab-content" id="v-pills-tabContent">
+
+                                                        <div class="shop-details-tab-img product-img--main"
+                                                            data-scale="1.4"
+                                                            style="overflow: hidden; position: relative;">
+
+                                                            <img id="mainImage" src="{{ Storage::url($produit->photo) }}"
+                                                                height="600" width="600" alt="Product image"
+                                                                style="transition: transform 0.3s ease;" />
+                                                        </div>
+
+
+                                                    </div>
+                                                    <br><br>
+
+                                                    <div class="nav nav-pills" id="v-pills-tab" role="tablist"
+                                                        aria-orientation="vertical">
+                                                        @foreach (json_decode($produit->photos) ?? [] as $image)
+                                                            <div class="slider__item">
+                                                                <img onclick="changeMainImage('{{ Storage::url($image) }}')"
+                                                                    src="{{ Storage::url($image) }}" width="100"
+                                                                    height="100" style="border-radius: 8px;"
+                                                                    alt="Additional product image" />
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+
+                                                <script>
+                                                    function changeMainImage(imageUrl) {
+                                                        document.getElementById('mainImage').src = imageUrl;
+                                                    }
+                                                </script>
+
+
+
+
+
+                                            </div>
+                                            {{--  <div class="col-lg-7 mb--40">
+                    <div class="row">
+                        <div class="col-lg-10 order-lg-2">
+                            <div class="single-product-thumbnail product-large-thumbnail axil-product thumbnail-badge zoom-gallery">
+                                <div class="thumbnail">
+                                    <img src="assets/images/product/product-big-01.png" alt="Product Images">
+                                    <div class="label-block label-right">
+                                        <div class="product-badget">20% OFF</div>
+                                    </div>
+                                    <div class="product-quick-view position-view">
+                                        <a href="assets/images/product/product-big-01.png" class="popup-zoom">
+                                            <i class="far fa-search-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="thumbnail">
+                                    <img src="assets/images/product/product-big-02.png" alt="Product Images">
+                                    <div class="label-block label-right">
+                                        <div class="product-badget">20% OFF</div>
+                                    </div>
+                                    <div class="product-quick-view position-view">
+                                        <a href="assets/images/product/product-big-02.png" class="popup-zoom">
+                                            <i class="far fa-search-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="thumbnail">
+                                    <img src="assets/images/product/product-big-03.png" alt="Product Images">
+                                    <div class="label-block label-right">
+                                        <div class="product-badget">20% OFF</div>
+                                    </div>
+                                    <div class="product-quick-view position-view">
+                                        <a href="assets/images/product/product-big-03.png" class="popup-zoom">
+                                            <i class="far fa-search-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 order-lg-1">
+                            <div class="product-small-thumb small-thumb-wrapper">
+                                <div class="small-thumb-img">
+                                    <img src="assets/images/product/product-thumb/thumb-08.png" alt="thumb image">
+                                </div>
+                                <div class="small-thumb-img">
+                                    <img src="assets/images/product/product-thumb/thumb-07.png" alt="thumb image">
+                                </div>
+                                <div class="small-thumb-img">
+                                    <img src="assets/images/product/product-thumb/thumb-09.png" alt="thumb image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+                                            <div class="col-lg-5 mb--40">
+                                                <div class="single-product-content">
+                                                    <div class="inner">
+
+                                                        <h3 class="product-title">{{ $produit->nom }}</h3>
+                                                        <span class="price-amount">
                                                             @if ($produit->inPromotion())
-                                                                <span class="small">
-                                                                    - {{ $produit->inPromotion()->pourcentage }} %
-                                                                </span>
-                                                                <b class="">
+                                                                <b class="text-success" style="color: #4169E1">
                                                                     {{ $produit->getPrice() }} DT
                                                                 </b>
-                                                                <br>
-                                                                <strike>
-                                                                    <span class="text-danger small">
-                                                                        {{ $produit->prix }} DT
-                                                                    </span>
-                                                                </strike>
+
+
+
+
+
+                                                                <span
+                                                                    style="position: relative; font-size: 1.2rem; color: #dc3545; font-weight: bold;">
+                                                                    {{ $produit->prix }} DT
+                                                                    <span
+                                                                        style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background-color: black;"></span>
+                                                                </span>
                                                             @else
-                                                                {{ $produit->getPrice() }} DT
+                                                                {{ $produit->getPrice() }}DT
+                                                            @endif
+                                                        </span>
+                                                        <ul class="product-meta">
+                                                            @if ($produit->stock > 0)
+                                                                <label class="badge bg-success"> Stock disponible</label>
+                                                            @else
+                                                                <label class="badge bg-danger"> Stock non
+                                                                    disponible</label>
                                                             @endif
 
-                                                            <span
-                                                                class="ft-regular text-danger bg-light-danger py-1 px-2 fs-sm">
-                                                                @if ($produit->stock > 0)
-                                                                    <label class="badge bg-success"> 
-                                                                     {{ __('stock_disponible') }}
-                                                                    </label>
-                                                                @else
-                                                                    <label
-                                                                        class="ft-regular text-danger bg-light-danger py-1 px-2 fs-sm">
-                                                                        
-                                                                        {{ __('non_disponible') }}
-                                                                    </label>
-                                                                @endif
-                                                            </span>
+                                                            <li>Categorie:<span>
+                                                                    {{ Str::limit($produit->categories->nom, 30) }}</span>
+                                                            </li>
+                                                            <li> <span>Reference:</span> {{ $produit->reference }}</li>
+                                                        </ul>
+                                                        <p class="description">In ornare lorem ut est dapibus, ut tincidunt
+                                                            nisi pretium. Integer ante est, elementum eget magna.
+                                                            Pellentesque sagittis dictum libero, eu dignissim tellus.</p>
+
+                                                        <div class="product-variations-wrapper">
+
+
                                                         </div>
 
 
-                                                      
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="prt_03 mb-3">
-                                                    <p>
-                                                        {!! \App\Helpers\TranslationHelper::TranslateText($produit->description) !!}
-                                                    </p>
-                                                </div>
-                                                
-                                                <div class="prt_04 mb-2">
-                                                    <p class="d-flex align-items-center mb-0 text-dark ft-medium">{{ \App\Helpers\TranslationHelper::TranslateText("Couleur") }}(s):</p>
-                                                    <div class="text-left">
-                                                        @foreach ($produit->couleur ?? [] as $key => $value)
-                                                        <div class="form-check form-option form-check-inline mb-1">
-                                                            <input class="form-check-input" type="radio" name="acolor8" id="awhite8">
-                                                            <label class="form-option-label rounded-circle" for="awhite8"><span class="form-option-color rounded-circle blc7" style="background-color: {{ $value }} ;color:{{ $value }};" ></span></label>
-                                                        </div>
-                                                        @endforeach
-                                                       
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="prt_04 mb-4">
-                                                    <p class="d-flex align-items-center mb-0 text-dark ft-medium"> {{ \App\Helpers\TranslationHelper::TranslateText("Taille") }}(s):</p>
-                                                    <div class="text-left pb-0 pt-2">
-                                                
+                                                        <div class="product-action-wrapper d-flex-center">
 
-                                                        @foreach ($produit->tailles as $index => $taille)
-                                             
-                                                        
-                                                        <div class="form-check size-option form-option form-check-inline mb-2">
-                                                            <input type="radio" class="form-check-input" name="taille" value="{{ $taille }}"
-                                                                   id="taille-{{ $produit->id }}-{{ $index }}">
-                                                            <label class="form-option-label" for="taille-{{ $produit->id }}-{{ $index }}">{{ $taille->nom }}</label>
-                                                        </div>
-                                                    @endforeach
-                                                   
-                                                    </div>
-                                                </div>
-                                               
-                                                <div class="prt_05 mb-4">
-                                                    <div class="form-row mb-7">
-                                                        <div class="col-12 col-lg-auto">
-                                                            <!-- Quantity -->
-                                                            <div class="quantity">
-                                                                {{ \App\Helpers\TranslationHelper::TranslateText("Quantité") }}:
-                                                                <div class="quantity__group">
-                                                                    <span class="quantity-control minus"><i class="far fa-minus"></i></span>
-                                                                    <input type="number" class="input-text qty text" name="quantite"
-                                                                        value="1" id="qte-{{ $produit->id }}" autocomplete="off">
-                                                                    <span class="quantity-control plus"><i class="far fa-plus"></i></span>
-                                                                </div>
+                                                            <div class="pro-qty">
+                                                                <span class="quantity-control minus"></span>
+                                                                <input type="number" class="input-text qty text"
+                                                                    name="quantite" min="1" value="1"
+                                                                    id="qte-{{ $produit->id }}" autocomplete="off">
+                                                                <span class="quantity-control plus"></i></span>
                                                             </div>
-                                                            <style>
-                                                                .quantity {
-                                                                    display: flex;
-                                                                    align-items: center;
-                                                                    position: relative;
-                                                                    top: 2px;
-                                                                    transform: translateY(2px); 
-                                                                }
-                        
-                                                                .quantity__group {
-                                                                    display: flex;
-                                                                    position: relative;
-                                                                    align-items: center;
-                                                                    top: 2px
-                                                                    
-                                                                }
-                        
-                                                                .quantity-control {
-                                                                    cursor: pointer;
-                                                                    padding: 5px;
-                                                                    font-size: 1.2em;
-                                                                }
-                        
-                                                                .quantity-control.minus {
-                                                                    color: red;
-                                                                    /* Change color as needed */
-                                                                }
-                        
-                                                                .quantity-control.plus {
-                                                                    color: green;
-                                                                    /* Change color as needed */
-                                                                }
-                        
-                                                                .input-text.qty {
-                                                                    width: 70px;
-                                                                    text-align: center;
-                                                                    text-align: center;
-                                                                    border: 1px solid #ccc;
-                                                                    margin: 0 5px;
-                                                                    font-size: 1.5em;
-                                                                }
-                                                            </style>
-                                                            {{-- <style>
-                                                                .quantity {
-                                                                    display: flex;
-                                                                    align-items: center;
-                                                                }
-                        
-                                                                .quantity__group {
-                                                                    display: flex;
-                                                                    align-items: center;
-                                                                }
-                        
-                                                                .quantity-control {
-                                                                    cursor: pointer;
-                                                                    padding: 5px;
-                                                                    font-size: 1.2em;
-                                                                }
-                        
-                                                                .quantity-control.minus {
-                                                                    color: red;
-                                                                    /* Change color as needed */
-                                                                }
-                        
-                                                                .quantity-control.plus {
-                                                                    color: green;
-                                                                    /* Change color as needed */
-                                                                }
-                        
-                                                                .input-text.qty {
-                                                                    width: 70px;
-                                                                    text-align: center;
-                                                                    border: 1px solid #ccc;
-                                                                    margin: 0 5px;
-                                                                    font-size: 1.5em;
-                                                                }
-                                                            </style> --}}
+
+                                                            <ul class="product-action d-flex-center mb--0">
+                                                                <li class="add-to-cart"><a
+                                                                        onclick="AddToCart( {{ $produit->id }} )"
+                                                                        class="axil-btn btn-bg-primary">Ajouter au
+                                                                        panier</a></li>
+                                                                @if (Auth()->user())
+                                                                    <li class="wishlist"><a
+                                                                            onclick="AddFavoris({{ $produit->id }})"><i
+                                                                                class="far fa-heart"></i></a></li>
+                                                                @endif
+                                                            </ul>
+                                                            <!-- End Product Action  -->
+
                                                         </div>
-                                                        <div class="col-12 col-lg">
-                                                            <!-- Submit -->
-                                                            <button type="submit"
-                                                                onclick="AddToCart( {{ $produit->id }} )"
-                                                                class="btn btn-block snackbar-addcart custom-height bg-dark mb-2">
-                                                                <i class="lni lni-shopping-basket mr-2"></i>
-                                                                {{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au panier") }}
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-12 col-lg-auto">
-                                                            <!-- Wishlist -->
-                                                            @if (Auth()->user())
-                                                                <button onclick="AddFavoris({{ $produit->id }})"
-                                                                    class="btn custom-height btn-default snackbar-wishlist btn-block mb-2 text-dark"
-                                                                    data-toggle="button">
-                                                                    <i class="lni lni-heart mr-2"></i> {{ \App\Helpers\TranslationHelper::TranslateText("Favori") }}
-                                                                </button>
-                                                            @endif
-                                                        </div>
+                                                        <!-- End Product Action Wrapper  -->
                                                     </div>
                                                 </div>
-
-                                                
-                                                <div class="prt_06">
-                                                    <p class="mb-0 d-flex align-items-center">
-                                                      
-                                                    </p>
-                                                </div>
-                                                
                                             </div>
                                         </div>
                                     </div>
@@ -507,13 +443,11 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
-                    @endif
-                                   
-            
+                @endforeach
+            @endif
+            <!-- Product Quick View Modal End -->
+
+
+
     </main>
-
-
-
-
 @endsection

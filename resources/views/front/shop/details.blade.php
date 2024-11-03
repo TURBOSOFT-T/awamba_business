@@ -1,405 +1,416 @@
 @extends('front.fixe')
 @section('titre', $produit->nom)
 @section('body')
+    @php
 
-@section('SEO')
+        $config = DB::table('configs')->first();
+    @endphp
 
-    <title>{{ $produit->nom ?? config('app.name') }}</title>
+    <head>
+    @section('header')
+        <meta name="description" content="{{ $produit->description ?? ' ' }}">
+        <meta name="author" content="konica.store">
+        <meta property="og:title" content="{{ $produit->nom }}">
+        <meta property="og:description" content="{{ $produit->description ?? '' }}">
+        <meta property="og:brand" content="{{ $produit->marques->nom ?? '' }}">
+        <meta property="og:image" content="{{ $produit->photo }}">
+        <meta property="og:type" content="product">
+        <meta property="og:price:amount" content="{{ $produit->prix }} DT">
 
-    <meta name="author" content="hb-design.shop">
-    <meta property="og:title" content="{{ $produit->nom }}">
-    <meta property="og:description" content="{{ $produit->description ?? '' }}">
-    <meta property="og:image" content="{{ $produit->photo }}">
-    <meta property="og:type" content="product">
-    <meta property="og:price:amount" content="{{ $produit->prix }} DT">
-    <meta property="og:availability" content="{{ $produit->statut }}">
-    <meta property="product:price:amount" content="{{ $produit->prix }} DT">
-    <meta property="product:availability" content="{{ $produit->statut }}">
-    <meta name="robots" content="index, follow">
-@endsection
+        <meta property="og:availability" content="{{ $produit->statut }}">
+
+        <meta property="product:price:amount" content="{{ $produit->prix }} DT">
+
+        <meta property="product:availability" content="{{ $produit->statut }}">
+        <meta name="robots" content="index, follow">
+
+
+    @endsection
+
+</head>
+<script src="path/to/jquery.js"></script>
+<script src="path/to/jquery.elevatezoom.js"></script>
 
 
 <main>
 
+    <main class="main-wrapper">
+        <!-- Start Shop Area  -->
+        <div class="axil-single-product-area axil-section-gap pb--0 bg-color-white">
+            <div class="single-product-thumb mb--40">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="shop-details-img">
+                                <div class="tab-content" id="v-pills-tabContent">
 
+                                    <div class="shop-details-tab-img product-img--main" id="zoomContainers"
+                                        data-scale="1.4" style="overflow: hidden; position: relative;">
 
-    <!-- ======================= Top Breadcrubms ======================== -->
-    <div class="gray py-3">
-        <div class="container">
-            <div class="row">
-                <div class="colxl-12 col-lg-12 col-md-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">{{ __('accueil') }}</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{ __('boutique') }}</a></li>
-                            
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ======================= Top Breadcrubms ======================== -->
-
-    <!-- ======================= Product Detail ======================== -->
-    <section class="middle">
-        <div class="container">
-            <div class="row justify-content-between">
-
-                <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12">
-                    <div class="quick_view_slide">
-                        <a  href="{{ Storage::url($produit->photo) }}"  data-lightbox="roadtrip"
-                        class="d-block mb-4">
-
-                        <img src="{{ Storage::url($produit->photo) }}"
-                            {{-- class="img-fluid rounded" --}}class="img-responsive m-auto"  alt="" />
-
-                    </a>
-
-                        @foreach (json_decode($produit->photos) ?? [] as $photo)
-                            <div class="single_view_slide"><a href="{{ Storage::url($photo) }}" data-lightbox="roadtrip"
-                                    class="d-block mb-4">
-
-                                    <img src="{{ Storage::url($photo) }}"
-                                        {{-- class="img-fluid rounded" --}}class="img-responsive m-auto"  alt="" />
-
-                                </a>
-                            </div>
-                        @endforeach
-
-                    </div>
-                </div>
-
-                <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12">
-                    <div class="prd_details pl-3">
-
-                        <div class="prt_01 mb-1"><span class="text-light bg-info rounded px-2 py-1"> {{ \App\Helpers\TranslationHelper::TranslateText("Categorie") }}:
-                                
-                                {{ \App\Helpers\TranslationHelper::TranslateText($produit->categories->nom) }}
-                            </span></div>
-                        <div class="prt_02 mb-3">
-                            <h2 class="ft-bold mb-1">
-
-                                {{ \App\Helpers\TranslationHelper::TranslateText($produit->nom) }}
-                            </h2>
-                            <div class="text-left">
-                                <div class="star-rating align-items-center d-flex justify-content-left mb-1 p-0">
-                           
-                                </div>
-                                <div class="elis_rty">
-                                  
-                                    <span class="ft-bold fs-md text-dark">
-                                        @if ($produit->inPromotion())
-                                            <span class=" small">
-                                                
-                                            </span>
-                                            <b class="">
-                                                {{ $produit->getPrice() }} DT
-                                            </b>
-                                            <br>
-                                            <strike>
-                                                <span class="text-danger small">
-                                                    {{ $produit->prix }} DT
-                                                </span>
-                                            </strike>
-                                        @else
-                                            {{ $produit->getPrice() }} DT
-                                        @endif
-                                    </span>
-                                    <br>
-                                    @if ($produit->stock > 0 )
-                                        <label class="badge bg-success"> {{ __('stock_disponible') }}</label>
-                                    @else
-                                        <label class="badge bg-danger">{{ __('non_disponible') }}</label>
-                                    @endif
-
-
-                               
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="prt_03 mb-4">
-                            <p>
-
-                                {!! \App\Helpers\TranslationHelper::TranslateText($produit->description) !!}
-                            </p>
-                        </div>
-
-                        <div class="prt_04 mb-2">
-                            <p class="d-flex align-items-center mb-0 text-dark ft-medium"> {{ \App\Helpers\TranslationHelper::TranslateText("Couleur") }}(s):</p>
-                            <div class="text-left">
-                                @foreach ($produit->couleur ?? [] as $key => $value)
-                                    <div class="form-check form-option form-check-inline mb-1">
-                                        <input class="form-check-input" type="radio" name="color1" id="white"
-                                            checked="">
-                                        <label class=" card form-option-label small rounded-circle" for="white">
-                                            <span class="form-option-color rounded-circle blc7"
-                                                style="background-color: {{ $value }} ;color:{{ $value }};">
-
-                                            </span></label>
+                                        <img id="mainImage" src="{{ Storage::url($produit->photo) }}" height="600"
+                                            width="600" alt="Product image"
+                                            style="transition: transform 0.3s ease;" />
                                     </div>
-                                @endforeach
-
-
-                            </div>
-                        </div>
-
-                        <div class="prt_04 mb-4">
-                            <p class="d-flex align-items-center mb-0 text-dark ft-medium"> {{ \App\Helpers\TranslationHelper::TranslateText("Taille") }}(s):
-                            </p>
-                            <div class="text-left pb-0 pt-2">
-                             
-                                @foreach ($produit->tailles as $index => $taille)
-                              
-                                
-                                <div class="form-check size-option form-option form-check-inline mb-2">
-                                    <input type="radio" class="form-check-input" name="taille" value="{{ $taille }}"
-                                           id="taille-{{ $produit->id }}-{{ $index }}">
-                                    <label class="form-option-label" for="taille-{{ $produit->id }}-{{ $index }}">{{ $taille->nom }}</label>
-                                </div>
-                            @endforeach
-                             
-                            </div>
-
-
-
-                        </div>
-
-                       
-
-
-                        <div class="prt_05 mb-4">
-                            <div class="form-row mb-7">
-
-                                <div class="col-12 col-lg-auto">
-                                    <br>
-
-                                    <div class="quantity">
-                                        {{ \App\Helpers\TranslationHelper::TranslateText("Quantité") }}:
-                                        <div class="quantity__group " >
-                                            <span class="quantity-control minus"><i class="far fa-minus"></i></span>
-                                            <input type="number" class="input-text qty text" name="quantite"
-                                                value="1" id="qte-{{ $produit->id }}" autocomplete="off">
-                                            <span class="quantity-control plus"><i class="far fa-plus"></i></span>
-                                        </div>
-                                    </div>
-                                    <style>
-                                        .quantity {
-                                            display: flex;
-                                            align-items: center;
-                                            position: relative;
-                                            top: -5px;
-                                            transform: translateY(-5px); 
-                                        }
-
-                                        .quantity__group {
-                                            display: flex;
-                                            position: relative;
-                                            align-items: center;
-                                            top: -4px
-                                            
-                                        }
-
-                                        .quantity-control {
-                                            cursor: pointer;
-                                            padding: 5px;
-                                            font-size: 1.2em;
-                                        }
-
-                                        .quantity-control.minus {
-                                            color: red;
-                                            /* Change color as needed */
-                                        }
-
-                                        .quantity-control.plus {
-                                            color: green;
-                                            /* Change color as needed */
-                                        }
-
-                                        .input-text.qty {
-                                            width: 70px;
-                                            text-align: center;
-                                            text-align: center;
-                                            border: 1px solid #ccc;
-                                            margin: 0 5px;
-                                            font-size: 1.5em;
-                                        }
-                                    </style>
 
 
                                 </div>
                                 <br><br>
-                                <div class="col-12 col-lg">
-                                    <!-- Submit -->
-                                    <button type="submit" onclick="AddToCart( {{ $produit->id }} )"
-                                        class="btn btn-block  snackbar-addcartcustom-height bg-dark mb-2">
-                                        <i class="lni lni-shopping-basket mr-2"></i> {{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au panier ") }}
-                                    </button>
+
+                                <div class="nav nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    @foreach (json_decode($produit->photos) ?? [] as $image)
+                                        <div class="slider__item">
+                                            <img onclick="changeMainImage('{{ Storage::url($image) }}')"
+                                                src="{{ Storage::url($image) }}" width="100" height="100"
+                                                style="border-radius: 8px;" alt="Additional product image" />
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <div class="col-12 col-lg-auto">
-                                    <!-- Wishlist -->
-                                    @if (Auth()->user())
-                                        <button onclick="AddFavoris({{ $produit->id }})"
-                                            class="btn custom-height snackbar-addcart snackbar-wishlist btn-default btn-block mb-2 text-dark"
-                                            data-toggle="button">
-                                            <i class="lni lni-heart mr-2"></i> {{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au favori") }}
-                                        </button>
-                                    @endif
+                            </div>
+
+                            <script>
+                                function changeMainImage(imageUrl) {
+                                    document.getElementById('mainImage').src = imageUrl;
+                                }
+                            </script>
+
+                            <script>
+                                const zoomContainers = document.getElementById('zoomContainers');
+                                const mainImage = document.getElementById('mainImage');
+                                const scale = zoomContainers.getAttribute('data-scale') || 1.4;
+
+
+                                zoomContainers.addEventListener('mouseover', function() {
+                                    mainImage.style.transform = `scale(${scale})`;
+                                    mainImage.style.cursor = "zoom-in";
+                                });
+
+
+                                zoomContainers.addEventListener('mouseout', function() {
+                                    mainImage.style.transform = "scale(1)";
+                                });
+
+
+                                function changeMainImage(imageUrl) {
+                                    mainImage.src = imageUrl;
+                                    mainImage.style.transform = "scale(1)";
+                                }
+                            </script>
+
+
+
+
+                        </div>
+
+                        <div class="col-lg-5 mb--40">
+                            <div class="single-product-content">
+                                <div class="inner">
+                                    <h3 class="product-title">{{ $produit->nom }}</h3>
+
+                                    <span class="price-amount">
+
+                                        @if ($produit->inPromotion())
+                                            <div class="row">
+                                                <div class="col-sm-6 col-6">
+
+                                                    <b class="text-success" style="color: #4169E1">
+                                                        {{ $produit->getPrice() }} DT
+                                                    </b>
+                                                </div>
+
+                                                <div class="col-sm-6 col-6 text-end">
+
+
+                                                    <span
+                                                        style="position: relative; font-size: 1.7rem; color: #dc3545; font-weight: bold;">
+                                                        {{ $produit->prix }} DT
+                                                        <span
+                                                            style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background-color: black;"></span>
+                                                    </span>
+
+
+                                                </div>
+                                            @else
+                                            
+                                            <span class="price current-price"> 
+                                               
+                                                {{ $produit->getPrice() }} DT
+                                            </b></span>
+                                               
+                                        @endif
+                                    </span>
+                                    <div class="product-rating">
+
+                                    </div>
+                                    <ul class="product-meta">
+                                        @if ($produit->stock > 0)
+                                            <label class="badge btn-bg-primary2"> Stock disponible</label>
+                                        @else
+                                            <label class="badge bg-danger"> Stock non disponible</label>
+                                        @endif
+                                        <br><br>
+
+                                        <li><span style="color: #EFB121">Categorie:</span>  <span style="color: #5EA13C">{{ Str::limit($produit->categories->nom, 30) }}</span></li>
+<br>
+                                        <li> <span style="color: #EFB121">Reference:</span> <span style="color: #5EA13C">{{ $produit->reference }}</span></li>
+                                    </ul>
+                                    <p class="description">{{ Str::limit($produit->description, 100) }}</p>
+
+                                    <div class="product-variations-wrapper">
+
+                                        <!-- Start Product Variation  -->
+                                        <div class="product-variation">
+
+                                        </div>
+                                        <!-- End Product Variation  -->
+
+                                        <!-- Start Product Variation  -->
+                                        <div class="product-variation product-size-variation">
+
+                                        </div>
+                                        <!-- End Product Variation  -->
+
+                                    </div>
+
+                                    <!-- Start Product Action Wrapper  -->
+                                    <div class="product-action-wrapper d-flex-center">
+                                        <!-- Start Quentity Action  -->
+                                        <div class="pro-qty">
+                                            {{--  <input type="text" value="1"> --}}
+                                            <span class="quantity-control minus"></span>
+                                            <input type="number" class="input-text qty text" name="quantite"
+                                                min="1" value="1" id="qte-{{ $produit->id }}"
+                                                autocomplete="off">
+                                            <span class="quantity-control plus"></i></span>
+                                        </div>
+
+
+
+                                        <!-- End Quentity Action  -->
+
+                                        <!-- Start Product Action  -->
+                                        <ul class="product-action d-flex-center mb--0">
+
+                                            <li class="select-option2"><a
+                                                onclick="AddToCart( {{ $produit->id }} )">Ajouter
+                                                au panier</a></li>
+                                                    <style>
+                                            .select-option2 {
+                                                background-color: #5EA13C;
+                                                color: #ffffff;
+                                                border: none;
+                                                padding: 10px 20px;
+                                                border-radius: 5px;
+                                                text-decoration: none;
+                                            }
+                                        </style>
+                                          {{--   <li class="add-to-cart"><a onclick="AddToCart( {{ $produit->id }} )"
+                                                    class=" badge  btn-bg-primary2">Ajouter au panier</a></li> --}}
+                                            @if (Auth()->user())
+                                                <li class="wishlist">
+
+                                                    <a onclick="AddFavoris({{ $produit->id }})"
+                                                        class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a>
+                                                </li>
+                                            @endif
+
+                                            <style>
+                                                .btn-bg-primary2 {
+                                                    background-color: #5EA13C;
+                                                    color: #ffffff;
+                                                    border: none;
+                                                    padding: 10px 20px;
+                                                    border-radius: 5px;
+                                                    text-decoration: none;
+                                                }
+                                            </style>
+                                        </ul>
+                                        <!-- End Product Action  -->
+
+                                    </div>
+                                    <!-- End Product Action Wrapper  -->
                                 </div>
                             </div>
                         </div>
-
-                        <div class="prt_06">
-
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- ======================= Product Detail End ======================== -->
+            <!-- End .single-product-thumb -->
 
-    <!-- ======================= Product Description ======================= -->
-    <section class="middle">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-xl-11 col-lg-12 col-md-12 col-sm-12">
-                    <ul class="nav nav-tabs b-0 d-flex align-items-center justify-content-center simple_tab_links mb-4"
-                        id="myTab" role="tablist">
+            <div class="woocommerce-tabs wc-tabs-wrapper bg-vista-white">
+                <div class="container">
+                    <ul class="nav tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="description-tab" href="#description" data-toggle="tab"
-                                role="tab" aria-controls="description" aria-selected="true">Description</a>
+                            <a class="active" id="description-tab" data-bs-toggle="tab" href="#description"
+                                role="tab" aria-controls="description" aria-selected="true"><span style="color: #EFB121">Description</span></a>
                         </li>
 
                     </ul>
-
                     <div class="tab-content" id="myTabContent">
-
-                        <!-- Description Content -->
                         <div class="tab-pane fade show active" id="description" role="tabpanel"
                             aria-labelledby="description-tab">
-                            <div class="description_info">
-                                <p class="p-0 mb-2">
-                                    {!! \App\Helpers\TranslationHelper::TranslateText($produit->description) !!}
-                                </p>
+                            <div class="product-desc-wrapper">
+                                <div class="row">
+                                    <div class="col-lg-12 mb--30">
+                                        <div class="single-desc">
+
+                                            <p>{!! $produit->description ?? ' ' !!}</p>
+                                        </div>
+                                    </div>
+                                    <!-- End .col-lg-6 -->
+
+                                    <!-- End .col-lg-6 -->
+                                </div>
+                                <!-- End .row -->
+
+                                <!-- End .row -->
                             </div>
+                            <!-- End .product-desc-wrapper -->
                         </div>
 
-
                     </div>
                 </div>
             </div>
+            <!-- woocommerce-tabs -->
+
         </div>
-    </section>
-    <!-- ======================= Product Description End ==================== -->
+        <!-- End Shop Area  -->
 
-    <!-- ======================= Similar Products Start ============================ -->
-    <section class="middle pt-0">
-        <div class="container">
-
-            <div class="row justify-content-center">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                    <div class="sec_title position-relative text-center">
-                        <h2 class="off_title">
-                            {{ \App\Helpers\TranslationHelper::TranslateText("Les produits de la même categorie") }}
-                        </h2>
-                        <h3 class="ft-bold pt-3">
-                            {{ \App\Helpers\TranslationHelper::TranslateText("Produits de même categorie") }}
-                        </h3>
-                    </div>
+        <!-- Start Recently Viewed Product Area  -->
+        <div class="axil-product-area bg-color-white axil-section-gap pb--50 pb_sm--30">
+            <div class="container">
+                <div class="section-title-wrapper">
+                    <h4>   <span class="axil-breadcrumb-item1 active" aria-current="page"> <i class="far fa-shopping-basket"></i> Les produits de la même categorie</span> </h4>
+                                
+    
+                    <h2 class="title">Parcourir</h2>
                 </div>
-            </div>
+                <div class="recent-product-activation slick-layout-wrapper--15 axil-slick-arrow arrow-top-slide">
+                    @php
 
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                    <div class="slide_items">
+                        $relatedProducts = $produit->categories->produits->where('id', '!=', $produit->id);
 
-                        <!-- single Item -->
-                        @php
+                    @endphp
+                    @if ($relatedProducts)
+                        @foreach ($relatedProducts as $produit)
+                            <div class="slick-single-layout">
+                                <div class="axil-product">
+                                    <div class="thumbnail">
+                                        <a
+                                            href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">
+                                            <img src="{{ Storage::url($produit->photo) }}" alt="Product Images">
 
-                            $relatedProducts = $produit->categories->produits->where('id', '!=', $produit->id);
+                                            <style>
+                                                .top-left {
+                                                    position: absolute;
+                                                    top: 8px;
+                                                    left: 16px;
+                                                    color: red;
+                                                }
+                                            </style>
 
-                        @endphp
-
-
-                        <!-- single Item -->
-                        @if ($relatedProducts)
-                            @foreach ($relatedProducts as $produit)
-                                <div class="single_itesm">
-                                    <div class="product_grid card b-0 mb-0">
-                                        @if (Auth()->user())
-                                            <button onclick="AddFavoris({{ $produit->id }})"
-                                                class="snackbar-wishlist btn btn_love position-absolute ab-right"><i
-                                                    class="far fa-heart"></i></button>
-                                        @endif
-                                        <div class="card-body p-0">
-                                            <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden"
-                                                    href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}"><img
-                                                        class="card-img-top"
-                                                        src="{{ Storage::url($produit->photo) }}" alt="..."></a>
-                                                
+                                            <div class="top-left"
+                                                style="background-color:#EFB121;color: white;">
+                                                <span>
+                                                    @if ($produit->inPromotion())
+                                                        <span>
+                                                            -{{ $produit->inPromotion()->pourcentage }}%</span>
+                                                    @endif
+                                                </span>
                                             </div>
+                                        </a>
+
+                                        <div class="product-hover-action">
+                                            <ul class="cart-action">
+                                                @if (Auth()->user())
+                                                    <li class="wishlist"><a
+                                                            onclick="AddFavoris({{ $produit->id }})"><i
+                                                                class="far fa-heart"></i></a></li>
+                                                @endif
+                                                <li class="axil-btn  btn-bg-primary2 "><a
+                                                        onclick="AddToCart( {{ $produit->id }} )">Ajouter au
+                                                        panier</a></li>
+                                                {{-- <li class="quickview"><a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#quick-view-modal"><i
+                                                            class="far fa-eye"></i></a></li> --}}
+
+                                            </ul>
                                         </div>
-                                        <div
-                                            class="card-footer b-0 p-3 pb-0 d-flex align-items-start justify-content-center">
-                                            <div class="text-left">
-                                                <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a
-                                                            href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">{{ $produit->nom }}</a>
-                                                    </h5>
-                                                    <div class="elis_rty"><span class="ft-bold fs-md text-dark">
-                                                            @if ($produit->inPromotion())
-                                                                <span class=" small">
-                                                                    - {{ $produit->inPromotion()->pourcentage }} %
-                                                                </span>
-                                                                <b class="ft-bold theme-cl fs-lg mr-2">
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="inner">
+                                            <h5 class="title"><a
+                                                    href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">{{ Str::limit($produit->nom, 15) }}</a>
+                                            </h5>
+                                            <div class="product-price-variant">
+                                                <h6 class="product-price--main">
+
+
+                                                    @if ($produit->inPromotion())
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-6">
+
+                                                                <b class="text-success" style="color: #4169E1">
                                                                     {{ $produit->getPrice() }} DT
                                                                 </b>
-                                                                <br>
-                                                                <strike>
+                                                            </div>
+
+                                                            <div class="col-sm-6 col-6 text-end">
+
+
+
+                                                                {{-- <span style="font-size: 1.2rem; color: #dc3545; font-weight: bold;">
+                                                            {{ $produit->prix }} DT
+                                                    </span> --}}
+                                                                <span class="price old-price"
+                                                                    style="position: relative; font-size: 1.2rem; color: #dc3545; font-weight: bold;">
+                                                                    {{ $produit->prix }} DT
                                                                     <span
-                                                                        class="ft-medium text-muted line-through fs-md mr-2">
-                                                                        {{ $produit->prix }} DT
-                                                                    </span>
-                                                                </strike>
-                                                            @else
-                                                                {{ $produit->getPrice() }} DT
-                                                            @endif
-                                                        </span></div>
-                                                </div>
+                                                                        style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background-color: black;"></span>
+                                                                </span>
+
+
+                                                            </div>
+                                                        @else
+                                                            {{ $produit->getPrice() }}DT
+                                                    @endif
+
+
+
+                                                </h6>
+                                            </div>
+                                            <div class="color-variant-wrapper">
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        @else
-                            <div class="col-12 text-center">
-                                {{ \App\Helpers\TranslationHelper::TranslateText("Aucun produit de la même categorie") }}
-
-
                             </div>
-
-                        @endif
-
-
+                        @endforeach
+                    @endif
 
 
 
-                    </div>
                 </div>
             </div>
-
-        </div>
-
-        <!-----modal------>
-
-    </section>
-
-
-
+            <style>
+                .axil-breadcrumb-item1 {
+            font-size: 14px;
+            color: #EFB121; /* Default breadcrumb color */
+            }
+            
+            .axil-breadcrumb-item.active {
+            font-weight: bold;
+            color: #EFB121; /* Distinct color for active item */
+            }
+            
+            .axil-breadcrumb-item:not(.active)::after {
+            content: " / "; /* Adds a separator after non-active items */
+            color: #EFB121;
+            }
+            
+            </style>
+            <!-- End Axil Newsletter Area  -->
+    </main>
 
 </main>
 @endsection
