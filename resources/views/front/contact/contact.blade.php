@@ -13,7 +13,8 @@
                      <div class="col-lg-6 col-md-8"> 
                         <div class="inner">
                             <ul class="axil-breadcrumb">
-                                <li class="axil-breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
+                                <li class="axil-breadcrumb-item"><a href="{{ route('home') }}">
+                                    {{ \App\Helpers\TranslationHelper::TranslateText("Accueil") }}</a></li>
                                 <li class="separator"></li>
                                 <li class="axil-breadcrumb-item1 active" aria-current="page">Contact</li>
                             </ul>
@@ -31,7 +32,9 @@
     
   
                             </style>
-                            <h1 class="title">Contactez-nous</h1>
+                            <h1 class="title">Contactez-nous
+                                {{ \App\Helpers\TranslationHelper::TranslateText("Contactez-nous") }}
+                            </h1>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-4">
@@ -53,8 +56,12 @@
                     <div class="row row--30">
                         <div class="col-lg-8">
                             <div class="contact-form">
-                                <h3 class="title mb--10">Nous aimerions avoir de vos nouvelles.</h3>
-                                <p>Si vous avez d'excellents produits que vous fabriquez ou que vous souhaitez travailler avec nous, envoyez-nous un message.</p>
+                                <h3 class="title mb--10">
+                                    {{ \App\Helpers\TranslationHelper::TranslateText("Nous aimerions avoir de vos nouvelles") }}
+                                </h3>
+                                <p>
+                                    {{ \App\Helpers\TranslationHelper::TranslateText("Si vous avez d'excellents produits que vous fabriquez ou que vous souhaitez travailler avec nous, envoyez-nous un message") }}
+                                    </p>
                                 @livewire('Front.ContactForm')
                             
                          
@@ -62,16 +69,24 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="contact-location mb--40">
-                                <h4 class="title mb--20">Notre magasin</h4>
+                                <h4 class="title mb--20">
+                                    {{ \App\Helpers\TranslationHelper::TranslateText("Notre magasin") }}
+                                </h4>
                                 <span class="address mb--20"> {{ $configs->addresse ?? ' ' }}</span>
-                                <span class="phone">Télphone: {{ $configs->telephone ?? ' ' }}</span>
+                                <span class="phone">{{ \App\Helpers\TranslationHelper::TranslateText("Téléphone") }}: {{ $configs->telephone ?? ' ' }}</span>
                                 <span class="email">Email: {{ $configs->email ?? ' ' }}</span>
                             </div>
                            
                             <div class="opening-hour">
-                                <h4 class="title mb--20">Horaires d'ouverture:</h4>
-                                <p>Du lundi au samedi : 9h00 - 22h00
-                                    <br> Dimanche : 10h00 - 18h00
+                                <h4 class="title mb--20">
+                                    {{ \App\Helpers\TranslationHelper::TranslateText("Horaires d'ouvertures") }} :
+                                </h4>
+                                <p>
+                                    {{ \App\Helpers\TranslationHelper::TranslateText("Du lundi au samedi: 9h00-22h00") }}
+                                   
+                                    <br> 
+                                    {{ \App\Helpers\TranslationHelper::TranslateText("Dimanche: 10h00-18h00") }}
+                                    
                                 </p>
                             </div>
                         </div>

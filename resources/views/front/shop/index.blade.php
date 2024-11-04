@@ -24,9 +24,9 @@
                             <div class="col-lg-6 col-md-8">
                                 <div class="inner">
                                     <ul class="axil-breadcrumb">
-                                        <li class="axil-breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
+                                        <li class="axil-breadcrumb-item"><a href="{{ route('home') }}">{{ \App\Helpers\TranslationHelper::TranslateText("Accueill") }}</a></li>
                                         <li class="separator"></li>
-                                        <li class="axil-breadcrumb-item1 active" aria-current="page">Boutique</li>
+                                        <li class="axil-breadcrumb-item1 active" aria-current="page">{{ \App\Helpers\TranslationHelper::TranslateText("Boutique") }}</li>
                                     </ul>
 
                                     <style>
@@ -43,7 +43,9 @@
 
             
                                     </style>
-                                    <h1 class="title">Explorez tous les produits</h1>
+                                    <h1 class="title">
+                                        {{ \App\Helpers\TranslationHelper::TranslateText("Explorez tous les produits") }}
+                                    </h1>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-4">
@@ -71,7 +73,7 @@
                                         <h6 class="title">CATEGORIES</h6>
                                         <div class="shop-submenu">
                                             <ul>
-                                                <li class="current-cat"><a href="/shop">Tous les produits</a></li>
+                                                <li class="current-cat"><a href="/shop">{{ \App\Helpers\TranslationHelper::TranslateText("Tous les produits") }}</a></li>
 
                                                 @foreach ($categories as $category)
                                                     <li><a href="/category/{{ $category->id }}"
@@ -83,7 +85,7 @@
                                         </div>
                                     </div>
                                     {{--   <div class="toggle-list product-categories product-gender active">
-                                        <h6 class="title">MARQUES</h6>
+                                        <h6 class="title">{{ \App\Helpers\TranslationHelper::TranslateText("Les marques") }}</h6>
                                         <div class="shop-submenu">
                                             <ul>
                                                 @foreach ($marques as $marque)
@@ -107,20 +109,20 @@
                                             <div
                                                 class="category-select align-items-center justify-content-lg-end justify-content-between">
                                                 <!-- Start Single Select  -->
-                                                <span class="filter-results">Filtrez</span>
+                                                <span class="filter-results">{{ \App\Helpers\TranslationHelper::TranslateText("Filtrez") }}</span>
                                                 <select class="single-select" name="sort_by" id="sort_by"
                                                     onchange="window.location.href=this.value;">
 
-                                                    <option value="{{ url('shop') }}">Default</option>
-                                                    <option value="{{ url('croissant') }}">Croissant</option>
+                                                    <option value="{{ url('shop') }}">{{ \App\Helpers\TranslationHelper::TranslateText("Defaut") }}</option>
+                                                    <option value="{{ url('croissant') }}">{{ \App\Helpers\TranslationHelper::TranslateText("Croissant") }}</option>
 
-                                                    <option value="{{ url('decroissant') }}">Décroissant</option>
+                                                    <option value="{{ url('decroissant') }}">{{ \App\Helpers\TranslationHelper::TranslateText("Décroissant") }}</option>
                                                 </select>
                                                 <!-- End Single Select  -->
                                             </div>
                                             <div class="d-lg-none">
                                                 <button class="product-filter-mobile filter-toggle"><i
-                                                        class="fas fa-filter"></i> FILTER</button>
+                                                        class="fas fa-filter"></i>{{ \App\Helpers\TranslationHelper::TranslateText("Filtrez") }}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -163,8 +165,10 @@
                                                                                 class="far fa-heart"></i></a></li>
                                                                 @endif
                                                                 <li class="select-option2"><a
-                                                                        onclick="AddToCart( {{ $produit->id }} )">Ajouter
-                                                                        au panier</a></li>
+                                                                        onclick="AddToCart( {{ $produit->id }} )">
+                                                                        
+                                                                        {{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au panier") }}
+                                                                    </a></li>
                                                                             <style>
                                                                     .select-option2 {
                                                                         background-color: #5EA13C;
@@ -388,16 +392,21 @@
                                                         </span>
                                                         <ul class="product-meta">
                                                             @if ($produit->stock > 0)
-                                                                <label class="badge bg-success"> Stock disponible</label>
+                                                                <label class="badge bg-success"> 
+                                                                    {{ \App\Helpers\TranslationHelper::TranslateText("Stock disponible") }}
+                                                                </label>
                                                             @else
-                                                                <label class="badge bg-danger"> Stock non
-                                                                    disponible</label>
+                                                                <label class="badge bg-danger"> 
+                                                                    
+                                                                    {{ \App\Helpers\TranslationHelper::TranslateText("Stock non disponible") }}
+                                                                </label>
                                                             @endif
 
-                                                            <li>Categorie:<span>
+                                                            <li>
+                                                                {{ \App\Helpers\TranslationHelper::TranslateText("Categorie") }}:<span>
                                                                     {{ Str::limit($produit->categories->nom, 30) }}</span>
                                                             </li>
-                                                            <li> <span>Reference:</span> {{ $produit->reference }}</li>
+                                                            <li> <span>{{ \App\Helpers\TranslationHelper::TranslateText("Reference") }}:</span> {{ $produit->reference }}</li>
                                                         </ul>
                                                         <p class="description">In ornare lorem ut est dapibus, ut tincidunt
                                                             nisi pretium. Integer ante est, elementum eget magna.
@@ -422,8 +431,10 @@
                                                             <ul class="product-action d-flex-center mb--0">
                                                                 <li class="add-to-cart"><a
                                                                         onclick="AddToCart( {{ $produit->id }} )"
-                                                                        class="axil-btn btn-bg-primary">Ajouter au
-                                                                        panier</a></li>
+                                                                        class="axil-btn btn-bg-primary">
+                                                                        
+                                                                        {{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au panier") }}
+                                                                    </a></li>
                                                                 @if (Auth()->user())
                                                                     <li class="wishlist"><a
                                                                             onclick="AddFavoris({{ $produit->id }})"><i

@@ -29,12 +29,12 @@ class produits extends Model
     'taille',
     'couleur',
     ];
-    protected $casts = [
+     protected $casts = [
         'photos' => 'json',
         'taille'=>'array',
         'couleur'=>'array',
     ];
-    
+     
 
    public function vendus()
     {
@@ -80,34 +80,8 @@ class produits extends Model
         }
     }
 
-    public function diminuer_stock2(int $quantite): void
-    {
-        $taille = $this->tailles()->first();
-        if ($taille && $taille->stock >= $quantite) {
-            // Diminue le stock dans la table pivot
-            $this->tailles()->updateExistingPivot( [
-               'stock' => $taille->pivot->stock - $quantite
-            ]);
-        } else {
-            // Gérer le cas où le stock est insuffisant
-            throw new \Exception("Quantité demandée non disponible.");
-        }
-    }
-
-    public function diminuerStockParTaille(int $tailleId, int $quantite): void
-    {
-        $taille = $this->tailles()->where('id', $tailleId)->first();
-
-        if ($taille && $taille->pivot->stock >= $quantite) {
-            // Met à jour le stock dans la table pivot
-            $this->tailles()->updateExistingPivot($tailleId, [
-                'stock' => $taille->pivot->stock - $quantite
-            ]);
-        } else {
-            throw new \Exception("Stock insuffisant pour cette taille.");
-        }
-    }
-
+   
+  
    
 
     public function retourner_stock(int $quantite): void
@@ -136,11 +110,6 @@ class produits extends Model
     }
   
 
-     public function tailles()
-    {
-        return $this->belongsToMany(Taille::class, 'produit_taille', 'produit_id', 'taille_id')->withPivot('stock');
-
-        
-    }
+ 
    
 }
