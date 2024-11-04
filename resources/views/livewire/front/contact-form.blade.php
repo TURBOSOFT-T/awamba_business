@@ -15,19 +15,19 @@
     <form wire:submit.prevent="save" class="axil-contact-form">
         <div class="form-row">
             <div class="form-group">
-                <input wire:model="nom" type="text" id="nom" placeholder="Votre Nom *" class="form-control">
+                <input wire:model="nom" type="text" id="nom" placeholder="  {{ \App\Helpers\TranslationHelper::TranslateText("Votre nom") }} *" class="form-control">
                 @error('nom')
                     <span class="small text-danger">{{ $message }}</span>
                 @enderror
             </div>
             <div class="form-group">
-                <input wire:model="email" type="email" id="email" placeholder="Adresse Email *" class="form-control">
+                <input wire:model="email" type="email" id="email" placeholder=" Email *" class="form-control">
                 @error('email')
                     <span class="small text-danger">{{ $message }}</span>
                 @enderror
             </div>
             <div class="form-group">
-                <input wire:model="telephone" type="tel" id="telephone" placeholder="Numéro de Téléphone *" class="form-control">
+                <input wire:model="telephone" type="tel" id="telephone"  placeholder="  {{ \App\Helpers\TranslationHelper::TranslateText("Votre téléphone") }} *" class="form-control">
                 @error('telephone')
                     <span class="small text-danger">{{ $message }}</span>
                 @enderror
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group">
-            <textarea wire:model="message" rows="5" type="text" id="message" placeholder="Entrez votre Message" class="form-control"></textarea>
+            <textarea wire:model="message" rows="5" type="text" id="message" style="background-color:#FAE7E7" placeholder="  {{ \App\Helpers\TranslationHelper::TranslateText("Entrez votre message") }}" class="form-control"></textarea>
             @error('message')
                 <span class="small text-danger">{{ $message }}</span>
             @enderror
@@ -45,7 +45,8 @@
             <span wire:loading>
                 <img src="/icons/kOnzy.gif" height="20" alt="Loading...">
             </span>
-            Envoyer un Message
+            
+            {{ \App\Helpers\TranslationHelper::TranslateText("Envoyez votre message") }}
         </button>
     </form>
 </div>

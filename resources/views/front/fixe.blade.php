@@ -63,9 +63,9 @@ $produit = DB::table('produits')->get();
 
 <body>
 
-
+{{-- 
    <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a> 
-    <!-- Start Header -->
+  
     <header class="header axil-header header-style-2">
         <div class="header-top-campaign">
             <div class="container position-relative">
@@ -76,7 +76,7 @@ $produit = DB::table('produits')->get();
             </div>
             <button class="remove-campaign"><i class="fal fa-times"></i></button>
         </div>
-        <!-- Start Header Top Area  -->
+       
         <div class="axil-header-top">
             <div class="container">
                 <div class="row align-items-center">
@@ -123,9 +123,7 @@ $produit = DB::table('produits')->get();
                 </div>
             </div>
         </div>
-        <!-- End Header Top Area  -->
-
-        <!-- Start Mainmenu Area  -->
+   
         <div class="axil-mainmenu aside-category-menu">
             <div class="container">
                 <div class="header-navbar">
@@ -369,7 +367,7 @@ $produit = DB::table('produits')->get();
                         </aside>
                     </div>
                     <div class="header-main-nav">
-                        <!-- Start Mainmanu Nav -->
+                        
                         <nav class="mainmenu-nav">
                             <button class="mobile-close-btn mobile-nav-toggler"><i class="fas fa-times"></i></button>
                             <div class="mobile-nav-brand">
@@ -438,7 +436,7 @@ $produit = DB::table('produits')->get();
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
-                        <!-- End Mainmanu Nav -->
+                     
                     </div>
                     <div class="header-action">
                         <ul class="action-list">
@@ -494,10 +492,10 @@ $produit = DB::table('produits')->get();
                 </div>
             </div>
         </div>
-        <!-- End Mainmenu Area  -->
-    </header>
+  
+    </header> --}}
 
-    {{-- <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
+    <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
    
     <header class="header axil-header header-style-5">
         <div class="axil-header-top">
@@ -586,6 +584,8 @@ $produit = DB::table('produits')->get();
                                 <li><a href="{{ url('dashboard') }}" class="nav-item nav-link">Dashboard</a>
                                 </li>
                                 @endif
+
+                                
 
 
 
@@ -702,7 +702,7 @@ $produit = DB::table('produits')->get();
             </div>
         </div>
     </header>
-  --}}
+  
     <main>
 
 
@@ -714,56 +714,7 @@ $produit = DB::table('produits')->get();
 
     </main>
 
-    <div class="service-area">
-        <div class="container">
-            <div class="row row-cols-xl-4 row-cols-sm-2 row-cols-1 row--20">
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service1.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Fast &amp; Secure Delivery</h6>
-                            <p>Tell about your service.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service2.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Money Back Guarantee</h6>
-                            <p>Within 10 days.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service3.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">24 Hour Return Policy</h6>
-                            <p>No question ask.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service4.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Pro Quality Support</h6>
-                            <p>24/7 Live support.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
     <!-- Start Footer Area  -->
     <footer class="axil-footer-area footer-style-2">
         <!-- Start Footer Top Area  -->
