@@ -8,7 +8,7 @@
             $produit = DB::table('produits')->get();
         @endphp
 
- <main class="main-wrapper">
+ <main class="main-wrapper  mt-4 mb-4">
 <style>
         .promo-section {
             background-color: #FAE7E7; /* Light pink */
