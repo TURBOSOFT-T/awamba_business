@@ -585,6 +585,8 @@ $produit = DB::table('produits')->get();
                                 </li>
                                 @endif
 
+                                
+
 
 
 
