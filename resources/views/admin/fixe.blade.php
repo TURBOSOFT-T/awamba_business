@@ -169,7 +169,7 @@
                     </li>
                 @endcan
 
-                <li>
+               {{--  <li>
                     <a href="{{ route('tailles') }}">
                         <div class="parent-icon icon-color-3"> <i class="ri-boxing-fill"></i>
                         </div>
@@ -177,7 +177,7 @@
                             Les tailles
                         </div>
                     </a>
-                </li> 
+                </li>  --}}
 
              {{--    <li>
                     <a href="javascript:;" class="has-arrow">
