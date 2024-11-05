@@ -15,6 +15,7 @@ class HomeComposer
         //    'marques' =>Marque::has('produits')->take(6)->get(), /// Pour le home page
            // 'brands' =>Marque::has('produits')->get(), // Pour le  sop page
          //  'categories'=>Category::all(),
+         'searchproducts' => produits::select('*')->latest()->take(5)->get(),
             'configs' => config::first(),
           //  'services'=>Service::all(),
             'produit'=>produits::all(),
