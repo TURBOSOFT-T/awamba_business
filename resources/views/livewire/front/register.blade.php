@@ -1,65 +1,100 @@
-<form wire:submit="save" class="singin-form">
-    <div class="form-group">
-        <label>Nom</label>
-        <input type="text" class="form-control"wire:model="nom" name="nom" placeholder="votre nom">
-    </div>
-    <div class="form-group">
-        <label>Prénom</label>
-        <input type="text" class="form-control"wire:model="prenom" name="prenom" placeholder="votre prénom">
-    </div>
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" class="form-control" placeholder="Adresse email" wire:model="email" name="email">
-    </div>
-    <div class="form-group">
-        <label>Mot de passe</label>
-        <input type="password" wire:model="password" id="passwordInput2" class="form-control" placeholder="Mot de passe"
-            required />
-        <i class="bi bi-eye-slash" id="togglePassword2" style="cursor: pointer;"></i>
+<div class="w-75">
 
-    </div>
-    <div class="form-group">
-        <label>Confirmation mot de passe</label>
-        <input type="password" class="form-control" wire:model="password_confirmation" placeholder="Votre mot de passe"
-            aria-describedby="password" required /> <i class="bi bi-eye-slash" id="togglePassword3"></i>
-
-    </div>
-    <div class="form-group">
-        @if ($errors->any())
-            <div class="alert alert-danger small">
-                @foreach ($errors->all() as $error)
-                    {{ $error }} <br>
-                @endforeach
+    <form wire:submit.prevent="save" id="multiStepForm">
+	    <h3>Créer un Compte</h3>
+        <!-- Step 1 -->
+        <div class="step active">
+            <h5 class="mt-4">Remplissez les Champs Suivants</h5>
+            <div class="form-group mb-3">
+                <input type="text" class="custom-input is-invalid" wire:model="nom" name="nom" placeholder="Noms" required>
+				<div class="invalid-feedback"></div>
             </div>
-        @endif
-        <button type="submit" class="axil-btn btn-bg-primary submit-btn">
+            <div class="form-group mb-3">
+                <input type="email" class="custom-input is-invalid" wire:model="email" name="email" placeholder="Email" required>
+				<div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group mb-4">
+                <input type="password" class="custom-input" wire:model="password" name="password" placeholder="Mot de Passe" required>
+				<div class="invalid-feedback"></div>
+            </div>
+            <button type="button" class="btn-next" onclick="nextStep(event)">Suivant</button>
+        </div>
 
-            <span wire:loading>
-                <img src="/icons/kOnzy.gif" height="20" width="20" alt="" srcset="">
-            </span>
-            <span>
-                Confirmation
-            </span>
-        </button>
+        <!-- Step 2 -->
+        <div class="step">
+            <h5 class="mt-4">Choisissez le type de Profil</h5>
+			
+            <div class="form-check radio-label mb-3">
+                <input class="form-check-input text-danger" type="radio" wire:model="profileType" name="profileType" id="buyer" value="buyer" required>
+                <label class="form-check-label" for="buyer">Profil Acheteur</label>
+            </div>
+            <div class="form-check radio-label mb-4">
+                <input class="form-check-input" type="radio" wire:model="profileType" name="profileType" id="seller" value="seller" required>
+                <label class="form-check-label" for="seller">Profil Vendeur</label>
+            </div>
+			<div class="invalid-feedback mb-4">Veuillez choisi une type de profile</div>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn-prev" onclick="prevStep()">Précédent</button>
+                <button type="button" class="btn-next" onclick="nextStep(event)">Suivant</button>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+            <h5 class="mt-4">Choisissez le type de Vendeur</h5>
+			<div class="invalid-feedback">Veuillez choisi une type de profile</div>
+            <div class="form-check radio-label mb-3">
+                <input class="form-check-input" type="radio" wire:model="profileType" name="profileType" id="individual" value="individual" required>
+                <label class="form-check-label" for="individual">Vendeur Particulier</label>
+            </div>
+            <div class="form-check radio-label mb-3">
+                <input class="form-check-input" type="radio" wire:model="profileType" name="profileType" id="merchant" value="merchant" required>
+                <label class="form-check-label" for="merchant">Vendeur Commerçant</label>
+            </div>
+            <div class="form-check radio-label mb-3">
+                <input class="form-check-input" type="radio" wire:model="profileType" name="profileType" id="company" value="company" required>
+                <label class="form-check-label" for="company">Entreprise</label>
+            </div>
+            <p class="mt-4">Téléchargez votre Photo de Profil</p>
+
+            <!-- Image upload fields -->
+            <div class="upload-container mb-4" onclick="document.getElementById('rectoInput').click()">
+                <input type="file" wire:model="rectoInput" name="rectoInput" id="rectoInput" accept="image/*" onchange="previewImage(event, 'rectoPreview')">
+                <div class="plus-icon" id="rectoPlusIcon">+</div>
+                <p class="upload-label" id="rectoLabel">Télécharger le Recto</p>
+                <img id="rectoPreview" src="#" alt="Recto Preview" style="display: none;">
+				<div class="invalid-feedback">Veuillez télécharger un fichier.</div>
+            </div>
+
+            <div class="upload-container mb-4" onclick="document.getElementById('versoInput').click()">
+                <input type="file" wire:model="versoInput" name="versoInput" id="versoInput" accept="image/*" onchange="previewImage(event, 'versoPreview')">
+                <div class="plus-icon" id="versoPlusIcon">+</div>
+                <p class="upload-label" id="versoLabel">Télécharger le Verso</p>
+                <img id="versoPreview" src="#" alt="Verso Preview" style="display: none;">
+				<div class="invalid-feedback">Veuillez télécharger un fichier.</div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="button" class="btn-prev" onclick="prevStep()">Précédent</button>
+               <button type="button" class="btn-next" onclick="nextStep(event)">Suivant</button>
+            </div>
+        </div>
+		<!-- Step 4 - Final Confirmation -->
+            <div class="step">
+                <h5 class="mt-4">Confirmation</h5>
+                <p>Vérifiez vos informations et cliquez sur "S'inscrire" pour finaliser votre inscription.</p>
+				<div class="d-flex gap-2 mt-3">
+                <button type="button" class="btn-prev" onclick="prevStep()">Précédent</button>
+                <button type="submit" class="btn-next" onclick="nextStep(event)">S'inscrire</button>
+            </div>
+            </div>
+
+			<div class="step">
+            Votre compte a été bien validé !
+        </div>
+    </form>
+	
+    <div class="mt-3">
+        <span>Vous Avez Déjà un Compte? </span><a href="/login" class="text-decoration-none">Se Connecter</a>
     </div>
-
-    <style>
-        .btn-bg-primary2 {
-            background-color: #5EA13C;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .btn-bg-secondary2 {
-        background-color: #EFB121; /* Couleur de fond, bleu dans cet exemple */
-        color: #ffffff; /* Couleur du texte, blanc dans cet exemple */
-        border: none;
-        padding: 10px 20px; /* Optionnel, ajuste la taille */
-        border-radius: 5px; /* Optionnel, arrondit les coins */
-        text-decoration: none; /* Supprime le soulignement */
-    }
-    </style>
-</form>
+</div>
