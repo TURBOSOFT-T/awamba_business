@@ -1,8 +1,10 @@
+<div class="w-50">
+<form   wire:submit='connexion' id="multiStepForm">
+<h3 class="d-flex flex-column">
+<span>Connexion</span>
+ <small class="mt-1 fs-5 fw-100">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entrez Vos Données Personnelles</small>
+</h3>
 
-
-
-
-<form   wire:submit='connexion' class="singin-form">
     @if (session()->has('error'))
     <div class="alert alert-danger p-3 small">
         {{ session('error') }}
@@ -13,38 +15,25 @@
         {{ session('success') }}
     </div>
 @endif
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" class="form-control" wire:model="email" placeholder="Votre mail">
-        @error('email')
+
+            <div class="form-group mb-3">
+                <input type="email" class="custom-input" wire:model="email" placeholder="Email ou Numéro de Téléphone" required>
+@error('email')
             <span class="text-danger small">
                 {{ $message }}
             </span>
         @enderror
-    </div>
-    <div class="form-group position-relative">
-        <label>Mot de passe</label>
-        <input 
-            type="password" 
-            id="password" 
-            class="form-control" 
-            wire:model="password" 
-            placeholder="Votre mot de passe"
-        >
-        <span 
-            class="position-absolute" 
-            style="right: 10px; top: 35px; cursor: pointer;" 
-            onclick="togglePassword()"
-        >
-            <i id="toggleIcon" class="ri-eye-line"></i>
-        </span>
-        
-        @error('password')
+            </div>
+  <div class="form-group mb-4">
+                <input type="password" class="custom-input" wire:model="password" name="password" placeholder="Mot de Passe" required>
+				 @error('password')
         <span class="text-danger small">
             {{ $message }}
         </span>
         @enderror
-    </div>
+            </div>
+       
+   
 
     
     
@@ -81,19 +70,25 @@
         @enderror
     </div> --}}
  
-    <div class="form-group d-flex align-items-center justify-content-between">
-        <button type="submit" class="axil-btn btn-bg-primary submit-btn">
+    <div class="form-group d-flex align-items-center justify-content-between gap-4">
+        <button type="submit" class="axil-btn btn-bg-primary2 submit-btn w-50">
             <span wire:loading>
-                <img src="https://i.gifer.com/ZKZg.gif" height="15" alt="" srcset="">
+                <img src="https://i.gifer.com/ZKZg.gif" height="5" alt="" srcset="">
             </span>
             <i class="ri-git-repository-private-line"></i>
             Connexion</button>
         <a href="{{ route('forgot_password') }}" class="forgot-btn">Mot de passe oublié?</a>
     </div>
+	<div class="">
+        <span>Vous n'avez pas un Compte? </span><a href="/register" class="text-decoration-none">Inscrivez-vous</a>
+    </div>
 
     <style>
+	.forgot-btn{
+		color:#DB4444;
+	}
         .btn-bg-primary2 {
-            background-color: #5EA13C;
+            background-color: #DB4444;
             color: #ffffff;
             border: none;
             padding: 10px 20px;
@@ -112,67 +107,4 @@
     </style>
 </form>
 
-
-
-
-{{-- 
- <form wire:submit='connexion'>
-      
-    @if (session()->has('error'))
-        <div class="alert alert-danger p-3 small">
-            {{ session('error') }}
-        </div>
-    @endif
-    @if (session()->has('success'))
-        <div class="alert alert-success p-3 small">
-            {{ session('success') }}
-        </div>
-    @endif
-    <div class="form-inner mb-35">
-        <input type="email" id="user_login_email" wire:model="email" placeholder="Email Address" />
-        @error('email')
-            <span class="text-danger small">
-                {{ $message }}
-            </span>
-        @enderror
-    </div>
-    <div class="form-inner">
-        <input type="password"  id="user_login_password" placeholder="Password"
-            wire:model="password" />
-        @error('password')
-            <span class="text-danger small">
-                {{ $message }}
-            </span>
-        @enderror
-        <i class="bi bi-eye-slash" id="togglePassword"></i>
-        
-    </div>
-    <div class="form-remember-forget">
-        <div class="remember">
-            <input type="checkbox" class="custom-check-box" id="check1">
-            <label for="check1">Remember me</label>
-        </div>
-        <a href="{{ route('forgot-password') }}" class="forget-pass hover-underline">Forget Password</a>
-    </div>
-  
-   
-    <button type="submit" class="primary-btn1 hover-btn3">
-        <span wire:loading>
-            <img src="https://i.gifer.com/ZKZg.gif" height="15" alt="" srcset="">
-        </span>
-        <i class="ri-git-repository-private-line"></i>
-        Connexion
-    </button>
-    <a href="#" class="member">Not a member yet?</a>
-</form>
-
-
-<script>
-   document.getElementById('togglePassword').addEventListener('click', function () {
-    const passwordInput = document.getElementById('user_login_password');
-    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordInput.setAttribute('type', type);
-    this.classList.toggle('bi-eye');
-});
-
-</script> --}}
+</div>
