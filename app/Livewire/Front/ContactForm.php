@@ -25,7 +25,7 @@ class ContactForm extends Component
             'nom' => 'required|max:200|string',
             'sujet' => 'required|max:200|string',
             'message' => 'required|max:5000|string',
-            'telephone' => 'required|numeric',
+            'telephone' => 'required',
           
         ], [
             'email.required' => 'Veuillez entrer votre email',
@@ -60,7 +60,7 @@ class ContactForm extends Component
                     'nom',
                     'sujet',
                     'message',
-'telephone',
+                    'telephone',
                 
                 ]
             );

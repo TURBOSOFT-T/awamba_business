@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('youtube')->nullable()->default(null);
             $table->string('twitter')->nullable()->default(null);
             $table->string('logofooter')->nullable()->default(null);
+            $table->string('image_login')->nullable()->default(null);
+            $table->string('image_register')->nullable()->default(null);
 
             $table->string('email')->nullable()->default(null);
             $table->string('description')->nullable()->default(null);

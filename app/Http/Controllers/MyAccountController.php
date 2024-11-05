@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\commandes;
 use App\Models\config;
 use App\Models\historiques_connexion;
-
+use App\Models\{produits, Category, favoris };
 use App\Models\User;
 use App\Models\views;
 use Illuminate\Http\Request;
@@ -26,9 +26,6 @@ use App\Mail\{OrderChangeStatuts, ChangeStatut};
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\File;
-use App\Models\{produits, Category, favoris as ModelsFavoris};
-
-
 
 
 
@@ -41,13 +38,18 @@ class MyAccountController extends Controller
 
 
 
-    public function comptes(){
+     public function comptes(){
 
-        $commandes= commandes::where('user_id', auth()->id() )->get();
-        return view('front.comptes.commandes' , compact('commandes'));
+        $commandes= commandes::with('contenus')->where('user_id', auth()->id() )->get();
+        //$contenus =contenu_commande::where('user_id', auth()->id() )->get();
+     //   dd($commandes);
+        return view('front.comptes.index' , compact('commandes'));
      }
 
-     public function favoris(){
+     public function favories(){
+
+        $favories= favoris::where('id_user', auth()->id() )->get();
+      //dd($favories);
         
         return view('front.comptes.favories');
      }
@@ -56,34 +58,11 @@ public function profile(){
     return view('front.comptes.profile');
 }
 
-public function account(){
-
-    //$commandes= commandes::where('user_id', auth()->id() )->get();
-    $commandes = commandes::with('contenus')->where('user_id', auth()->id())->latest()->paginate(10);
-    $favoris = ModelsFavoris::where('id_user', auth()->id())->latest()->paginate(10);
-   // $totalCommand = $commandes->count();
-    $totalCommand = commandes::where('user_id', auth()->id())
-    ->WhereIn('statut',[ 'livrée', 'payée'])
-    ->count();
-    $totalFavoris = ModelsFavoris::where('id_user', auth()->id())->count();
-    $commandesEnCours = commandes::where('user_id', auth()->id())
-    ->whereIn('statut', ['attente' ,'traitement', 'En cours livraison','planification'])
-    ->count();
-
-    
-
-    return view('front.comptes.account', compact('commandes', 'totalCommand','totalFavoris','favoris','commandesEnCours'));
-
+public function mesdevis(){
+    $commandes= commandes::where('user_id', auth()->id() )->get();
+  //  dd($commandes);
+    return view('front.comptes.devis');
 }
-
-
-     public function comptes1(){
-
-        $commandes= commandes::with('contenus')->where('user_id', auth()->id() )->get();
-        //$contenus =contenu_commande::where('user_id', auth()->id() )->get();
-     //   dd($commandes);
-        return view('front.comptes.index' , compact('commandes'));
-     }
 
 
 

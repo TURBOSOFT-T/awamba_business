@@ -129,20 +129,20 @@
                             {{ $item->quantite }}</td>
                         <td>
                             @if ( $commande->tax)
-                                <b>{{number_format( $commande->getPrix() * $item->quantite, 2, ',', ' ') }} <x-devise></x-devise></b>
+                                <b>{{number_format( $commande->getPrix() * $item->quantite, 2, ',', ' ') }} DT</b>
                                 @else
                               {{--   {{ $item->prix_unitaire }} DT --}}
-                                <b>{{number_format(  $item->prix_unitaire  * $item->quantite, 2, ',', ' ') }} <x-devise></x-devise></b>
+                                <b>{{number_format(  $item->prix_unitaire  * $item->quantite, 2, ',', ' ') }} DT</b>
                             @endif
                            
                         </td>
                         <td>{{-- {{ $item->prix_unitaire * $item->quantite }} DT --}}
 
                                 @if ( $commande->tax)
-                            <b>{{number_format( $commande->getPrix() * $item->quantite, 2, ',', ' ') }} <x-devise></x-devise></b>
+                            <b>{{number_format( $commande->getPrix() * $item->quantite, 2, ',', ' ') }} DT</b>
                        
                         @else
-                            <b> {{ $item->prix_unitaire * $item->quantite }} <x-devise></x-devise> </b>
+                            <b> {{ $item->prix_unitaire * $item->quantite }} DT </b>
                         @endif 
                         </td>
                     </tr>
@@ -157,8 +157,8 @@
                         </b>
                     </td>
                     <td>1</td>
-                    <td> {{number_format( $commande->frais ?? 0, 2, ',', ' ') }} <x-devise></x-devise> </td>
-                    <td> {{number_format( $commande->frais ?? 0, 2, ',', ' ') }} <x-devise></x-devise> </td>
+                    <td> {{number_format( $commande->frais ?? 0, 2, ',', ' ') }} DT </td>
+                    <td> {{number_format( $commande->frais ?? 0, 2, ',', ' ') }} DT </td>
                 </tr>
 
                 <tr>
@@ -168,11 +168,11 @@
                     @if ($commande->tax)
                         <td> A {{ $commande->tax }} %</td>
                         <td>--</td>
-                        <td> {{ number_format($commande->getTVA(), 2, ',', ' ')}} <x-devise></x-devise> </td>
+                        <td> {{ number_format($commande->getTVA(), 2, ',', ' ')}} DT </td>
                     @else
                         <td> A 00 %</td>
-                        <td>00 <x-devise></x-devise></td>
-                        <td> 00 <x-devise></x-devise> </td>
+                        <td>00 DT</td>
+                        <td> 00 DT </td>
                     @endif
 
 
@@ -183,8 +183,8 @@
                             {{ \App\Helpers\TranslationHelper::TranslateText("Frais de timbre ") }} </b>
                     </td>
                     <td>1</td>
-                    <td> 1 <x-devise></x-devise> </td>
-                    <td> 1 <x-devise></x-devise> </td>
+                    <td> 1 DT </td>
+                    <td> 1 DT </td>
                 </tr>
                 <tr class="tr-montant">
                     <td colspan="3">
@@ -193,17 +193,22 @@
                     </td>
                     <td>
                         @if ($commande->frais && $commande->tax)
-                            <b>{{number_format( $commande->montantHT() + $commande->frais + 1, 2, ',', ' ') }} <x-devise></x-devise></b>
+                            <b>{{number_format( $commande->montantHT() + $commande->frais + 1, 2, ',', ' ') }} DT</b>
                         @elseif($commande->frais)
-                            <b>{{ number_format($commande->montant() + 1, 2, ',',' ') }} <x-devise></x-devise></b>
+                            <b>{{ number_format($commande->montant() + 1, 2, ',',' ') }} DT</b>
                         @elseif($commande->tax)
-                            <b>{{ number_format($commande->montantHT() + 1, 2, ',', ' ') }} <x-devise></x-devise></b>
+                            <b>{{ number_format($commande->montantHT() + 1, 2, ',', ' ') }} DT</b>
                         @else
-                            <b>{{ number_format($commande->montant() - $commande->frais + 1), 2, ',', ' ' }} <x-devise></x-devise></b>
+                            <b>{{ number_format($commande->montant() - $commande->frais + 1), 2, ',', ' ' }} DT</b>
                         @endif
 
                     </td>
-               
+                    {{--  <td>
+                        @foreach ($commande->contenus as $item)
+                        {{ $item->prix_unitaire * $item->quantite }} DT
+                        @endforeach
+                    </td> --}}
+
                 </tr>
             </tbody>
         </table>

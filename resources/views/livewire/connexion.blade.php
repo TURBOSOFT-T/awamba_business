@@ -67,7 +67,19 @@
         }
     </script>
     
-
+    
+  {{--   <div class="form-group position-relative">
+        <label>Mot de passe</label>
+        <input type="password" id="password" class="form-control" wire:model="password" placeholder="Votre mot de passe">
+        <span class="position-absolute" style="right: 10px; top: 35px; cursor: pointer;" onclick="togglePassword()">
+            <i id="toggleIcon" class="ri-eye-line"></i>
+        </span>
+        @error('password')
+        <span class="text-danger small">
+            {{ $message }}
+        </span>
+        @enderror
+    </div> --}}
  
     <div class="form-group d-flex align-items-center justify-content-between">
         <button type="submit" class="axil-btn btn-bg-primary submit-btn">
