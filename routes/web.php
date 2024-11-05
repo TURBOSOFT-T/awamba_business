@@ -54,6 +54,7 @@ Route::get('storage-link',[AdminController::class,'storageLink'])->name('storage
 
 Route::get('contact', [ContactController::class, 'contact'])->name("contact");
 Route::get('about', [ContactController::class, 'about'])->name("about");
+Route::get('conditions', [ContactController::class, 'condition'])->name("conditions");
 /////temoignages
 Route::resource('testimonial', TestimonialController::class);
 

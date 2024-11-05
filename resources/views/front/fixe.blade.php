@@ -495,7 +495,7 @@ $produit = DB::table('produits')->get();
     </header> --}}
 
     <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
-   
+   <div class="page-container">
     <header class="header axil-header header-style-5">
         <div class="axil-header-top">
             <div class="container">
@@ -851,8 +851,19 @@ $produit = DB::table('produits')->get();
     </footer>
     <!-- End Footer Area  -->
     </div>
+  
+   
 	<style>
-         
+         .page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it takes up full viewport height */
+}
+
+main {
+    flex: 1; /* Fills the remaining space, pushing footer down */
+}
+
         .footer {
             background-color: #111;
             color: #fff;
@@ -931,7 +942,7 @@ $produit = DB::table('produits')->get();
     <div class="container-fuild" style="margin-inline:40px 40px">
         <div class="row">
             <!-- Exclusif Section -->
-            <div class="col-md-3">
+            <div class="col-md-3 mb-3">
                 <h6 class="footer-title">Exclusif</h6>
                 <p>S'abonner</p>
                 <p>Bénéficiez de 10€ de réduction sur votre première commande</p>
@@ -945,7 +956,7 @@ $produit = DB::table('produits')->get();
             </div>
 
             <!-- Support Section -->
-            <div class="col-md-3">
+            <div class="col-md-3 mb-3">
                 <h6 class="footer-title">Support</h6>
                 <p>111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.</p>
                 <p>exclusive@gmail.com</p>
@@ -953,25 +964,25 @@ $produit = DB::table('produits')->get();
             </div>
 
             <!-- Compte Section -->
-            <div class="col-md-2">
+            <div class="col-md-2 mb-3">
                 <h6 class="footer-title">Compte</h6>
                 <a href="#">Mon Compte</a>
-                <a href="#">Se connecter / S'inscrire</a>
+                <a href="/login">Se connecter / S'inscrire</a>
                 <a href="#">Panier</a>
                 <a href="#">Favoris</a>
                 <a href="#">Boutique</a>
             </div>
 
             <!-- Quick Link Section -->
-            <div class="col-md-2">
+            <div class="col-md-2 mb-3">
                 <h6 class="footer-title">Quick Link</h6>
                 <a href="#">Confidentialité</a>
-                <a href="#">Conditions</a>
-                <a href="#">Contacts</a>
+                <a href="/conditions">Conditions</a>
+                <a href="/contact">Contacts</a>
             </div>
 
             <!-- Download App Section -->
-            <div class="col-md-2">
+            <div class="col-md-2 mb-3">
                 <h6 class="footer-title">Download App</h6>
 				 
                 <div class="d-flex gap-4" >
@@ -988,14 +999,16 @@ $produit = DB::table('produits')->get();
                     <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
+        
         </div>
 
-        <div class="copy mt-4">
-            &copy; Copyright Rimel 2022. All rights reserved
-        </div>
     </div>
+	<hr class='border-2 border-top mt-4'/>
+	<div class="col-md-12 copy mt-4 ">
+            &copy; Copyright awamba 2024. All rights reserved
+        </div>
 </footer>
-   
+   </div>
     <!-- Product Quick View Modal Start -->
     <div class="modal fade quick-view-product" id="quick-view-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

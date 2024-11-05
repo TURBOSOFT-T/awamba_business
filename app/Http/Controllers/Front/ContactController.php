@@ -34,4 +34,9 @@ class ContactController extends Controller
         $configs= config::firstOrFail();
         return view('front.about.about', compact('configs'));
     }
+	
+	public function condition(){
+        $configs= config::firstOrFail();
+        return view('front.condition.condition', compact('configs'));
+    }
 }
