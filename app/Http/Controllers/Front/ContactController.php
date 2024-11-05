@@ -29,4 +29,9 @@ class ContactController extends Controller
        return back()->with ('message', __('Votre message a été envoyé avec succès'));
       
     }
+
+    public function about(){
+        $configs= config::firstOrFail();
+        return view('front.about.about', compact('configs'));
+    }
 }
