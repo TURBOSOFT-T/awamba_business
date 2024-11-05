@@ -28,8 +28,6 @@ class config extends Model
         'twitter',
         'linkedin',
         'youtube',
-        'image_login',
-        'image_register',
 
         
     ];
