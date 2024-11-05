@@ -52,12 +52,10 @@ $produit = DB::table('produits')->get();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/styles.cs s') }}">
+ 
     <link href="/assets/css/styles.css" rel="stylesheet">
     <script src="/Script.js"></script>
-
-
 
     @yield('SEO')
 </head>
