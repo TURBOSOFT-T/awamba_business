@@ -34,6 +34,8 @@ class AdminContact extends Component
         $this->twitter=$config->twitter;
         $this->linkedin=$config->linkedin;
         $this->youtube=$config->youtube;
+        $this->image_login=$config->image_login;
+        $this->image_register=$config->image_register;
 
 
     }
@@ -63,6 +65,8 @@ class AdminContact extends Component
             'twitter' => 'nullable',
             'linkedin' => 'nullable',
             'youtube' => 'nullable',
+            'image_login' =>  'image|nullable|max:4024',
+            'image_register' =>  'image|nullable|max:4024',            
         ]);
      
         // update the user
@@ -97,6 +101,22 @@ class AdminContact extends Component
                 Storage::disk('public')->delete($this->icon2);
             }
             $config->icon= $this->icon->store('icon', 'public');
+        }
+
+        if($this->image_login) {
+            //delete old image
+            if ($this->image_login) {
+                Storage::disk('public')->delete($this->image_login);
+            }
+            $config->image_login= $this->image_login->store('image_login', 'public');
+        }
+
+        if($this->image_register) {
+            //delete old image
+            if ($this->image_register) {
+                Storage::disk('public')->delete($this->image_register);
+            }
+            $config->image_register= $this->image_register->store('image_register', 'public');
         }
 
         $config->frais = $this->frais;

@@ -40,7 +40,24 @@ Route::get('/download-backup', [BackupController::class, 'export'])->name('backu
 Route::post('/locale', [LocaleController::class ,'change'])->name("locale.change");
 //Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
 //Route::get('search')->get('', [HomeController::class, 'search']);
+   // CACHE CLEAR ROUTE
+   Route::get('cache-clear', function () {
+    Artisan::call('optimize:clear');
+    request()->session()->flash('success', 'Successfully cache cleared.');
+    return redirect()->back();
+})->name('cache.clear');
+
+
+// STORAGE LINKED ROUTE
+Route::get('storage-link',[AdminController::class,'storageLink'])->name('storage.link');
+
+
 Route::get('contact', [ContactController::class, 'contact'])->name("contact");
+Route::get('about', [ContactController::class, 'about'])->name("about");
+/////temoignages
+Route::resource('testimonial', TestimonialController::class);
+
+
 Route::get('search', [HomeController::class, 'search'])->name("search");
 
 Route::resource('contacts', ContactController::class, ['only' => ['create', 'store']]);
