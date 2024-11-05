@@ -39,6 +39,8 @@
             </div>
         </div>
 
+
+        
         <!-- Step 3 -->
         <div class="step">
             <h5 class="mt-4">Choisissez le type de Vendeur</h5>
