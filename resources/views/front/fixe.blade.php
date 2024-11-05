@@ -840,7 +840,7 @@ $produit = DB::table('produits')->get();
     <!-- End Footer Area  -->
     </div>
 	<style>
-        /* Custom CSS for footer */
+        
         .footer {
             background-color: #111;
             color: #fff;
