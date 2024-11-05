@@ -91,6 +91,7 @@
         border-radius: 5px;
         background-color: #fbecec; /* Couleur de fond légèrement rose */
     }
+    
     .btn-submit {
         background-color: #E74C3C;
         color: #fff;
