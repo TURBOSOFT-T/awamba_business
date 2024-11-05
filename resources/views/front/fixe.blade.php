@@ -54,8 +54,6 @@ $produit = DB::table('produits')->get();
     <link href="/assets/css/styles.css" rel="stylesheet">
     <script src="/Script.js"></script>
 
-
-
     @yield('SEO')
 </head>
 
