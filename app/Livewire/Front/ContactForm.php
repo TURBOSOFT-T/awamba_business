@@ -6,6 +6,9 @@ use App\Models\Contact;
 use App\Models\notifications;
 use Livewire\Component;
 
+use Mail;
+
+
 class ContactForm extends Component
 {
 
