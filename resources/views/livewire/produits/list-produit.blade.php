@@ -72,8 +72,7 @@
                     </th>
                     <th>Photo</th>
                     <th>Nom</th>
-                   <th>Stock Général</th>
-                    <th> Détails Stock</th>
+                    <th>Stock</th>
                     <th>Prix vente</th>
                     <th>Prix achat</th>
                     <th>Sell</th>
@@ -108,71 +107,45 @@
 
                             {{ $produit->nom }}
                         </td>
-                       
-                            <td>
-                                <span> <b>{{ $produit->stock }}</b> unités</span>
-                            </td>
-                       
+
+                          
                         <td class="cusor">
                             {{--   <span class="badge {{ $produit->stock > 0 ? 'bg-success' : 'bg-danger' }}">
                                 {{ $produit->stock > 0 ? 'En stock' : 'Rupture' }}
                             </span> --}}
 
-                          {{--   @if ($produit->stock > 20)
-                               
+                            @if ($produit->stock > 20)
+                                <!-- Icône pour en stock -->
                                 <span class="text-success" title="En Stock">
                                     <i class="fas fa-check-circle"></i>
-                                    <span class=" text-sucess"> <b onclick="url('{{ route('produits.historique', ['id' => $produit->id]) }}')">
-                                        {{ $produit->stock }} U.
-                                    </b></span>
-
+                                    <span class="badge badge-success">En Stock</span>
+                                    {{ $produit->stock }} U.
                                 </span>
-                                <b onclick="url('{{ route('produits.historique', ['id' => $produit->id]) }}')">
-                                
-                                </b>
                             @endif
 
                             @if ($produit->stock < 20 && $produit->stock > 0)
-                             
+                                <!-- Seuil pour l'alerte -->
+                                {{ $produit->stock }} U.
                                 <span class="badge badge-yellow" title="{{ $produit->stock }} Produit(s) en stock pour le moment"  style="background-color: rgb(222, 222, 19) ;  color: rgb(252, 253, 251);">Alerte Stock Bas</span>
                             @endif
 
 
                             @if ($produit->stock == 0)
-                               
+                                <!-- Icône pour rupture de stock -->
                                 <span class="text-danger" title="Rupture de Stock">
                                     <i class="fas fa-times-circle"></i>
                                     <span class="badge badge-danger">Rupture</span>
                                 </span>
-                            @endif --}}
-
-                            @foreach($produit->tailles as $taille)
-                            <div>
-                                <span>Taille : <b>{{ $taille->nom }}</b></span>
-                                
-                                <!-- Vérifier le stock de chaque taille -->
-                              
-                                @if ($taille->pivot->stock > 0)
-                                    <span class="text-success">
-                                        <i class="fas fa-check-circle"></i>
-                                        Stock : {{ $taille->pivot->stock }} unités
-                                    </span>
-                                @else
-                                    <span class="text-danger" title="Rupture de Stock">
-                                        <i class="fas fa-times-circle"></i>
-                                        <span class="badge badge-danger">Rupture</span>
-                                    </span>
-                                @endif
-                            </div>
-                        @endforeach
+                            @endif
                         </td>
-
-                       {{--  <td class="cusor">
-                        
+                        {{-- <td class="cusor">
+                            @if ($produit->sur_devis == false)
                                 <b onclick="url('{{ route('produits.historique', ['id' => $produit->id]) }}')">
                                     {{ $produit->stock }} U.
                                 </b>
-                          
+                            @else
+                                <b>------</b>
+                            @endif
 
                         </td> --}}
                         <td>
@@ -182,16 +155,16 @@
                                     - {{ $produit->inPromotion()->pourcentage }} %
                                 </span>
                                 <b class="text-success">
-                                    {{ $produit->getPrice() }} DT
+                                    {{ $produit->getPrice() }} <x-devise></x-devise>
                                 </b>
                                 <br>
                                 <strike>
                                     <span class="text-danger small">
-                                        {{ $produit->prix }} DT
+                                        {{ $produit->prix }} <x-devise></x-devise>
                                     </span>
                                 </strike>
                                 @elseif ($produit->sur_devis==false)
-                                {{ $produit->getPrice() }}DT
+                                {{ $produit->getPrice() }} <x-devise></x-devise>
                                 @else
                                 <b>------</b>
                             
@@ -200,7 +173,7 @@
                         </td>
                         <td>
                             @if($produit->sur_devis==false)
-                            {{ $produit->prix_achat }} DT
+                            {{ $produit->prix_achat }} <x-devise></x-devise>
                             @else
                             <b>------</b>
                             @endif
@@ -215,20 +188,21 @@
                        
                         <td>{{ $produit->created_at->format('d/m/Y') }} </td>
                         <td style="text-align: right;">
-                            <div class="btn-group">
 
                             
-                                {{--                 <b title="Historique"
-                                                    onclick="window.location.href='{{ route('produits.historique', ['id' => $produit->id]) }}'">
-            
-                                                    <i class="fas fa-history"></i>
-                                                </b --}}
-                                          
-                                                <button class="btn btn-primary btn-sm" title="Ajouter Stock"
-                                                    wire:click="openModal({{ $produit->id }})">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                         
+                            @if ($produit->stock < 20)
+                            {{--                 <b title="Historique"
+                                                onclick="window.location.href='{{ route('produits.historique', ['id' => $produit->id]) }}'">
+        
+                                                <i class="fas fa-history"></i>
+                                            </b --}}
+                                      
+                                            <button class="btn btn-primary btn-sm" title="Ajouter Stock"
+                                                wire:click="openModal({{ $produit->id }})">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        @endif
+                            <div class="btn-group">
                                 <button class="btn btn-sm btn-dark"
                                     onclick="url(' {{ route('produits.update', ['id' => $produit->id]) }} ')">
                                     <i class="ri-edit-box-line"></i>
@@ -348,99 +322,53 @@
             color: white;
             font-weight: bold;
         }
-    
+
         .badge-success {
             background-color: green;
         }
-    
+
         .badge-danger {
             background-color: red;
         }
     </style>
-    
-    
-    
-    {{-- @if ($showModal)
-    <div class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ajouter Stock pour {{ $selectedProduit }}</h5>
-                    <button type="button" class="btn-close" wire:click="$set('showModal', false)"
-                        aria-label="Close"></button>
-                </div>
-
-                <input type="hidden" wire:model="produit_id">
-                <input type="hidden" wire:model="taille_id">
 
 
-              
-                <div class="modal-body">
-                    <form wire:submit.prevent="addStock">
-                        <div class="mb-3">
-                            <label for="stock" class="form-label">Quantité à ajouter</label>
-                            <input type="number" id="stock" wire:model="stock" class="form-control"
-                                min="1">
-                            @error('stock')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif --}}
+
 
     @if ($showModal)
-    <div class="modal fade show" style="display: block;" tabindex="-1" role="dialog" id="add-stock-modal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ajouter Stock pour {{ $selectedProduit }}</h5>
-                    <button type="button" class="btn-close" wire:click="$set('showModal', false)"
-                        aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <form wire:submit.prevent="addStock">
-                        <div class="mb-3">
-                            <label for="taille" class="form-label">Sélectionnez une taille</label>
-                            <select id="taille" wire:model="taille_id" class="form-select">
-                                <option value="">Choisissez une taille</option>
-                                @foreach($tailles as $size)
-                                    <option value="{{ $size->id }}">{{ $size->nom }}</option>
-                                @endforeach
-                            </select>
-                            @error('taille_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="stock" class="form-label">Quantité à ajouter</label>
-                            <input type="number" id="stock" wire:model="stock" class="form-control" min="1">
-                            @error('stock')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
-                    </form>
+        <div class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajouter Stock pour {{ $selectedProduit }}</h5>
+                        <button type="button" class="btn-close" wire:click="$set('showModal', false)"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form wire:submit.prevent="addStock">
+                            <div class="mb-3">
+                                <label for="stock" class="form-label">Quantité à ajouter</label>
+                                <input type="number" id="stock" wire:model="stock" class="form-control"
+                                    min="1">
+                                @error('stock')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endif
+    @endif
     <script>
-    document.addEventListener('livewire:load', function() {
-        Livewire.on('openModal', () => {
-            var modal = new bootstrap.Modal(document.getElementById('add-stock-modal'));
-            modal.show();
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('openModal', () => {
+                var modal = new bootstrap.Modal(document.getElementById('add-stock-modal'));
+                modal.show();
+            });
         });
-    });
     </script>
-    
+
 
 </div>
-
