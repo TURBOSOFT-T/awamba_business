@@ -8,7 +8,7 @@
             $produit = DB::table('produits')->get();
         @endphp
 
- <main class="main-wrapper  mt-4 mb-4">
+ <main class="main-wrapper">
 <style>
         .promo-section {
             background-color: #FAE7E7; /* Light pink */
@@ -240,7 +240,7 @@ input[type="radio"]:checked + label:before {
             <div class="carousel-item active">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="text-center">
-                        <h1 style="color:#DB4444">
+                        <h1 class="h2" style="color:#DB4444">
                             Vendez sans 
 Aucun Frais de 
 Commission avec
@@ -258,7 +258,7 @@ AWAMBA BUSINESS !
             <div class="carousel-item">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="text-center">
-                        <h1 style="color:#DB4444">
+                        <h1 class="h2" style="color:#DB4444">
                             Achetez des Produits à l’international et revendez en Afrique avec 
                             <strong>AWAMBA BUSINESS</strong> Gratuitement !
                         </h1>
@@ -272,7 +272,7 @@ AWAMBA BUSINESS !
 			<div class="carousel-item">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="text-center">
-                        <h1 style="color:#DB4444">
+                        <h1 class="h2" style="color:#DB4444">
                           Récompenses pour les Utilisateurs Réguliers
                         </h1>
                         <div class="mt-4">
@@ -285,7 +285,7 @@ AWAMBA BUSINESS !
 			<div class="carousel-item">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="text-center">
-                        <h1 style="color:#DB4444">
+                        <h1 class="h2" style="color:#DB4444">
                          Awamba Business aide les fabricants africains à vendre leurs produits locaux dans le monde entier ! Grâce à notre plateforme, 
 						 accédez facilement aux marchés d'Europe, d'Asie et d'Amérique
                         </h1>
