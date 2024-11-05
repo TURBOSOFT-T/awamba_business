@@ -168,7 +168,7 @@
                         </ul>
                     </li>
                 @endcan
-
+{{-- 
                 <li>
                     <a href="{{ route('tailles') }}">
                         <div class="parent-icon icon-color-3"> <i class="ri-boxing-fill"></i>
@@ -177,7 +177,7 @@
                             Les tailles
                         </div>
                     </a>
-                </li> 
+                </li>  --}}
 
              {{--    <li>
                     <a href="javascript:;" class="has-arrow">
@@ -503,9 +503,9 @@
     <!--footer -->
     <div class="footer">
         <p class="mb-0">@ {{ date('Y') }} | Developed By :
-            <a href="#" target="_blank" style="color: #c71f17 !important;">
+            <a href="https://turbosoft-techno.com" target="_blank" style="color: #c71f17 !important;">
                 <strong>
-                    BECKER
+                    TURBOSOFT
                 </strong>
             </a>
         </p>
