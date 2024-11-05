@@ -29,16 +29,18 @@ $produit = DB::table('produits')->get();
     ============================================ -->
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/vendor/font-awesome.css">
-    <link rel="stylesheet" href="assets/css/vendor/flaticon/flaticon.css">
-    <link rel="stylesheet" href="assets/css/vendor/slick.css">
-    <link rel="stylesheet" href="assets/css/vendor/slick-theme.css">
-    <link rel="stylesheet" href="assets/css/vendor/jquery-ui.min.css">
-    <link rel="stylesheet" href="assets/css/vendor/sal.css">
-    <link rel="stylesheet" href="assets/css/vendor/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/vendor/base.css">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/vendor/font-awesome.css">
+    <link rel="stylesheet" href="/assets/css/vendor/flaticon/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/vendor/slick.css">
+    <link rel="stylesheet" href="/assets/css/vendor/slick-theme.css">
+    <link rel="stylesheet" href="/assets/css/vendor/jquery-ui.min.css">
+    <link rel="stylesheet" href="/assets/css/vendor/sal.css">
+    <link rel="stylesheet" href="/assets/css/vendor/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/vendor/base.css">
+    <link rel="stylesheet" href="/assets/css/style.min.css">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -61,213 +63,9 @@ $produit = DB::table('produits')->get();
 
 <body>
 
-    <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
-    <!-- Start Header -->
-    <header class="header axil-header header-style-5">
-        <div class="axil-header-top">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-sm-6 col-12">
-                        <div class="header-top-dropdown">
-                            <div class="dropdown">
-                                <form action="{{ route('locale.change') }}" method="POST">
-                                    @csrf
-                                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ app()->getLocale() == 'fr' ? 'Français' : 'English' }}
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <button type="submit" name="locale" value="fr" class="dropdown-item">
-                                            <img src="https://img.icons8.com/color/20/france-circular.png" alt="fr">
-                                            Français
-                                        </button>
-                                        <button type="submit" name="locale" value="en" class="dropdown-item">
-                                            <img src="https://img.icons8.com/color/20/great-britain-circular.png" alt="en">
-                                            English
-                                        </button>
-
-                                    </ul>
-                                </form>
-                            </div>
-                            <div class="dropdown">
-                               {{--  <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    USD
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">USD</a></li>
-                                    <li><a class="dropdown-item" href="#">AUD</a></li>
-                                    <li><a class="dropdown-item" href="#">EUR</a></li>
-                                </ul> --}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-sm-6 col-12">
-                        <div class="header-top-link">
-                            <ul class="quick-link">
-                                <li><a href="#">Help</a></li>
-                                <li><a href="sign-up.html">Join Us</a></li>
-                                <li><a href="sign-in.html">Sign In</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Start Mainmenu Area  -->
-        <div id="axil-sticky-placeholder"></div>
-        <div class="axil-mainmenu">
-            <div class="container">
-                <div class="header-navbar">
-                    <div class="header-brand">
-                        <a href="index.html" class="logo logo-dark">
-                            <img src="assets/images/logo/logo.png" alt="Site Logo">
-                        </a>
-                        <a href="index.html" class="logo logo-light">
-                            <img src="assets/images/logo/logo-light.png" alt="Site Logo">
-                        </a>
-                    </div>
-                    <div class="header-main-nav">
-                        <!-- Start Mainmanu Nav -->
-                        <nav class="mainmenu-nav">
-                            <button class="mobile-close-btn mobile-nav-toggler"><i class="fas fa-times"></i></button>
-                            <div class="mobile-nav-brand">
-                                <a href="index.html" class="logo">
-                                    <img src="assets/images/logo/logo.png" alt="Site Logo">
-                                </a>
-                            </div>
-                            <ul class="mainmenu">
-                                <li><a href="{{ route('home') }}">{{ __('accueil') }}</a>
-
-                                </li>
-
-
-                                <li><a href="{{ route('shop') }}">{{ __('boutique') }}</a></li>
-
-
-                                <li><a href="{{ route('contact') }}">Contact</a></li>
-
-                                
-                                @guest
-                                @else
-                                @if (auth()->user()->role != 'client')
-                                <li><a href="{{ url('dashboard') }}" class="nav-item nav-link">Dashboard</a>
-                                </li>
-                                @endif
-
-
-
-
-
-                                @endguest
-                            </ul>
-                        </nav>
-                        <!-- End Mainmanu Nav -->
-                    </div>
-                    <div class="header-action">
-                        <ul class="action-list">
-                            <li class="axil-search d-xl-block d-none">
-                                <input type="search" class="placeholder product-search-input" name="search2" id="search2" value="" maxlength="128" placeholder="What are you looking for?" autocomplete="off">
-                                <button type="submit" class="icon wooc-btn-search">
-                                    <i class="flaticon-magnifying-glass"></i>
-                                </button>
-                            </li>
-                            <li class="axil-search d-xl-none d-block">
-                                <a href="javascript:void(0)" class="header-search-icon" title="Search">
-                                    <i class="flaticon-magnifying-glass"></i>
-                                </a>
-                            </li>
-                            <li class="wishlist">
-                                <a href="wishlist.html">
-                                    <i class="flaticon-heart"></i>
-                                </a>
-                            </li>
-                            <li class="shopping-cart">
-                                <a href="#" class="cart-dropdown-btn">
-                                    <span class="cart-count">3</span>
-                                    <i class="flaticon-shopping-cart"></i>
-                                </a>
-                            </li>
-
-                            <li class="my-account">
-                                <a href="javascript:void(0)">
-                                    <i class="far fa-user"></i>
-                                </a>
-                                <div class="my-account-dropdown">
-
-                                    @if (Auth()->user())
-                                    <ul>
-                                        @if (auth()->user()->role != 'client')
-                                        <li><a href="{{ url('dashboard') }}">Dashboard</a>
-                                        </li>
-                                        @endif
-                                   
-                                        <li>
-                                            <a href="{{ route('favories') }}">Mes favoris</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('cart') }}">Mon panier</a>
-                                        </li>
-                                        <li>
-
-                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();   document.getElementById('logout-form').submit();">
-                                                Déconnexion
-                                            </a>
-
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                @csrf
-                                            </form>
-                                        </li>
-
-
-
-
-                                    </ul>
-                                    @else
-                                    <div class="login-btn">
-                                        <a href="{{ url('login') }}" class="axil-btn btn-bg-primary">Connexion</a>
-                                    </div>
-
-                                    <div class="reg-footer text-center">Pas de compte? <a href="{{ url('register') }}" class="btn-link">S'inscrire ici.</a>
-                                    </div>
-                                    @endif
-
-                                </div>
-                            </li>
-                           
-                            <li class="axil-mobile-toggle">
-                                <button class="menu-btn mobile-nav-toggler">
-                                    <i class="flaticon-menu-2"></i>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Mainmenu Area -->
-        <div class="header-top-campaign">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-5 col-lg-6 col-md-10">
-                        <div class="header-campaign-activation axil-slick-arrow arrow-both-side header-campaign-arrow">
-                            <div class="slick-slide">
-                                <div class="campaign-content">
-                                    <p>STUDENT NOW GET 10% OFF : <a href="#">GET OFFER</a></p>
-                                </div>
-                            </div>
-                            <div class="slick-slide">
-                                <div class="campaign-content">
-                                    <p>STUDENT NOW GET 10% OFF : <a href="#">GET OFFER</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-  {{--  
-    <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
-    
+{{-- 
+   <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a> 
+  
     <header class="header axil-header header-style-2">
         <div class="header-top-campaign">
             <div class="container position-relative">
@@ -278,7 +76,7 @@ $produit = DB::table('produits')->get();
             </div>
             <button class="remove-campaign"><i class="fal fa-times"></i></button>
         </div>
-    
+       
         <div class="axil-header-top">
             <div class="container">
                 <div class="row align-items-center">
@@ -301,39 +99,36 @@ $produit = DB::table('produits')->get();
                                 <input type="search" class="placeholder product-search-input" name="search2" id="search2" value="" maxlength="128" placeholder="What are you looking for...." autocomplete="off">
                             </div>
                             <div class="dropdown">
-                            
+                                <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    USD
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">USD</a></li>
+                                    <li><a class="dropdown-item" href="#">AUD</a></li>
+                                    <li><a class="dropdown-item" href="#">EUR</a></li>
+                                </ul>
                             </div>
                             <div class="dropdown">
-
-                                <form action="{{ route('locale.change') }}" method="POST">
-                                    @csrf
-                                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ app()->getLocale() == 'fr' ? 'Français' : 'English' }}
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <button type="submit" name="locale" value="fr" class="dropdown-item">
-                                            <img src="https://img.icons8.com/color/20/france-circular.png" alt="fr">
-                                            Français
-                                        </button>
-                                        <button type="submit" name="locale" value="en" class="dropdown-item">
-                                            <img src="https://img.icons8.com/color/20/great-britain-circular.png" alt="en">
-                                            English
-                                        </button>
-
-                                    </ul>
-                                </form>
+                                <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    EN
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">EN</a></li>
+                                    <li><a class="dropdown-item" href="#">ARB</a></li>
+                                    <li><a class="dropdown-item" href="#">SPN</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-     
+   
         <div class="axil-mainmenu aside-category-menu">
             <div class="container">
                 <div class="header-navbar">
                     <div class="header-nav-department">
-                         <aside class="header-department">
+                        <aside class="header-department">
                             <button class="header-department-text department-title">
                                 <span class="icon"><i class="fal fa-bars"></i></span>
                                 <span class="text">Categories</span>
@@ -569,15 +364,10 @@ $produit = DB::table('produits')->get();
 
                                 </ul>
                             </nav>
-                        </aside> 
-
-                        
-                        
+                        </aside>
                     </div>
-
-                    
                     <div class="header-main-nav">
-                       
+                        
                         <nav class="mainmenu-nav">
                             <button class="mobile-close-btn mobile-nav-toggler"><i class="fas fa-times"></i></button>
                             <div class="mobile-nav-brand">
@@ -586,39 +376,67 @@ $produit = DB::table('produits')->get();
                                 </a>
                             </div>
                             <ul class="mainmenu">
-                                <li><a href="{{ route('home') }}">{{ __('accueil') }}</a>
-
+                                <li class="menu-item-has-children">
+                                    <a href="#">Home</a>
+                                    <ul class="axil-submenu">
+                                        <li><a href="index-1.html">Home - Electronics</a></li>
+                                        <li><a href="index-2.html">Home - NFT</a></li>
+                                        <li><a href="index-3.html">Home - Fashion</a></li>
+                                        <li><a href="index-4.html">Home - Jewellery</a></li>
+                                        <li><a href="index-5.html">Home - Furniture</a></li>
+                                        <li><a href="index-7.html">Home - Multipurpose</a></li>
+                                        <li><a href="https://new.axilthemes.com/demo/template/etrade-rtl/">RTL Version</a></li>
+                                    </ul>
                                 </li>
-
-
-                                <li><a href="{{ route('shop') }}">{{ __('boutique') }}</a></li>
-
-
-                                <li><a href="{{ route('contact') }}">Contact</a></li>
-
-                                @if (auth()->user())
-                                <li> <a href="{{ route('comptes') }}">
-
-                                        {{ __('compte') }}
-                                    </a>
-                                    @endif
+                                <li class="menu-item-has-children">
+                                    <a href="#">Shop</a>
+                                    <ul class="axil-submenu">
+                                        <li><a href="shop-sidebar.html">Shop With Sidebar</a></li>
+                                        <li><a href="shop.html">Shop no Sidebar</a></li>
+                                        <li><a href="single-product.html">Product Variation 1</a></li>
+                                        <li><a href="single-product-2.html">Product Variation 2</a></li>
+                                        <li><a href="single-product-3.html">Product Variation 3</a></li>
+                                        <li><a href="single-product-4.html">Product Variation 4</a></li>
+                                        <li><a href="single-product-5.html">Product Variation 5</a></li>
+                                        <li><a href="single-product-6.html">Product Variation 6</a></li>
+                                        <li><a href="single-product-7.html">Product Variation 7</a></li>
+                                        <li><a href="single-product-8.html">Product Variation 8</a></li>
+                                    </ul>
                                 </li>
-                                @guest
-                                @else
-                                @if (auth()->user()->role != 'client')
-                                <li><a href="{{ url('dashboard') }}" class="nav-item nav-link">Dashboard</a>
+                                <li class="menu-item-has-children">
+                                    <a href="#">Pages</a>
+                                    <ul class="axil-submenu">
+                                        <li><a href="wishlist.html">Wishlist</a></li>
+                                        <li><a href="cart.html">Cart</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="my-account.html">Account</a></li>
+                                        <li><a href="sign-up.html">Sign Up</a></li>
+                                        <li><a href="sign-in.html">Sign In</a></li>
+                                        <li><a href="forgot-password.html">Forgot Password</a></li>
+                                        <li><a href="reset-password.html">Reset Password</a></li>
+                                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                        <li><a href="coming-soon.html">Coming Soon</a></li>
+                                        <li><a href="404.html">404 Error</a></li>
+                                        <li><a href="typography.html">Typography</a></li>
+                                    </ul>
                                 </li>
-                                @endif
-
-
-
-
-
-                                @endguest
-
+                                <li><a href="about-us.html">About</a></li>
+                                <li class="menu-item-has-children">
+                                    <a href="#">Blog</a>
+                                    <ul class="axil-submenu">
+                                        <li><a href="blog.html">Blog List</a></li>
+                                        <li><a href="blog-grid.html">Blog Grid</a></li>
+                                        <li><a href="blog-details.html">Standard Post</a></li>
+                                        <li><a href="blog-gallery.html">Gallery Post</a></li>
+                                        <li><a href="blog-video.html">Video Post</a></li>
+                                        <li><a href="blog-audio.html">Audio Post</a></li>
+                                        <li><a href="blog-quote.html">Quote Post</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
-                      
+                     
                     </div>
                     <div class="header-action">
                         <ul class="action-list">
@@ -640,6 +458,171 @@ $produit = DB::table('produits')->get();
                             </li>
                             <li class="my-account">
                                 <a href="javascript:void(0)">
+                                    <i class="flaticon-person"></i>
+                                </a>
+                                <div class="my-account-dropdown">
+                                    <span class="title">QUICKLINKS</span>
+                                    <ul>
+                                        <li>
+                                            <a href="my-account.html">My Account</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Initiate return</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Support</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Language</a>
+                                        </li>
+                                    </ul>
+                                    <div class="login-btn">
+                                        <a href="sign-in.html" class="axil-btn btn-bg-primary">Login</a>
+                                    </div>
+                                    <div class="reg-footer text-center">No account yet? <a href="sign-up.html" class="btn-link">REGISTER HERE.</a></div>
+                                </div>
+                            </li>
+                            <li class="axil-mobile-toggle">
+                                <button class="menu-btn mobile-nav-toggler">
+                                    <i class="flaticon-menu-2"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+    </header> --}}
+
+    <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
+   
+    <header class="header axil-header header-style-5">
+        <div class="axil-header-top">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="header-top-dropdown">
+                            <div class="dropdown">
+                                <form action="{{ route('locale.change') }}" method="POST">
+                                    @csrf
+                                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ app()->getLocale() == 'fr' ? 'Français' : 'English' }}
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <button type="submit" name="locale" value="fr" class="dropdown-item">
+                                            <img src="https://img.icons8.com/color/20/france-circular.png" alt="fr">
+                                            Français
+                                        </button>
+                                        <button type="submit" name="locale" value="en" class="dropdown-item">
+                                            <img src="https://img.icons8.com/color/20/great-britain-circular.png" alt="en">
+                                            English
+                                        </button>
+
+                                    </ul>
+                                </form>
+                            </div>
+                            <div class="dropdown">
+                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="header-top-link">
+                            <ul class="quick-link">
+                                <li><a href="#">Help</a></li>
+                                <li><a href="sign-up.html">Join Us</a></li>
+                                <li><a href="sign-in.html">Sign In</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div id="axil-sticky-placeholder"></div>
+        <div class="axil-mainmenu">
+            <div class="container">
+                <div class="header-navbar">
+                    <div class="header-brand">
+                        <a href="index.html" class="logo logo-dark">
+                            <img src="assets/images/logo/logo.png" alt="Site Logo">
+                        </a>
+                        <a href="index.html" class="logo logo-light">
+                            <img src="assets/images/logo/logo-light.png" alt="Site Logo">
+                        </a>
+                    </div>
+                    <div class="header-main-nav">
+                       
+                        <nav class="mainmenu-nav">
+                            <button class="mobile-close-btn mobile-nav-toggler"><i class="fas fa-times"></i></button>
+                            <div class="mobile-nav-brand">
+                                <a href="index.html" class="logo">
+                                    <img src="assets/images/logo/logo.png" alt="Site Logo">
+                                </a>
+                            </div>
+                            <ul class="mainmenu">
+                                <li><a href="{{ route('home') }}">{{ __('accueil') }}</a>
+
+                                </li>
+
+
+                                <li><a href="{{ route('shop') }}">{{ __('boutique') }}</a></li>
+                            </li class="menu-item">
+                            <li><a href="{{ route('about') }}">
+                                {{ \App\Helpers\TranslationHelper::TranslateText('A propos de nous') }}    
+                            </a></li>
+            
+
+
+                                <li><a href="{{ route('contact') }}">Contact</a></li>
+
+                                
+                                @guest
+                                @else
+                                @if (auth()->user()->role != 'client')
+                                <li><a href="{{ url('dashboard') }}" class="nav-item nav-link">Dashboard</a>
+                                </li>
+                                @endif
+
+                                
+
+
+
+
+
+                                @endguest
+                            </ul>
+                        </nav>
+              
+                    </div>
+                    <div class="header-action">
+                        <ul class="action-list">
+                            <li class="axil-search d-xl-block d-none">
+                                <input type="search" class="placeholder product-search-input" name="search2" id="search2" value="" maxlength="128" placeholder="{{ \App\Helpers\TranslationHelper::TranslateText("Rechercher produit") }}" autocomplete="off">
+                                <button type="submit" class="icon wooc-btn-search">
+                                    <i class="flaticon-magnifying-glass"></i>
+                                </button>
+                            </li>
+                            <li class="axil-search d-xl-none d-block">
+                                <a href="javascript:void(0)" class="header-search-icon" title="Search">
+                                    <i class="flaticon-magnifying-glass"></i>
+                                </a>
+                            </li>
+                            <li class="wishlist">
+                                <a  href="{{ route('favories') }}">
+                                    <i class="flaticon-heart"></i>
+                                </a>
+                            </li>
+                            <li class="shopping-cart">
+                                <a href="#" class="cart-dropdown-btn">
+                                    <span class="cart-count"  id="count-panier-span">00</span>
+                                    <i class="flaticon-shopping-cart"></i>
+                                </a>
+                            </li>
+
+                            <li class="my-account">
+                                <a href="javascript:void(0)">
                                     <i class="far fa-user"></i>
                                 </a>
                                 <div class="my-account-dropdown">
@@ -650,6 +633,9 @@ $produit = DB::table('produits')->get();
                                         <li><a href="{{ url('dashboard') }}">Dashboard</a>
                                         </li>
                                         @endif
+                                         <li>
+                                    <a href="{{ route('account') }}">Mon compte</a>
+                                </li>
                                    
                                         <li>
                                             <a href="{{ route('favories') }}">Mes favoris</a>
@@ -683,6 +669,7 @@ $produit = DB::table('produits')->get();
 
                                 </div>
                             </li>
+                           
                             <li class="axil-mobile-toggle">
                                 <button class="menu-btn mobile-nav-toggler">
                                     <i class="flaticon-menu-2"></i>
@@ -693,10 +680,29 @@ $produit = DB::table('produits')->get();
                 </div>
             </div>
         </div>
-      
+        
+        <div class="header-top-campaign">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-5 col-lg-6 col-md-10">
+                        <div class="header-campaign-activation axil-slick-arrow arrow-both-side header-campaign-arrow">
+                            <div class="slick-slide">
+                                <div class="campaign-content">
+                                    <p>STUDENT NOW GET 10% OFF : <a href="#">GET OFFER</a></p>
+                                </div>
+                            </div>
+                            <div class="slick-slide">
+                                <div class="campaign-content">
+                                    <p>STUDENT NOW GET 10% OFF : <a href="#">GET OFFER</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
-
- --}}
+  
     <main>
 
 
@@ -708,56 +714,7 @@ $produit = DB::table('produits')->get();
 
     </main>
 
-    <div class="service-area">
-        <div class="container">
-            <div class="row row-cols-xl-4 row-cols-sm-2 row-cols-1 row--20">
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service1.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Fast &amp; Secure Delivery</h6>
-                            <p>Tell about your service.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service2.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Money Back Guarantee</h6>
-                            <p>Within 10 days.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service3.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">24 Hour Return Policy</h6>
-                            <p>No question ask.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service4.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Pro Quality Support</h6>
-                            <p>24/7 Live support.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
     <!-- Start Footer Area  -->
     <footer class="axil-footer-area footer-style-2">
         <!-- Start Footer Top Area  -->
@@ -1027,84 +984,80 @@ $produit = DB::table('produits')->get();
     <!-- Product Quick View Modal End -->
 
     <!-- Header Search Modal End -->
-    <div class="header-search-modal" id="header-search-modal">
+
+     <!-- Header Search Modal End -->
+     <div class="header-search-modal" id="header-search-modal">
         <button class="card-close sidebar-close"><i class="fas fa-times"></i></button>
         <div class="header-search-wrap">
             <div class="card-header">
-                <form action="#">
+                <form role="search" action="{{ url('search') }}" method="get">
                     <div class="input-group">
-                        <input type="search" class="form-control" name="prod-search" id="prod-search" placeholder="Write Something....">
+                        <input value="{{ $nom ?? '' }}" class="form-control" id="search" type="search" name="search" placeholder="{{ \App\Helpers\TranslationHelper::TranslateText("Rechercher produit") }}">
+
                         <button type="submit" class="axil-btn btn-bg-primary"><i class="far fa-search"></i></button>
                     </div>
                 </form>
             </div>
             <div class="card-body">
                 <div class="search-result-header">
-                    <h6 class="title">24 Result Found</h6>
-                    <a href="shop.html" class="view-all">View All</a>
+                    <h6 class="title"></h6>
+                    <a href="{{ route('shop') }}" class="view-all">{{ \App\Helpers\TranslationHelper::TranslateText("Voir tout") }}</a>
                 </div>
                 <div class="psearch-results">
+                    @if (isset($searchproducts))
+                    @foreach ($searchproducts as $produit)
                     <div class="axil-product-list">
                         <div class="thumbnail">
-                            <a href="single-product.html">
-                                <img src="./assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags">
+                            <a href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">
+                                <img width="100" height="100" src="{{ Storage::url($produit->photo) }}" alt="Yantiti Leather Bags">
                             </a>
                         </div>
                         <div class="product-content">
                             <div class="product-rating">
                                 <span class="rating-icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fal fa-star"></i>
-                                </span>
-                                <span class="rating-number"><span>100+</span> Reviews</span>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fal fa-star"></i>
+                            </span>
+                                <span class="rating-number"><span>100+</span> Reviews</span> 
                             </div>
-                            <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
+                            <h6 class="product-title"><a href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">{{ $produit->nom }}</a>
+                            </h6>
+
                             <div class="product-price-variant">
-                                <span class="price current-price">$29.99</span>
-                                <span class="price old-price">$49.99</span>
+                                @if ($produit->inPromotion())
+                                <span class="price current-price"><b class="text-success" style="color: #4169E1">
+                                        {{ $produit->getPrice() }} DT
+                                    </b></span>
+                                <span class="price old-price">
+                                    <span class="price old-price" style="position: relative; font-size: 1.2rem; color: #dc3545; font-weight: bold;">
+                                        {{ $produit->prix }} DT
+                                        <span style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background-color: black;"></span>
+                                    </span>
+                                </span>
+                                @else
+                                {{ $produit->getPrice() }}DT
+                                @endif
+
                             </div>
                             <div class="product-cart">
-                                <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
-                                <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
+                                <a onclick="AddToCart( {{ $produit->id }} )" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
+                                @if (Auth()->user())
+                                <a onclick="AddFavoris({{ $produit->id }})" class="cart-btn"><i class="fal fa-heart"></i></a>
+                                @endif
                             </div>
                         </div>
                     </div>
-                    <div class="axil-product-list">
-                        <div class="thumbnail">
-                            <a href="single-product.html">
-                                <img src="./assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags">
-                            </a>
-                        </div>
-                        <div class="product-content">
-                            <div class="product-rating">
-                                <span class="rating-icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fal fa-star"></i>
-                                </span>
-                                <span class="rating-number"><span>100+</span> Reviews</span>
-                            </div>
-                            <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
-                            <div class="product-price-variant">
-                                <span class="price current-price">$29.99</span>
-                                <span class="price old-price">$49.99</span>
-                            </div>
-                            <div class="product-cart">
-                                <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
-                                <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+                    @endif
+
                 </div>
             </div>
         </div>
     </div>
-    <!-- Header Search Modal End -->
+  
 
 
     <div class="cart-dropdown" id="cart-dropdown">
@@ -1137,30 +1090,30 @@ $produit = DB::table('produits')->get();
     </div>
 
 
-    <!-- JS
-    ============================================ -->
-    <!-- Modernizer JS -->
-    <script src="assets/js/vendor/modernizr.min.js"></script>
-    <!-- jQuery JS -->
-    <script src="assets/js/vendor/jquery.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="assets/js/vendor/popper.min.js"></script>
-    <script src="assets/js/vendor/bootstrap.min.js"></script>
-    <script src="assets/js/vendor/slick.min.js"></script>
-    <script src="assets/js/vendor/js.cookie.js"></script>
-    <!-- <script src="assets/js/vendor/jquery.style.switcher.js"></script> -->
-    <script src="assets/js/vendor/jquery-ui.min.js"></script>
-    <script src="assets/js/vendor/jquery.ui.touch-punch.min.js"></script>
-    <script src="assets/js/vendor/jquery.countdown.min.js"></script>
-    <script src="assets/js/vendor/sal.js"></script>
-    <script src="assets/js/vendor/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/vendor/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
-    <script src="assets/js/vendor/counterup.js"></script>
-    <script src="assets/js/vendor/waypoints.min.js"></script>
 
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+
+       <!-- Modernizer JS -->
+       <script src="/assets/js/vendor/modernizr.min.js"></script>
+       <!-- jQuery JS -->
+       <script src="/assets/js/vendor/jquery.js"></script>
+       <!-- Bootstrap JS -->
+       <script src="/assets/js/vendor/popper.min.js"></script>
+       <script src="/assets/js/vendor/bootstrap.min.js"></script>
+       <script src="/assets/js/vendor/slick.min.js"></script>
+       <script src="/assets/js/vendor/js.cookie.js"></script>
+       <!-- <script src="assets/js/vendor/jquery.style.switcher.js"></script> -->
+       <script src="/assets/js/vendor/jquery-ui.min.js"></script>
+       <script src="/assets/js/vendor/jquery.ui.touch-punch.min.js"></script>
+       <script src="/assets/js/vendor/jquery.countdown.min.js"></script>
+       <script src="/assets/js/vendor/sal.js"></script>
+       <script src="/assets/js/vendor/jquery.magnific-popup.min.js"></script>
+       <script src="/assets/js/vendor/imagesloaded.pkgd.min.js"></script>
+       <script src="/assets/js/vendor/isotope.pkgd.min.js"></script>
+       <script src="/assets/js/vendor/counterup.js"></script>
+       <script src="/assets/js/vendor/waypoints.min.js"></script>
+   
+     
+       <script src="/assets/js/main.js"></script>
 
 </body>
 
