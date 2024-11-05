@@ -15,8 +15,17 @@
         </div>
     @endif
     <div class="row">
+      {{--   <div class="col-sm-8">
+            <div class="form-check form-switch">
 
-
+                <input name="sur_devis" class="form-check-input" class="switch" type="checkbox" id="sur_devis"
+                    wire:model.lazy="sur_devis" wire:click="sur_devis">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Produit sur devis</label>
+                @error('sur_devis')
+                    <span class="text-danger small"> {{ $message }} </span>
+                @enderror
+            </div>
+        </div> --}}
         <br>
         <br>
         <div class="col-sm-8">
@@ -38,15 +47,8 @@
 
             <div class="row">
 
-
+             
                 <div>
-                    @php
-
-                        $tailles1 = DB::table('tailles')->get();
-
-                    @endphp
-
-
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -55,33 +57,25 @@
                         </thead>
                         <tbody>
                             @php
-                                $chunkSize = 6;
-                                $chunks = $tailles1->chunk($chunkSize);
-
+                                $chunkSize = 6; // Number of items per row
+                                $chunks = $tailles->chunk($chunkSize);
                             @endphp
-
+                
                             @foreach ($chunks as $chunk)
                                 <tr>
                                     @foreach ($chunk as $taille)
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input @error('taille') is-invalid @enderror"
-                                                    type="checkbox"
-                                                    id="taille{{ $loop->parent->index }}-{{ $loop->index }}"
-                                                    wire:model="selectedSizes" value="{{ $taille->id }}"
-                                                    {{ in_array($taille->id, $selectedSizes) ? 'checked' : '' }}>
-
-
+                                                <input class="form-check-input @error('taille') is-invalid @enderror" type="checkbox" id="taille{{ $loop->parent->index }}-{{ $loop->index }}" wire:model="taille" value="{{ $taille }}">
                                                 &nbsp
-                                                <label class="form-check-label"
-                                                    for="taille{{ $loop->parent->index }}-{{ $loop->index }}">
-                                                    {{ $taille->nom }}
+                                                <label class="form-check-label" for="taille{{ $loop->parent->index }}-{{ $loop->index }}">
+                                                    {{ $taille }}
                                                 </label>
                                             </div>
                                         </td>
                                     @endforeach
-
-
+                
+                                    <!-- Fill remaining cells if the chunk has fewer items than chunkSize -->
                                     @for ($i = count($chunk); $i < $chunkSize; $i++)
                                         <td></td>
                                     @endfor
@@ -89,28 +83,27 @@
                             @endforeach
                         </tbody>
                     </table>
-
-
+                
                     <style>
                         .table {
                             width: 100%;
                             border-collapse: collapse;
                         }
-
+                
                         .table td {
                             padding: 0.5rem;
-                            vertical-align: top;
+                            vertical-align: top; /* Aligns content to the top of the cell */
                         }
-
+                
                         .form-check {
                             display: flex;
                             align-items: center;
                         }
                     </style>
                 </div>
+              
 
 
-                
                 <div class="col-sm-12 mb-3">
                     <div class="form-group">
                         <table class="table table-bordered color-table">
@@ -144,7 +137,7 @@
                                             </td>
                                         @endforeach
 
-                                       
+                                        <!-- Fill remaining cells if chunk size is less than chunkSize -->
                                         @for ($i = count($chunk); $i < $chunkSize; $i++)
                                             <td></td>
                                         @endfor
@@ -163,7 +156,7 @@
                         .color-table td {
                             padding: 0.5rem;
                             vertical-align: top;
-                            
+                            /* Aligns content to the top of the cell */
                         }
 
                         .form-check {
@@ -182,6 +175,7 @@
                     </style>
                 </div>
  
+            
 
 
                 <div class="col-sm-6 mb-3">
@@ -244,7 +238,30 @@
             </div>
         </div>
         <div class="col-sm-4">
+           {{--  <div class="mb-3">
+                <label for="">Photo d'illustration</label>
+                <div class="preview-produit-illustration" onclick="preview_illustration('new-prosduit')">
+                    @if ($produit)
+                        @if ($photo2 && is_null($photo))
+                            <img src="{{ Storage::url($photo2) }}" alt="" class="w-100">
+                        @else
+                            <img src="{{ $photo->temporaryUrl() }}" alt="" srcset="">
+                        @endif
+                    @else
+                        @if ($photo)
+                            <img src="{{ $photo->temporaryUrl() }}" alt="" class="w-100">
+                        @else
+                        <img src="/icons/no-image.webp" alt="" class="w-100">
+                        @endif
+                    @endif
+                </div>
 
+                <input type="file" name="photo" accept="image/*" class=" d-none" id="file-input-new-prosduit"
+                    wire:model="photo">
+                @error('photo')
+                    <span class="text-danger small"> {{ $message }} </span>
+                @enderror
+            </div> --}}
 
             <div class="mb-3">
                 <label for="">Photo d'illustration</label>
@@ -293,3 +310,9 @@
     </div>
     </form>
 </div>
+{{-- <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.ckeditor').ckeditor();
+    });
+</script> --}}

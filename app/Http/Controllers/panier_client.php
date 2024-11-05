@@ -97,12 +97,12 @@ class panier_client extends Controller
             ->first();
 
    // Vérifier si la taille a été sélectionnée
-   if (empty($taille)) {
+ /*   if (empty($taille)) {
     return response()->json([
         'statut' => false,
-        'message' => __('messages.size_not_selected'), // Message d'erreur pour taille non sélectionnée
+        'message' => __('messages.size_not_selected'),
     ]);
-}
+} */
 
         
         if (!$produit) {

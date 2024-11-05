@@ -104,9 +104,9 @@
                             </div>
                         </td>
                         <td>{{ $item->produit->nom }}</td>
-                        <td>{{ $item->prix_unitaire }} DT</td>
+                        <td>{{ $item->prix_unitaire }} <x-devise></x-devise></td>
                         <td>{{ $item->quantite }}</td>
-                        <td>{{ $item->prix_unitaire * $item->quantite }} DT</td>
+                        <td>{{ $item->prix_unitaire * $item->quantite }} <x-devise></x-devise></td>
                     </tr>
                     @php
                         $total += $item->prix_unitaire * $item->quantite;
@@ -130,7 +130,7 @@
                 </tr>
                 <tr class="total">
                     <td colspan="4"><strong>Total</strong></td>
-                    <td><strong>{{ $total_tva }} DT</strong></td>
+                    <td><strong>{{ $total_tva }} <x-devise></x-devise></strong></td>
                 </tr>
             </tbody>
         </table>
