@@ -45,7 +45,7 @@
 
                             </td>
                             <td>
-                                {{ $contenu->quantite * $contenu->prix_unitaire }} <x-devise></x-devise>
+                                {{ $contenu->quantite * $contenu->prix_unitaire }} DT
                                 
                             </td>
                             <td>
@@ -62,9 +62,9 @@
                                 src="https://img.icons8.com/ios/30/40C057/delivery--v1.png" alt="delivery--v1" />
                         </td>
                         <td> <b>Frais de livraison</b> </td>
-                        <td> {{ $commande->frais ?? 0}} <x-devise></x-devise> </td>
+                        <td> {{ $commande->frais ?? 0}} DT </td>
                         <td> 1 </td>
-                        <td> {{ $commande->frais ?? 0}} <x-devise></x-devise> </td>
+                        <td> {{ $commande->frais ?? 0}} DT </td>
                         
                         <td></td>
                         
@@ -82,11 +82,11 @@
                         </td>
                         @if($commande->tax)
                         <td>
-                            {{ $commande->getTVA() }} <x-devise></x-devise>
+                            {{ $commande->getTVA() }} DT
                         </td>
                         @else
                         <td>
-                         00 <x-devise></x-devise>
+                         00 DT
                         </td>
                         @endif
                        

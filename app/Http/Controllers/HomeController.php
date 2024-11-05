@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use App\Http\Traits\ListColor;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 
 
@@ -34,15 +33,6 @@ class HomeController extends Controller
             ->Orwhere('description', 'like', '%'.$key.'%');
         }
        $produits = produits::select('*')->latest()->take(16)->get();
-       $produits_week = produits::where('created_at', '>=', Carbon::now()->subWeek())
-                   ->latest()
-                   ->take(16)
-                   ->get();
-
-
-                   $searchproducts = produits::select('*')->latest()->take(10)->get();
-                   $rescentesproduits = produits::select('*')->take(10)->get();
-
        $categoryProducts = DB::table('produits')
        ->select('*')
        ->where('category_id', 'category_id')
@@ -60,7 +50,7 @@ class HomeController extends Controller
 // $favorited = favoris::where('id_user', Auth::user()->id)->where("id_produit", $id_produit)->count();
 //$favorited = favoris::where('id_user', Auth::user()->id)->where("id_produit", $id_produit)->count();
       
-      return view('front.index', compact('searchproducts','couleurs','produits','configs','banners','key', 'categoryProducts', 'favoris'));
+      return view('front.index', compact('couleurs','produits','configs','banners','key', 'categoryProducts', 'favoris'));
 
     }
      
@@ -216,8 +206,7 @@ class HomeController extends Controller
     public function details($id){
         $produit =produits:: findOrFail($id);
         $configs= config::all();
-        $searchproducts = produits::select('*')->latest()->take(10)->get();
-        return view('front.shop.details', compact('produit','configs', 'searchproducts'));
+        return view('front.shop.details', compact('produit','configs'));
     }
     
     public function products($id)
