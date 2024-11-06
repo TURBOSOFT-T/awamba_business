@@ -29,11 +29,7 @@
                                 <h3>  {{ \App\Helpers\TranslationHelper::TranslateText("Félicitation pour  votre commande !") }}</h3>
                             </p>
                            
-                        {{--     <div class="order-id">
-                                <a href="/shop" class="btn btn"  style=" background-color: #DB4444;">
-                                    Continuer les achats
-                                </a>
-                            </div> --}}
+                        
                             <style>
                                 .btn-small-width {
                                     width: 300px; /* Ajustez la largeur selon vos besoins */
