@@ -170,8 +170,10 @@
 </div>
 
                                 
-                                <button type="submit" class="axil-btn btn-bg-primary2 checkout-btn">Valider la Commande</button>
-								<a href="#">Voir Conditions et Confidentialité</a>
+                               <div class="d-flex flex-column gap-3">
+							    <button type="submit" class="axil-btn btn-bg-primary2 checkout-btn">Valider la Commande</button>
+								<a href="/conditions">Voir Conditions et Confidentialité</a>
+							   </div>
                             </div>
                         </div>
                     </div>
