@@ -29,7 +29,11 @@ class User extends Authenticatable
         'avatar',
         'password',
         'phone',
-        'avatar'
+        'avatar',
+        'profile',
+        'type_vendeur',
+        'retro_image',
+        'verso_image'
     ];
 
     /**

@@ -25,6 +25,10 @@ return new class extends Migration
             $table->string('phone')->nullable(true)->default(null);
             $table->string('code_postal')->nullable(true)->default(null);
             $table->enum("role",["personnel","admin","client","developper"])->default("client");
+            $table->enum("profile",["acheteur","vendeur"])->default("acheteur");
+            $table->enum("type_vendeur",["Vendeur Particulier","Vendeur Commerçant","Entreprise"])->default("Entreprise");
+            $table->string("retro_image")->nullable(true)->default(null);
+            $table->string("verso_image")->nullable(true)->default(null);
             $table->string('token')->nullable();
             $table->rememberToken();
             $table->softDeletes();

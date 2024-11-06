@@ -3,6 +3,7 @@
     <form wire:submit.prevent="save" id="multiStepForm">
 	    <h3>Créer un Compte</h3>
         <!-- Step 1 -->
+        @if ($currentStep === 1)
         <div class="step active">
             <h5 class="mt-4">Remplissez les Champs Suivants</h5>
             <div class="form-group mb-3">
@@ -20,7 +21,9 @@
             <button type="button" class="btn-next" onclick="nextStep(event)">Suivant</button>
         </div>
 
+
         <!-- Step 2 -->
+        @elseif($currentStep==2)
         <div class="step">
             <h5 class="mt-4">Choisissez le type de Profil</h5>
 			
@@ -42,6 +45,7 @@
 
         
         <!-- Step 3 -->
+        @elseif($currentStep=3)
         <div class="step">
             <h5 class="mt-4">Choisissez le type de Vendeur</h5>
 			<div class="invalid-feedback">Veuillez choisi une type de profile</div>
@@ -81,15 +85,18 @@
                <button type="button" class="btn-next" onclick="nextStep(event)">Suivant</button>
             </div>
         </div>
+
 		<!-- Step 4 - Final Confirmation -->
+        @elseif($currentStep=4)
             <div class="step">
                 <h5 class="mt-4">Confirmation</h5>
                 <p>Vérifiez vos informations et cliquez sur "S'inscrire" pour finaliser votre inscription.</p>
 				<div class="d-flex gap-2 mt-3">
                 <button type="button" class="btn-prev" onclick="prevStep()">Précédent</button>
-                <button type="submit" class="btn-next" onclick="nextStep(event)">S'inscrire</button>
+                <button type="submit" class="btn-next"wire:click="save"  {{-- onclick="nextStep(event)" --}}>S'inscrire</button>
             </div>
             </div>
+            @endif
 
 			<div class="step">
             Votre compte a été bien validé !

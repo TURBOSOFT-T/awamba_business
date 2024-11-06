@@ -13,6 +13,100 @@ class Register extends Component
     public $nom, $prenom, $email, $password, $telephone;
     public $step = 1;
 
+    use WithFileUploads;
+
+    // Form fields
+    public  $profile, $recto_image, $verso_image, $type_vendeur, $user;
+    public $currentStep = 1;
+
+
+    
+    public function mount($user)
+    {
+        if ($user) {
+            $this->user = $user;
+            $this->nom = $user->nom;
+            $this->prenom = $user->prenom;
+            $this->email = $user->email;
+            $this->recto_image2 = $user->recto_image;
+            $this->verso_image2 = $user->verso_image;
+
+          
+          
+        }
+     
+    }
+
+
+
+    protected function rules()
+    {
+        return [
+            'nom' => 'required|string|min:2',
+            'email' =>'required|email|unique:users',
+            'password' => 'required|min:6',
+            'profile' => 'nullable|in:vendeur,acheteur',
+            
+            'type_vendeur' => 'nullable|in:Vendeur Particulier,Vendeur Commerçant', "Entreprise",
+            'recto_image' => 'required|image|max:10024', // max 10MB
+            'verso_image' => 'required|image|max:10024',
+        ];
+
+    }
+
+
+      // Step forward function
+      public function nextStep()
+      {
+          $this->validateCurrentStep();
+          $this->currentStep++;
+      }
+  
+      // Step back function
+      public function prevStep()
+      {
+          $this->currentStep--;
+      }
+  
+      // Validate based on the current step
+      public function validateCurrentStep()
+      {
+          if ($this->currentStep == 1) {
+              $this->validateOnly(['nom', 'email', 'password']);
+          } elseif ($this->currentStep == 2) {
+              $this->validateOnly(['profile']);
+          } elseif ($this->currentStep == 3) {
+              $this->validateOnly(['recto_image', 'verso_image']);
+          }
+      }
+  
+      // Final submission
+      public function save()
+      {
+          $this->validate();
+  
+          // Store images
+          $rectoPath = $this->recto_image->store('profile_photos', 'public');
+          $versoPath = $this->verso_image->store('profile_photos', 'public');
+  
+          // Save the user
+    $user=       User::create([
+              'nom' => $this->nom,
+              'email' => $this->email,
+              'password' => Hash::make($this->password),
+              'profile_type' => $this->profileType,
+              'recto_path' => $rectoPath,
+              'verso_path' => $versoPath,
+          ]);
+  
+          // Reset form fields
+          $this->reset();
+  
+          // Go to the success step
+          $this->currentStep = 5;
+      }
+
+
     public function render()
     {
         return view('livewire.front.register');
@@ -52,12 +146,7 @@ class Register extends Component
             'enter_code.integer' => 'Code incorrect',
         ]);
 
-        if($this->code !=  $this->enter_code){
-            //flash error message
-            session()->flash('error', 'Code entré est incorrect !');
-            return;
-        }
-
+    
         $this->step = 3;
     }
 
@@ -93,7 +182,7 @@ class Register extends Component
         
     }
 
-    public function save(){
+    public function save1(){
         $this->validate([
             'nom' =>'required|string',
             'prenom' =>'required|string',
