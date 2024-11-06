@@ -490,8 +490,20 @@ main {
 
     </div>
 	<hr class='border-2 border-top mt-4'/>
-	<div class="col-md-12 copy mt-4 ">
-            &copy; Copyright awamba 2024. All rights reserved
+	<div class="col-md-12 copy mt-1 ">
+
+        <p class="mb-0" style="font-size: 1.1rem;">
+            &copy; {{ date('Y') }} | Developed By:
+            <a href="https://turbosoft-techno.com" target="_blank" style="color: #c71f17 !important; font-size: 0.9rem;">
+              TURBOSOFT
+            </a>
+        </p>
+        
+        {{--  Copyright awamba {{ date('Y') }}. Designd By
+            <a href="https://turbosoft-techno.com"
+           style="color: #dc3545">
+             TURBOSOFT 
+        </a> --}}
         </div>
 </footer>
    </div>

@@ -503,9 +503,9 @@
     <!--footer -->
     <div class="footer">
         <p class="mb-0">@ {{ date('Y') }} | Developed By :
-            <a href="#" target="_blank" style="color: #c71f17 !important;">
+            <a href="https://turbosoft-techno.com" target="_blank" style="color: #c71f17 !important;">
                 <strong>
-                    BECKER
+                    TURBOSOFT
                 </strong>
             </a>
         </p>
