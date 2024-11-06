@@ -31,6 +31,12 @@ $produit = DB::table('produits')->get();
     <!-- Bootstrap CSS -->
     
     <!-- Bootstrap CSS -->
+ 
+ 
+ 
+   
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/assets/css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/vendor/font-awesome.css">
     <link rel="stylesheet" href="/assets/css/vendor/flaticon/flaticon.css">
