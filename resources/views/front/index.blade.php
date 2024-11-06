@@ -533,10 +533,9 @@
     <!-- Section des produits les plus vendus -->
     <div class="header d-flex align-items-center justify-content-between">
         <div class="section-title">
-            <span class="title-highlight"><i class="fas fa-calendar-alt"></i> Ce Mois</span>
-            <h2 class="title">Produits Les Plus Vendus</h2>
+            <span class="title-highlight"><i class="fas fa-calendar-alt"></i>     Nos produits</span>
+            <h2 class="title">Explorer nos produits</h2>
         </div>
-        <button class="btn-view-more">Voir plus</button>
     </div>
 </div>
 
