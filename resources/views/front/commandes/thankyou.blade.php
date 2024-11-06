@@ -30,7 +30,7 @@
                             </p>
                            
                         {{--     <div class="order-id">
-                                <a href="/shop" class="btn btn"  style=" background-color: #b2e21522;">
+                                <a href="/shop" class="btn btn"  style=" background-color: #DB4444;">
                                     Continuer les achats
                                 </a>
                             </div> --}}
@@ -41,7 +41,7 @@
                             </style>
                             
                             <div class="form-group mb--0">
-                                <a href="/shop" class="axil-btn btn-bg-primary btn-small-width">
+                                <a href="/shop" class="axil-btn btn-bg-primary2 btn-small-width">
                                     <span>  {{ \App\Helpers\TranslationHelper::TranslateText("Continuer les achats") }}</span>
                                 </a>
                             </div>
@@ -55,7 +55,7 @@
 
         <style>
             .btn-bg-primary2 {
-                background-color: #5EA13C;
+                background-color: #DB4444;
                 color: #ffffff;
                 border: none;
                 padding: 10px 20px;

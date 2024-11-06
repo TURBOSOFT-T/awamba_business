@@ -15,7 +15,7 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table axil-product-table axil-cart-table mb--40">
-                        <thead>
+                        <thead >
                             <tr>
                                 <th scope="col" class="product-thumbnail">Produit</th>
                                 <th scope="col" class="product-title"></th>
@@ -161,8 +161,9 @@
             </div>
 			<!-- Summary Section -->
         <div class="w-25">
-            <div class="summary-box">
+           
 			@if ($total1 > 0)
+				 <div class="summary-box">
                 <h5>Total de la Commande</h5>
                 <div class="d-flex justify-content-between">
                     <span>Sous-Total:</span>
@@ -178,8 +179,9 @@
                     <span>{{$total1}} XAF</span>
                 </div>
                 <a href="{{ url('/commander') }}" class="axil-btn text-center btn-checkout w-100 mt-3">Finalisation de l'achat</a>
-				@endif
-            </div>
+ </div>			
+			@endif
+           
         </div>
         </div>
                 

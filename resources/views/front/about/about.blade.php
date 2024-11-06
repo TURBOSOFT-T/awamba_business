@@ -233,7 +233,7 @@ Awamba Business, c'est avant tout une mission : donner aux producteurs africains
     <div class="row d-flex justify-content-between mt-5">
         <div class="col-md-4 mb-3">
             <div class="service-boxs">
-                <i class="far fa-truck"></i>
+                <i class="fas fa-shipping-fast"></i>
                 <h5>Livraison Gratuite et Rapide</h5>
                 <p> 
 				Livraison Gratuite Pour Toute Commande égale
@@ -244,7 +244,7 @@ même pays que le fournisseur
         </div>
         <div class="col-md-4 mb-3">
             <div class="service-boxs">
-                <i class="far fa-headset"></i>
+                <i class="fas fa-headphones-alt"></i>
                 <h5>Service Client 24/7</h5>
                 <p> Soutien Client Amical</p>
             </div>
