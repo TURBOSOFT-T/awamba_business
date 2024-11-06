@@ -195,6 +195,34 @@ class panier_client extends Controller
     }
 
 
+public function updateQuantity(Request $request, $id)
+{
+    $quantity = $request->input('quantity');
+    $cart = session('cart', []);
+
+    foreach ($cart as &$item) {
+        if ($item['id_produit'] == $id) {
+            $produit = produits::find($id);
+
+            if (!$produit) {
+                return response()->json(['success' => false, 'message' => __('messages.product_not_found')]);
+            }
+
+            // Check stock limit
+            if ($produit->stock >= $quantity) {
+                $item['quantite'] = $quantity;
+                session(['cart' => $cart]); // Save updated cart to session
+                return response()->json(['success' => true, 'message' => __('messages.quantity_updated')]);
+            } else {
+                return response()->json(['success' => false, 'message' => __('messages.insufficient_stock')]);
+            }
+        }
+    }
+
+    return response()->json(['success' => false, 'message' => __('messages.product_not_in_cart')]);
+}
+
+
 
     public function deleteProduit($id_produit){
         //delete produit from cart

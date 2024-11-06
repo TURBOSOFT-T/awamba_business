@@ -91,6 +91,8 @@ Route::get('/sort-by',[HomeController::class,'sort_by'])->name('sort.by');
 
 //gestion du panier
 Route::get('cart', [panier_client::class, 'cart'])->name('cart');
+
+Route::post('/update-quantity/{id}', [panier_client::class, 'updateQuantity']);
 Route::post('/client/ajouter_au_panier', [panier_client::class, 'add']);
 Route::get('/client/count_panier', [panier_client::class, 'count_panier']);
 Route::get('/client/mon_panier', [panier_client::class, 'contenu_mon_panier']);
