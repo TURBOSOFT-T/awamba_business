@@ -124,9 +124,10 @@ Route::middleware('auth')->group(function () {
     //Route::get('/commander', [CommandeController::class, 'commander'])->name('commander');
 
     //gestion des favoris
-    Route::post('/client/ajouter_favoris', [favoris_client::class, 'add']);
-    Route::get('/favories', [MyAccountController::class, 'favories'])->name('favories');
-    Route::get('/favoris/{id}', [favoris_client::class, 'deleteFavorite'])->name('deleteFavorite');
+   //gestion des favoris
+   Route::post('/client/ajouter_favoris', [favoris_client::class, 'add']);
+   Route::get('/favories', [MyAccountController::class, 'favoris'])->name('favories');
+   Route::get('/favoris/{id}', [favoris_client::class, 'deleteFavorite'])->name('deleteFavorite');
 
     ///Mon compte
     Route::get('/comptes', [MyAccountController::class, 'comptes'])->name('comptes');
