@@ -2,6 +2,7 @@
     @php
 
     $configs = DB::table('configs')->first();
+	$total1 = 0;
     @endphp
 
     <!-- Start Cart Area  -->
@@ -26,7 +27,11 @@
                         </thead>
                         <tbody>
                             @forelse ($paniers ?? [] as $id => $details)
-                            <tr data-id="{{ $id }}">
+							@php
+                                $subtotal = $details['prix'] * $details['quantite'];
+                                $total1 += $subtotal;
+                            @endphp
+                            <tr data-id="{{ $details['id_produit'] }}">
                                 <td class="product-remove">
                                     <div class="delete-icon">
 
@@ -39,15 +44,10 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    {{-- <a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a> --}}
-                                </td>
+                                    </td>
                                 <td class="product-thumbnail"><a href="{{ route('details-produits', ['id' => $details['id_produit'], 'slug'=>Str::slug(Str::limit($details['nom'], 10))]) , }}"><img src="{{ Storage::url($details['photo']) }}" alt="Digital Product"></a></td>
                                 <td class="product-title">
-                                    {{-- <div class="product-img">
-                                        <a href="{{ route('details-produits', ['id' => $details['id_produit'], 'slug'=>Str::slug(Str::limit($details['nom'], 10))]) , }}">
-
-                                    </a>
-                </div> --}}
+                                    
                 <div class="product-content">
                     <h6><a href="#"> {{ $details['nom'] }}</a></h6>
                 </div>
@@ -57,22 +57,84 @@
                         {{ $details['prix'] }} DT
                     </p>
                 </td>
+				                        
                 <td class="product-quantity" data-title="Qty">
-                    <div class="pro-qty">
-                        {{--
-                                       <input type="number" value="{{ $details['quantite'] }}" min="0" wire:change="update({{ $details['id_produit'] }}, $event.target.value)"class="quantity-input">
-                        --}}
-                        <span class="quantity-control minus"></span>
-                        <input type="number" value="{{ $details['quantite'] }}" min="0" wire:change="update({{ $details['id_produit'] }}, $event.target.value)" class="quantity-input" autocomplete="off">
-
-                        <span class="quantity-control plus"></i></span>
-
-                    </div>
-
-                </td>
+				 <div class="quantity-wrapper pro-qty">
+                                        <span class="quantity-control minus custom-minus" data-product-id="{{ $details['id_produit'] }}">-</span>
+                                        <input type="number" value="{{ $details['quantite'] }}" min="1" class="quantity-input custom-quantity-input" data-product-id="{{ $details['id_produit'] }}" autocomplete="off">
+                                        <span class="quantity-control plus" data-product-id="{{ $details['id_produit'] }}">+</span>
+                                    </div>
+                                </td>
                 <td class="product-subtotal" data-title="Subtotal"><span class="currency-symbol"></span> {{ $details['prix'] * $details['quantite'] }}
                     DT</td>
                 </tr>
+				<style>
+				/* Wrapper for the quantity control */
+.quantity-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Button styles */
+.quantity-control {
+    width: 32px;
+  display: block;
+  float: left;
+  line-height: 26px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 300;
+  color: #000;
+  height: 32px;
+  background: #f6f7fb;
+  border-radius: 50%;
+  transition: .3s;
+  border: 2px solid rgba(0,0,0,0);
+}
+
+
+
+/* Input field styles */
+.custom-quantity-input {
+   width: 28px;
+  float: left;
+  border: none;
+  height: 32px;
+  line-height: 30px;
+  padding: 0;
+  text-align: center;
+  background-color: rgba(0,0,0,0);
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 12px;
+  color: #27272e;
+}
+
+.custom-quantity-input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 600px) {
+    .quantity-wrapper {
+        gap: 4px;
+    }
+
+    .custom-quantity-input {
+        width: 50px;
+        font-size: 14px;
+    }
+
+    .quantity-control {
+        padding: 6px;
+        font-size: 14px;
+    }
+}
+
+				</style>
                 @empty
                 <tr>
                     <td colspan="6">
@@ -159,12 +221,12 @@
                     <div class="axil-order-summery mt--80">
                         <h5 class="title mb--20">Résumé commande</h5>
                         <div class="summery-table-wrap">
-                            @if ($total > 0)
+                            @if ($total1 > 0)
                             <table class="table summery-table mb--30">
                                 <tbody>
                                     <tr class="order-subtotal">
                                         <td>Subtotal</td>
-                                        <td>{{ $total }} <x-devise></x-devise></td>
+                                        <td>{{ $total1 }} <x-devise></x-devise></td>
                                     </tr>
                                     <tr class="order-shipping">
                                         <td>Frais De Livraison</td>
@@ -181,7 +243,7 @@
 
                                     <tr class="order-total">
                                         <td>Total</td>
-                                        <td class="order-total-amount">{{ $total + $configs->frais ?? 0 }} <x-devise></x-devise></td>
+                                        <td class="order-total-amount">{{ $total1 + $configs->frais ?? 0 }} <x-devise></x-devise></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -229,37 +291,81 @@
 
 
 
-    <script>
+        <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.update-quantity').forEach(select => {
-                select.addEventListener('change', function() {
-                    const quantity = this.value;
+            document.querySelectorAll('.quantity-control').forEach(button => {
+                button.addEventListener('click', function() {
+                    const isIncrement = this.classList.contains('plus');
                     const productId = this.getAttribute('data-product-id');
+                    const quantityInput = document.querySelector(`input[data-product-id="${productId}"]`);
+                    let currentQuantity = parseInt(quantityInput.value);
 
-                    fetch(`/update-quantity/${productId}`, {
-                            method: 'POST'
-                            , headers: {
-                                'Content-Type': 'application/json'
-                                , 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            }
-                            , body: JSON.stringify({
-                                quantity
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                // Met à jour le total ou affiche un message de succès
-                                console.log('Quantité mise à jour avec succès!');
-                                location.reload(); // Optionnel : pour recharger les totaux ou autres parties du panier
-                            } else {
-                                console.error('Erreur lors de la mise à jour de la quantité');
-                            }
-                        })
-                        .catch(error => console.error('Erreur:', error));
+                    if (isIncrement) {
+                        currentQuantity++;
+                    } else if (currentQuantity > 1) {
+                        currentQuantity--;
+                    }
+
+                    quantityInput.value = currentQuantity;
+                    updateCartQuantity(productId, currentQuantity);
+                });
+            });
+
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    let quantity = parseInt(this.value);
+
+                    if (quantity < 1) {
+                        quantity = 1;
+                        this.value = quantity;
+                    }
+
+                    updateCartQuantity(productId, quantity);
                 });
             });
         });
 
+        function updateCartQuantity(productId, quantity) {
+            fetch(`/update-quantity/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ quantity })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const productRow = document.querySelector(`tr[data-id="${productId}"]`);
+
+                    if (!productRow) {
+                        console.error(`No product row found for productId: ${productId}`);
+                        return;
+                    }
+
+                    const price = parseFloat(productRow.querySelector('.product-price .price').textContent.replace(' DT', ''));
+                    const subtotal = price * quantity;
+                    productRow.querySelector('.product-subtotal').textContent = `${subtotal.toFixed(2)} DT`;
+
+                  //  updateGrandTotal();
+                } else {
+                    console.error('Erreur lors de la mise à jour de la quantité');
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        }
+
+        function updateGrandTotal() {
+            let grandTotal = 0;
+
+            document.querySelectorAll('.product-subtotal').forEach(subtotalElement => {
+                const subtotal = parseFloat(subtotalElement.textContent.replace(' DT', ''));
+                grandTotal += subtotal;
+            });
+
+            document.getElementById('grand-total').textContent = `${grandTotal.toFixed(2)} DT`;
+        }
     </script>
 </main>
