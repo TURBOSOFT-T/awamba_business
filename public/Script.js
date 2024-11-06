@@ -156,7 +156,7 @@ function AddFavoris(id) {
         .then((data) => {
             if (data.statut) {
                 sweet_alert("Félicitation", "success", data.message, 1500);
-                location.reload();
+               // location.reload();
 
          
             

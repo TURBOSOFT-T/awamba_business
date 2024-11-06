@@ -48,7 +48,7 @@
 
                 <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12">
                     <div class="quick_view_slide">
-                        <a  href="{{ Storage::url($produit->photo) }}"  data-lightbox="roadtrip"
+                        <a x data-lightbox="roadtrip"
                         class="d-block mb-4">
 
                         <img src="{{ Storage::url($produit->photo) }}"

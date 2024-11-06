@@ -34,6 +34,21 @@
 
 <main>
 
+    <div class="gray py-3">
+        <div class="container">
+            <div class="row">
+                <div class="colxl-12 col-lg-12 col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">{{ __('accueil') }}</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{ __('boutique') }}</a></li>
+                            
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
    
         <main class="main-wrapper">
             <!-- Start Shop Area  -->
@@ -47,31 +62,19 @@
                                         <div class="single-product-thumbnail-wrap zoom-gallery">
                                             <div class="single-product-thumbnail product-large-thumbnail-3 axil-product">
                                                 <div class="thumbnail">
-                                                    <a href="/assets/images/product/product-big-01.png" class="popup-zoom">
-                                                        <img src="/assets/images/product/product-big-01.png" alt="Product Images">
+                                                    <a  src="{{ Storage::url($produit->photo) }}" class="popup-zoom">
+                                                        <img  id="mainImage" src="{{ Storage::url($produit->photo) }}"  alt="Product Images">
                                                     </a>
                                                 </div>
-                                                <div class="thumbnail">
-                                                    <a href="/assets/images/product/product-big-02.png" class="popup-zoom">
-                                                        <img src="/assets/images/product/product-big-02.png" alt="Product Images">
-                                                    </a>
-                                                </div>
-                                                <div class="thumbnail">
-                                                    <a href="/assets/images/product/product-big-03.png" class="popup-zoom">
-                                                        <img src="/assets/images/product/product-big-03.png" alt="Product Images">
-                                                    </a>
-                                                </div>
-                                                <div class="thumbnail">
-                                                    <a href="/assets/images/product/product-big-02.png" class="popup-zoom">
-                                                        <img src="/assets/images/product/product-big-02.png" alt="Product Images">
-                                                    </a>
-                                                </div>
+                                          
                                             </div>
+                                            @if ($produit->inPromotion())
                                             <div class="label-block">
-                                                <div class="product-badget">20% OFF</div>
+                                                <div class="product-badget"> -{{ $produit->inPromotion()->pourcentage }}%</div>
                                             </div>
+                                            @endif
                                             <div class="product-quick-view position-view">
-                                                <a href="/images/product/product-big-01.png" class="popup-zoom">
+                                                <a  href="{{ Storage::url($produit->photo) }}" class="popup-zoom">
                                                     <i class="far fa-search-plus"></i>
                                                 </a>
                                             </div>
@@ -79,27 +82,47 @@
                                     </div>
                                     <div class="col-lg-2 order-lg-1">
                                         <div class="product-small-thumb-3 small-thumb-wrapper">
+
+        
+                                            @foreach (json_decode($produit->photos) ?? [] as $photo)
                                             <div class="small-thumb-img">
-                                                <img src="/assets/images/product/product-thumb/thumb-08.png" alt="thumb image">
+                                                <img onclick="changeMainImage('{{ Storage::url($photo) }}')" src="{{ Storage::url($photo) }}" alt="thumb image">
                                             </div>
-                                            <div class="small-thumb-img">
-                                                <img src="/assets/images/product/product-thumb/thumb-07.png" alt="thumb image">
-                                            </div>
-                                            <div class="small-thumb-img">
-                                                <img src="/assets/images/product/product-thumb/thumb-09.png" alt="thumb image">
-                                            </div>
-                                            <div class="small-thumb-img">
-                                                <img src="/assets/images/product/product-thumb/thumb-07.png" alt="thumb image">
-                                            </div>
+                                            @endforeach
+                                      
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                                function changeMainImage(imageUrl) {
+                                    document.getElementById('mainImage').src = imageUrl;
+                                }
+                            </script>
+
                             <div class="col-lg-5 mb--40">
                                 <div class="single-product-content">
                                     <div class="inner">
-                                        <h2 class="product-title">3D™ wireless headset</h2>
-                                        <span class="price-amount">$155.00 - $255.00</span>
+                                        <h2 class="product-title"> {{ \App\Helpers\TranslationHelper::TranslateText($produit->nom) }}</h2>
+                                        <span class="price-amount">
+
+                                            @if ($produit->inPromotion())
+                                            <span class=" small">
+                                                
+                                            </span>
+                                            <b class="">
+                                                {{ $produit->getPrice() }} <x-devise></x-devise>
+                                            </b>
+                                            <br>
+                                            <strike>
+                                                <span class="text-danger small">
+                                                    {{ $produit->prix }} <x-devise></x-devise>
+                                                </span>
+                                            </strike>
+                                        @else
+                                            {{ $produit->getPrice() }} <x-devise></x-devise>
+                                        @endif
+                                        </span>
                                         <div class="product-rating">
                                             <div class="star-rating">
                                                 <i class="fas fa-star"></i>
@@ -113,17 +136,31 @@
                                             </div>
                                         </div>
                                         <ul class="product-meta">
-                                            <li><i class="fal fa-check"></i>In stock</li>
-                                            <li><i class="fal fa-check"></i>Free delivery available</li>
-                                            <li><i class="fal fa-check"></i>Sales 30% Off Use Code: MOTIVE30</li>
+                                            <li><i class="fal fa-check"></i>
+                                                @if ($produit->stock > 0 )
+                                                <label class="badge bg-success"> {{ __('stock_disponible') }}</label>
+                                            @else
+                                                <label class="badge bg-danger">{{ __('non_disponible') }}</label>
+                                            @endif
+                                            </li>
+                                            {{-- <li><i class="fal fa-check"></i>Free delivery available</li>
+                                            <li><i class="fal fa-check"></i>Sales 30% Off Use Code: MOTIVE30</li> --}}
+                                            
                                         </ul>
-                                        <p class="description">In ornare lorem ut est dapibus, ut tincidunt nisi pretium. Integer ante est, elementum eget magna. Pellentesque sagittis dictum libero, eu dignissim tellus.</p>
+                                        <div class="prt_01 mb-1"><span class="text-light bg-info rounded px-2 py-1"> {{ \App\Helpers\TranslationHelper::TranslateText("Categorie") }}:
+                                
+                                                {{ \App\Helpers\TranslationHelper::TranslateText($produit->categories->nom) }}
+                                            </span></div>
+                                        <p class="description">
+
+                                            {!! \App\Helpers\TranslationHelper::TranslateText($produit->description) !!}
+                                        </p>
     
                                         <div class="product-variations-wrapper">
     
                                             <!-- Start Product Variation  -->
                                             <div class="product-variation">
-                                                <h6 class="title">Colors:</h6>
+                                                <h6 class="title">{{ \App\Helpers\TranslationHelper::TranslateText("Couleur") }}(s):</h6>
                                                 <div class="color-variant-wrapper">
                                                     <ul class="color-variant">
                                                         <li class="color-extra-01 active"><span><span class="color"></span></span>
@@ -139,7 +176,7 @@
     
                                             <!-- Start Product Variation  -->
                                             <div class="product-variation product-size-variation">
-                                                <h6 class="title">Size:</h6>
+                                                <h6 class="title"> {{ \App\Helpers\TranslationHelper::TranslateText("Taille") }}(s):</h6>
                                                 <ul class="range-variant">
                                                     <li>xs</li>
                                                     <li>s</li>
@@ -160,8 +197,10 @@
     
                                             <!-- Start Product Action  -->
                                             <ul class="product-action d-flex-center mb--0">
-                                                <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add to Cart</a></li>
-                                                <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
+                                                <li class="add-to-cart"><a  onclick="AddToCart( {{ $produit->id }} )" class="axil-btn btn-bg-primary">{{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au panier ") }}</a></li>
+                                                @if (Auth()->user())
+                                                <li class="wishlist"><a onclick="AddFavoris({{ $produit->id }})" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
+                                                 @endif
                                             </ul>
                                             <!-- End Product Action  -->
     
@@ -181,9 +220,7 @@
                             <li class="nav-item" role="presentation">
                                 <a class="active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
                             </li>
-                            <li class="nav-item " role="presentation">
-                                <a id="additional-info-tab" data-bs-toggle="tab" href="#additional-info" role="tab" aria-controls="additional-info" aria-selected="false">Additional Information</a>
-                            </li>
+                           
                             <li class="nav-item" role="presentation">
                                 <a id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews</a>
                             </li>
@@ -194,19 +231,13 @@
                                     <div class="row">
                                         <div class="col-lg-6 mb--30">
                                             <div class="single-desc">
-                                                <h5 class="title">Specifications:</h5>
-                                                <p>We’ve created a full-stack structure for our working workflow processes, were from the funny the century initial all the made, have spare to negatives. But the structure was from the funny the century rather,
-                                                    initial all the made, have spare to negatives.</p>
+                                               
+                                                <p> 
+                                                    {!! \App\Helpers\TranslationHelper::TranslateText($produit->description) !!}
+                                                </p>
                                             </div>
                                         </div>
-                                        <!-- End .col-lg-6 -->
-                                        <div class="col-lg-6 mb--30">
-                                            <div class="single-desc">
-                                                <h5 class="title">Care & Maintenance:</h5>
-                                                <p>Use warm water to describe us as a product team that creates amazing UI/UX experiences, by crafting top-notch user experience.</p>
-                                            </div>
-                                        </div>
-                                        <!-- End .col-lg-6 -->
+                                      
                                     </div>
                                     <!-- End .row -->
                                     <div class="row">
@@ -238,60 +269,7 @@
                                 </div>
                                 <!-- End .product-desc-wrapper -->
                             </div>
-                            <div class="tab-pane fade" id="additional-info" role="tabpanel" aria-labelledby="additional-info-tab">
-                                <div class="product-additional-info">
-                                    <div class="table-responsive">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <th>Stand Up</th>
-                                                    <td>35″L x 24″W x 37-45″H(front to back wheel)</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Folded (w/o wheels) </th>
-                                                    <td>32.5″L x 18.5″W x 16.5″H</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Folded (w/ wheels) </th>
-                                                    <td>32.5″L x 24″W x 18.5″H</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Door Pass Through </th>
-                                                    <td>24</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Frame </th>
-                                                    <td>Aluminum</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Weight (w/o wheels) </th>
-                                                    <td>20 LBS</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Weight Capacity </th>
-                                                    <td>60 LBS</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Width</th>
-                                                    <td>24″</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Handle height (ground to handle) </th>
-                                                    <td>37-45″</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Wheels</th>
-                                                    <td>Aluminum</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Size</th>
-                                                    <td>S, M, X, XL</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                          
                             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                                 <div class="reviews-wrapper">
                                     <div class="row">
@@ -458,72 +436,65 @@
             <div class="axil-product-area bg-color-white axil-section-gap pb--50 pb_sm--30">
                 <div class="container">
                     <div class="section-title-wrapper">
-                        <span class="title-highlighter highlighter-primary"><i class="far fa-shopping-basket"></i> Your Recently</span>
-                        <h2 class="title">Viewed Items</h2>
+                        <span class="title-highlighter highlighter-primary"><i class="far fa-shopping-basket"></i>  {{ \App\Helpers\TranslationHelper::TranslateText("Les produits de la même categorie") }}</span>
+                        <h2 class="title"> {{ \App\Helpers\TranslationHelper::TranslateText("Les produits similaires") }}</h2>
                     </div>
+                    @php
+
+                    $relatedProducts = $produit->categories->produits->where('id', '!=', $produit->id);
+
+                @endphp
+
                     <div class="recent-product-activation slick-layout-wrapper--15 axil-slick-arrow arrow-top-slide">
-                        <div class="slick-single-layout">
-                            <div class="axil-product">
-                                <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img src="/assets/images/product/electric/product-01.png" alt="Product Images">
-                                    </a>
-                                    <div class="label-block label-right">
-                                        <div class="product-badget">20% OFF</div>
-                                    </div>
-                                    <div class="product-hover-action">
-                                        <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                                            <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <div class="inner">
-                                        <h5 class="title"><a href="single-product.html">3D™ wireless headset</a></h5>
-                                        <div class="product-price-variant">
-                                            <span class="price old-price">$30</span>
-                                            <span class="price current-price">$30</span>
-                                        </div>
-                                        <div class="color-variant-wrapper">
-                                            <ul class="color-variant">
-                                                <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-02"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-03"><span><span class="color"></span></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                   
                         <!-- End .slick-single-layout -->
+                        @if ($relatedProducts)
+                        @foreach ($relatedProducts as $produit)
                         <div class="slick-single-layout">
                             <div class="axil-product">
                                 <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img src="/assets/images/product/electric/product-02.png" alt="Product Images">
+                                    <a  href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">
+                                        <img  src="{{ Storage::url($produit->photo) }}" alt="Product Images">
                                     </a>
+                                    @if ($produit->inPromotion())
                                     <div class="label-block label-right">
-                                        <div class="product-badget">40% OFF</div>
+                                        <div class="product-badget"> -{{ $produit->inPromotion()->pourcentage }}%</div>
                                     </div>
+                                    @endif
                                     <div class="product-hover-action">
                                         <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
+                                            @if (Auth()->user())
+                                            <li class="wishlist"><a onclick="AddFavoris({{ $produit->id }})"><i class="far fa-heart"></i></a></li>
+                                            @endif
+                                            <li class="select-option"><a onclick="AddToCart( {{ $produit->id }} )">{{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au panier ") }}</a></li>
                                             <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="product-content">
                                     <div class="inner">
-                                        <h5 class="title"><a href="single-product.html">Media remote</a></h5>
+                                        <h5 class="title"><a   href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">{{ $produit->nom }}</a></h5>
                                         <div class="product-price-variant">
-                                            <span class="price old-price">$80</span>
-                                            <span class="price current-price">$50</span>
+                                            {{-- <span class="price old-price">$60</span>
+                                            <span class="price current-price">$45</span> --}}
+
+                                            @if ($produit->inPromotion())
+                                            <span class=" small">
+                                                - {{ $produit->inPromotion()->pourcentage }} %
+                                            </span>
+                                            <b class="ft-bold theme-cl fs-lg mr-2">
+                                                {{ $produit->getPrice() }} <x-devise></x-devise>
+                                            </b>
+                                            <br>
+                                            <strike>
+                                                <span
+                                                    class="ft-medium text-muted line-through fs-md mr-2">
+                                                    {{ $produit->prix }} <x-devise></x-devise>
+                                                </span>
+                                            </strike>
+                                        @else
+                                            {{ $produit->getPrice() }} <x-devise></x-devise>
+                                        @endif
                                         </div>
                                         <div class="color-variant-wrapper">
                                             <ul class="color-variant">
@@ -539,240 +510,16 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End .slick-single-layout -->
-                        <div class="slick-single-layout">
-                            <div class="axil-product">
-                                <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img src="/assets/images/product/electric/product-03.png" alt="Product Images">
-                                    </a>
-                                    <div class="label-block label-right">
-                                        <div class="product-badget">30% OFF</div>
-                                    </div>
-                                    <div class="product-hover-action">
-                                        <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                                            <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <div class="inner">
-                                        <h5 class="title"><a href="single-product.html">HD camera</a></h5>
-                                        <div class="product-price-variant">
-                                            <span class="price old-price">$60</span>
-                                            <span class="price current-price">$45</span>
-                                        </div>
-                                        <div class="color-variant-wrapper">
-                                            <ul class="color-variant">
-                                                <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-02"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-03"><span><span class="color"></span></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                        @endforeach
+                        @else
+                            <div class="col-12 text-center">
+                                {{ \App\Helpers\TranslationHelper::TranslateText("Aucun produit de la même categorie") }}
+
+
                             </div>
-                        </div>
-                        <!-- End .slick-single-layout -->
-                        <div class="slick-single-layout">
-                            <div class="axil-product">
-                                <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img src="/assets/images/product/electric/product-04.png" alt="Product Images">
-                                    </a>
-                                    <div class="label-block label-right">
-                                        <div class="product-badget">50% OFF</div>
-                                    </div>
-                                    <div class="product-hover-action">
-                                        <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                                            <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <div class="inner">
-                                        <h5 class="title"><a href="single-product.html">PS Remote Control</a></h5>
-                                        <div class="product-price-variant">
-                                            <span class="price old-price">$70</span>
-                                            <span class="price current-price">$35</span>
-                                        </div>
-                                        <div class="color-variant-wrapper">
-                                            <ul class="color-variant">
-                                                <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-02"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-03"><span><span class="color"></span></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      
-                        <div class="slick-single-layout">
-                            <div class="axil-product">
-                                <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img src="/assets/images/product/electric/product-05.png" alt="Product Images">
-                                    </a>
-                                    <div class="label-block label-right">
-                                        <div class="product-badget">25% OFF</div>
-                                    </div>
-                                    <div class="product-hover-action">
-                                        <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                                            <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <div class="inner">
-                                        <h5 class="title"><a href="single-product.html">PS Remote Control</a></h5>
-                                        <div class="product-price-variant">
-                                            <span class="price old-price">$50</span>
-                                            <span class="price current-price">$38</span>
-                                        </div>
-                                        <div class="color-variant-wrapper">
-                                            <ul class="color-variant">
-                                                <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-02"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-03"><span><span class="color"></span></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="slick-single-layout">
-                            <div class="axil-product">
-                                <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img src="/assets/images/product/electric/product-03.png" alt="Product Images">
-                                    </a>
-                                    <div class="label-block label-right">
-                                        <div class="product-badget">30% OFF</div>
-                                    </div>
-                                    <div class="product-hover-action">
-                                        <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                                            <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <div class="inner">
-                                        <h5 class="title"><a href="single-product.html">HD camera</a></h5>
-                                        <div class="product-price-variant">
-                                            <span class="price old-price">$60</span>
-                                            <span class="price current-price">$45</span>
-                                        </div>
-                                        <div class="color-variant-wrapper">
-                                            <ul class="color-variant">
-                                                <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-02"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-03"><span><span class="color"></span></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End .slick-single-layout -->
-                        <div class="slick-single-layout">
-                            <div class="axil-product">
-                                <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img src="/assets/images/product/electric/product-04.png" alt="Product Images">
-                                    </a>
-                                    <div class="label-block label-right">
-                                        <div class="product-badget">50% OFF</div>
-                                    </div>
-                                    <div class="product-hover-action">
-                                        <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                                            <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <div class="inner">
-                                        <h5 class="title"><a href="single-product.html">PS Remote Control</a></h5>
-                                        <div class="product-price-variant">
-                                            <span class="price old-price">$70</span>
-                                            <span class="price current-price">$35</span>
-                                        </div>
-                                        <div class="color-variant-wrapper">
-                                            <ul class="color-variant">
-                                                <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-02"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-03"><span><span class="color"></span></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       
-                        <div class="slick-single-layout">
-                            <div class="axil-product">
-                                <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img src="/assets/images/product/electric/product-05.png" alt="Product Images">
-                                    </a>
-                                    <div class="label-block label-right">
-                                        <div class="product-badget">25% OFF</div>
-                                    </div>
-                                    <div class="product-hover-action">
-                                        <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                                            <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <div class="inner">
-                                        <h5 class="title"><a href="single-product.html">PS5 Remote Control</a></h5>
-                                        <div class="product-price-variant">
-                                            <span class="price old-price">$50</span>
-                                            <span class="price current-price">$38</span>
-                                        </div>
-                                        <div class="color-variant-wrapper">
-                                            <ul class="color-variant">
-                                                <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-02"><span><span class="color"></span></span>
-                                                </li>
-                                                <li class="color-extra-03"><span><span class="color"></span></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        @endif
+                     
                         
     
                     </div>
