@@ -175,7 +175,7 @@
 						                </div>
                     @foreach (json_decode($produit->photos) ?? [] as $photo)
 					<div class="thumbnail-list mb-3 me-3" onclick="changeMainImage('{{ Storage::url($photo) }}')">
-                        <img onclick="changeMainImage('{{ Storage::url($photo) }}')" src="{{ Storage::url($photo) }}" alt="thumb image">
+                        <img onclick="changeMainImage('{{ Storage::url($photo) }}')" src="{{ Storage::url($photo) }}" alt="{{$produit->nom}}">
 						                </div>
                     @endforeach
                 </div>
@@ -184,7 +184,7 @@
                     <div class="single-product-thumbnail product-large-thumbnail-3 axil-product">
                         <div class="thumbnail product-gallery">
                             <a href="{{ Storage::url($produit->photo) }}" id="main-image" class="popup-zoom main-image">
-                                <img id="mainImage" src="{{ Storage::url($produit->photo) }}" alt="Product Images">
+                                <img id="mainImage" src="{{ Storage::url($produit->photo) }}" alt="{{$produit->nom}}">
                             </a>
                         </div>
                     </div>
@@ -559,7 +559,7 @@
                             <div class="axil-product">
 							<div class="product-card position-relative">
 							
-        <span class="discount-badge"> -10%</span>
+							
     @if ($produit->inPromotion())
         <span class="discount-badge"> -{{ $produit->inPromotion()->pourcentage }}%</span>
     @endif
@@ -570,7 +570,7 @@
     
     <div class="action-icons">
         <ul class="cart-action d-flex flex-column">
-                <li class="wishlist"><a onclick="AddFavoris({{ $produit->id }})"><i class="far fa-heart"></i></a></li>
+		
             @if (Auth()->user())
                 <li class="wishlist"><a onclick="AddFavoris({{ $produit->id }})"><i class="far fa-heart"></i></a></li>
             @endif
