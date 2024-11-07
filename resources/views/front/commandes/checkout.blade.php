@@ -116,13 +116,13 @@
 											<img width="80" src="{{ Storage::url($details['photo']) }}" alt="{{ $details['nom'] }}"> 
 											<span>{{ $details['nom'] }}</span>
 											</td>
-                                                <td> {{ $details['total'] }} XCFA</td>
+                                                <td> {{ $details['total'] }}  <x-devise></x-devise></td>
                                             </tr>
                                             @endforeach
                                            
                                             <tr class="mt-4 border-bottom d-flex justify-content-between">
                                                 <td>Sous-Total:</td>
-                                                <td>{{ $total }} XCFA</td>
+                                                <td>{{ $total }}  <x-devise></x-devise></td>
                                             </tr>
                                             
 
@@ -133,7 +133,7 @@
                                                     <tr class="border-bottom d-flex justify-content-between" >
                                                         <td class="tax">  {{ \App\Helpers\TranslationHelper::TranslateText("Livraison") }}</td>
                                                         <td>{{ $configs->frais ?? 0 }}
-                                                            XCFA</td>
+                                                            <x-devise></x-devise></td>
                                                     </tr>
                                                     
                                                     </td>
@@ -143,7 +143,7 @@
                                             </tr>
                                             <tr class="order-total border-bottom d-flex justify-content-between">
                                                 <td>Total</td>
-                                                <td class="order-total-amount">{{ $total + $configs->frais ?? 0 }} DT</td>
+                                                <td class="order-total-amount">{{ $total + $configs->frais ?? 0 }} <x-devise></x-devise></td>
                                             </tr>
 											
                                         </tbody>

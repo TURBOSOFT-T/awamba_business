@@ -56,7 +56,7 @@
                                 </td>
                                 <td class="product-price" data-title="Price"><span class="currency-symbol"></span>
                                     <p class="price">
-                                        {{ $details['prix'] }} XAF
+                                        {{ $details['prix'] }}  <x-devise></x-devise>
                                     </p>
                                 </td>
 
@@ -70,7 +70,7 @@
                                              </div>
                                 </td>
                                 <td class="product-subtotal" data-title="Subtotal"><span class="currency-symbol"></span> {{ $details['prix'] * $details['quantite'] }}
-                                    XAF</td>
+                                    <x-devise></x-devise></td>
                             </tr>
 
                             @empty

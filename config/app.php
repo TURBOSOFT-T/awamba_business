@@ -262,6 +262,6 @@ return [
     */
 
     'description' => 'Plateforme pour le shopping des vêtements de qualité',
-    'author' => 'BECKER',
+    'author' => 'AWAMBA',
 
 ];
