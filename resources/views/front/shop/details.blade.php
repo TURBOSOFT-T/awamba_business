@@ -182,8 +182,8 @@
                 <div class="single-product-thumbnail-wrap zoom-gallery">
                     
                     <div class="single-product-thumbnail product-large-thumbnail-3 axil-product">
-                        <div class="thumbnail product-gallery">
-                            <a href="{{ Storage::url($produit->photo) }}" id="main-image" class="popup-zoom main-image">
+                        <div class="thumbnail">
+                            <a href="{{ Storage::url($produit->photo) }}" id="main-image" class="popup-zoom">
                                 <img id="mainImage" src="{{ Storage::url($produit->photo) }}" alt="{{$produit->nom}}">
                              </a>
                         </div>
