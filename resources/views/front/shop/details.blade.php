@@ -33,9 +33,7 @@
 
                         .main-image {
 
-                                     display: flex;
-                            align-items: center;
-                            justify-content: center;
+                                     
 							height:100%;
 							width:100%;
                             
@@ -45,10 +43,8 @@
 							height:100%;
 						}
 						.single-product-thumbnail-wrap{
-							          display: flex;
-                            align-items: center;
-                            justify-content: center;
-padding: 8rem 8rem;							
+							          
+							padding:2rem 2rem;
 							width:100%;       
 							border-radius: 8px;
 							background-color: #FDEDEC;
