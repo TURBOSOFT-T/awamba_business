@@ -185,7 +185,7 @@
                         <div class="thumbnail product-gallery">
                             <a href="{{ Storage::url($produit->photo) }}" id="main-image" class="popup-zoom main-image">
                                 <img id="mainImage" src="{{ Storage::url($produit->photo) }}" alt="{{$produit->nom}}">
-                            </a>
+                             </a>
                         </div>
                     </div>
 					                        
