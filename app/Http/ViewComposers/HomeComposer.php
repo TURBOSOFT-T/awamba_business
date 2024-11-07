@@ -18,7 +18,7 @@ class HomeComposer
          'searchproducts' => produits::select('*')->latest()->take(5)->get(),
             'configs' => config::first(),
           //  'services'=>Service::all(),
-            'produit'=>produits::all(),
+            'produits'=>produits::all(),
             'favoris'=>Favoris::where('id_produit', '!=', null)
             ->where('id_user', auth()->id() )->get(),
             

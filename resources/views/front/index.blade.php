@@ -131,7 +131,7 @@
                                                 ><i class="far fa-heart"></i></a></li>
                                             @endif
                                             <li class="select-option w-20" ><a onclick="AddToCart( {{ $produit->id }} )"> {{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au panier") }}</a></li>
-                                            <li class="quickview "><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
+                                            <li class="quickview "><a href="#" data-bs-toggle="modal" data-bs-target="#{{ $produit->id }}" {{-- data-bs-target="#quick-view-modal" --}}><i class="far fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
