@@ -33,13 +33,19 @@
 
                         .main-image {
 
-                           
+                                     
+							height:100%;
+							width:100%;
                             
                         }
+						.main-image img{
+							width:100%;
+							height:100%;
+						}
 						.single-product-thumbnail-wrap{
-							                            display: flex;
-                            align-items: center;
-                            justify-content: center;
+							          
+							padding:2rem 2rem;
+							width:100%;       
 							border-radius: 8px;
 							background-color: #FDEDEC;
 						}
@@ -180,14 +186,10 @@
                     @endforeach
                 </div>
                 <div class="single-product-thumbnail-wrap zoom-gallery">
-                    
-                    <div class="single-product-thumbnail product-large-thumbnail-3 axil-product">
-                        <div class="thumbnail">
-                            <a href="{{ Storage::url($produit->photo) }}" id="main-image" class="popup-zoom">
+                     <a href="{{ Storage::url($produit->photo) }}" id="main-image" class="popup-zoom main-image">
                                 <img id="mainImage" src="{{ Storage::url($produit->photo) }}" alt="{{$produit->nom}}">
                              </a>
-                        </div>
-                    </div>
+                   
 					                        
                     @if ($produit->inPromotion())
                         <div class="label-block">
