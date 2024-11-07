@@ -371,72 +371,6 @@
 
 
 
-                                {{-- 
-                                <style>
-                                    .custom-dropdown {
-                                        position: relative;
-                                        display: inline-block;
-                                        width: 100%;
-                                       
-                                    }
-
-                                    .dropbtn {
-                                        background-color: #f1f1f1;
-                                        color: black;
-                                        padding: 12px 16px;
-                                        font-size: 16px;
-                                        border: none;
-                                        cursor: pointer;
-                                        width: 100%;
-                                      
-                                        text-align: left;
-                                       
-                                    }
-
-                                    .dropdown-content {
-                                        display: none;
-                                        position: absolute;
-                                        background-color: #f9f9f9;
-                                        min-width: 100%;
-                                      
-                                        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                                        z-index: 1;
-                                    }
-
-                                    .dropdown:hover .dropdown-content {
-                                        display: block;
-                                    }
-
-                                    .dropdown-item {
-                                        color: black;
-                                        padding: 10px;
-                                        text-decoration: none;
-                                        display: flex;
-                                        align-items: center;
-                                        border: none;
-                                        background: none;
-                                        width: 100%;
-                                        cursor: pointer;
-                                    }
-
-                                    .dropdown-item img {
-                                        margin-right: 8px;
-                                       
-                                    }
-
-                                    .dropdown-item:hover {
-                                        background-color: #ddd;
-                                       
-                                    }
-
-                                    @media (max-width: 568px) {
-                                        .dropbtn {
-                                            font-size: 18px;
-                                          
-                                        }
-                                    }
-                                </style> --}}
-
                             </li>
 
 
@@ -506,6 +440,7 @@
         <!-- End Modal -->
 
         <!-- Log In Modal -->
+      
         <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginmodal"
             aria-hidden="true">
             <div class="modal-dialog modal-xl login-pop-form" role="document">
@@ -609,6 +544,8 @@
                 </div>
             </div>
         </div>
+        @endforeach
+        @endif
 
         <!-- Register Modal -->
         <div class="modal fade" id="registerModal" tabindex="-1" role="dialog"
