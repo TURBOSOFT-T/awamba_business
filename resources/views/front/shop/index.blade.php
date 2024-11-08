@@ -86,11 +86,11 @@
                                         <h6 class="title">  {!! \App\Helpers\TranslationHelper::TranslateText('Marques') !!}</h6>
                                         <div class="shop-submenu">
                                             <ul>
-                                                @foreach ($marques as $marque)
+                                               {{--  @foreach ($marques as $marque)
                                                     <li><a href="/marque/{{ $marque->id }}"
                                                             class="{{ isset($current_marque) && $current_marque->id === $marque->id ? 'selected' : '' }}">{{ $marque->nom }}
                                                             ({{ $marque->produits->count() }})</a></li>
-                                                @endforeach
+                                                @endforeach --}}
                                             </ul>
                                         </div>
                                     </div> 
