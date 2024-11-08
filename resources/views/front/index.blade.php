@@ -40,29 +40,62 @@
 
         <!-- Slider principal -->
         <div class="col-lg-9 col-md-8 col-12 main-slider">
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators custom-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://png.pngtree.com/background/20230611/original/pngtree-black-iphone-with-an-app-overlay-on-it-picture-image_3166866.jpg" class="d-block w-100" alt="iPhone 14 Promo">
-                        <div class="carousel-caption text-start">
-                            <h3 class="product-title">iPhone 14 Series</h3>
-                                <div class="discount-text">
-                                <span>Remise</span>
-                                <span>de</span>
-                                <span class="percentage">10%</span>
-                        </div>
-                            <a href="#" class="shop-button">
-                                Acheter Maintenant 
-                                <i class="fas fa-arrow-right"></i>
-                                </a>
-                        </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-indicators custom-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://png.pngtree.com/background/20230611/original/pngtree-black-iphone-with-an-app-overlay-on-it-picture-image_3166866.jpg" class="d-block w-100" alt="iPhone 14 Promo">
+                <div class="carousel-caption text-start">
+                    <h3 class="product-title">iPhone 14 Series</h3>
+                    <div class="discount-text">
+                        <span>Remise</span>
+                        <span>de</span>
+                        <span class="percentage">10%</span>
                     </div>
+                    <a href="#" class="shop-button">
+                        Acheter Maintenant 
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://9to5mac.com/wp-content/uploads/sites/6/2023/06/iOS-17-wallpaper.jpg?quality=82&strip=all" class="d-block w-100" alt="iPhone 14 Promo">
+                <div class="carousel-caption text-start">
+                    <h3 class="product-title">iPhone 14 Series</h3>
+                    <div class="discount-text">
+                        <span>Remise</span>
+                        <span>de</span>
+                        <span class="percentage">10%</span>
+                    </div>
+                    <a href="#" class="shop-button">
+                        Acheter Maintenant 
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://www.zdnet.com/a/img/resize/40585dec4c91719eb570ad8872c4f648404ea042/2022/09/08/9013b6e4-e766-4dc6-80c1-684c881ce00a/iphone-14-pro-2.jpg?auto=webp&width=1280" class="d-block w-100" alt="iPhone 14 Promo">
+                <div class="carousel-caption text-start">
+                    <h3 class="product-title">iPhone 14 Series</h3>
+                    <div class="discount-text">
+                        <span>Remise</span>
+                        <span>de</span>
+                        <span class="percentage">10%</span>
+                    </div>
+                    <a href="#" class="shop-button">
+                        Acheter Maintenant 
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
             </div>
         </div>
     </div>
