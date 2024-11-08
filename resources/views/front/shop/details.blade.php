@@ -15,11 +15,11 @@
         <meta property="og:brand" content="{{ $produit->marques->nom ?? '' }}">
         <meta property="og:image" content="{{ $produit->photo }}">
         <meta property="og:type" content="product">
-        <meta property="og:price:amount" content="{{ $produit->prix }} DT">
+        <meta property="og:price:amount" content="{{ $produit->prix }} XCFA " >
 
         <meta property="og:availability" content="{{ $produit->statut }}">
 
-        <meta property="product:price:amount" content="{{ $produit->prix }} DT">
+        <meta property="product:price:amount" content="{{ $produit->prix }} XCFA">
 
         <meta property="product:availability" content="{{ $produit->statut }}">
         <meta name="robots" content="index, follow">

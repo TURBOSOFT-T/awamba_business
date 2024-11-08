@@ -67,7 +67,7 @@
                     <div class="d-md-flex align-items-end flash-sale-section">
                         <div class="section-title-wrapper">
                             <span class="title-highlighter highlighter-primary"><i class="far fa-shopping-basket"></i>  {{ \App\Helpers\TranslationHelper::TranslateText("Aujourd'hui") }}</span>
-                            <h2 class="title"> {{ \App\Helpers\TranslationHelper::TranslateText(" Ventes flach") }}</h2>
+                            <h2 class="title"> {{ \App\Helpers\TranslationHelper::TranslateText(" Ventes flash") }}</h2>
                         </div>
                         <div class="sale-countdown countdown"></div>
                     </div>
@@ -145,16 +145,16 @@
                                                
                                             </span>
                                             <b class="">
-                                                {{ $produit->getPrice() }} DT
+                                                {{ $produit->getPrice() }} <x-devise></x-devise>
                                             </b>
                                             <br>
                                             <strike>
                                                 <span class="text-danger small">
-                                                    {{ $produit->prix }} DT
+                                                    {{ $produit->prix }} <x-devise></x-devise>
                                                 </span>
                                             </strike>
                                             @else
-                                            {{ $produit->getPrice() }} DT
+                                            {{ $produit->getPrice() }} <x-devise></x-devise>
                                             @endif
                                         </div>
                                         <div class="product-rating">
@@ -216,60 +216,7 @@
 
                 </div>
             </div>
-            <div class="category-section container mt-5 position-relative">
-
-
-                <div class="categories-wrapper position-relative">
-                    <!-- Flèche de retour -->
-                    <button class="arrow-btn prev-arrow">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-
-                    <div class="categories d-flex justify-content-between flex-wrap mt-4">
-                        <div class="category-card">
-                            <div class="category-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <p class="category-label">Téléphones</p>
-                        </div>
-                        <div class="category-card">
-                            <div class="category-icon">
-                                <i class="fas fa-desktop"></i>
-                            </div>
-                            <p class="category-label">Ordinateurs</p>
-                        </div>
-                        <div class="category-card">
-                            <div class="category-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <p class="category-label">Montres</p>
-                        </div>
-                        <div class="category-card selected">
-                            <div class="category-icon">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                            <p class="category-label">Caméra</p>
-                        </div>
-                        <div class="category-card">
-                            <div class="category-icon">
-                                <i class="fas fa-music"></i>
-                            </div>
-                            <p class="category-label">Musique</p>
-                        </div>
-                        <div class="category-card">
-                            <div class="category-icon">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
-                            <p class="category-label">Jeux Vidéos</p>
-                        </div>
-                    </div>
-
-                    <!-- Flèche d'avance -->
-                    <button class="arrow-btn next-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
+           
         </div>
 
 
@@ -291,13 +238,13 @@
                         <div class="slick-single-layout">
                             <div class="axil-product product-style-three">
                                 <div class="thumbnail">
-                                    <a href="single-product.html">
-                                        <img data-sal="fade" data-sal-delay="100" data-sal-duration="1500" src="assets/images/product/jewellery/product-6.png" alt="Product Images">
+                                    <a  href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">
+                                        <img data-sal="fade" data-sal-delay="100" data-sal-duration="1500" src="{{ Storage::url($produit->photo) }}" alt="Product Images">
                                     </a>
                                     <div class="product-hover-action">
                                         <ul class="cart-action">
-                                            <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                                            <li class="select-option"><a href="cart.html">Add to Cart</a></li>
+                                            <li class="wishlist"><a onclick="AddFavoris({{ $produit->id }})" ><i class="far fa-heart"></i></a></li>
+                                            <li class="select-option"><a  onclick="AddToCart( {{ $produit->id }} )">  {!! \App\Helpers\TranslationHelper::TranslateText('Ajouter au panier') !!}</a></li>
                                             <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
                                         </ul>
                                     </div>
@@ -314,10 +261,27 @@
                                             </span>
                                             <span class="rating-number">(18)</span>
                                         </div>
-                                        <h5 class="title"><a href="single-product.html">Diamond Necklace</a></h5>
+                                        <h5 class="title"><a  href="{{ route('details-produits', ['id' => $produit->id, 'slug' => Str::slug(Str::limit($produit->nom, 10))]) }}">{{ $produit->nom }}</a></h5>
                                         <div class="product-price-variant">
-                                            <span class="price current-price">$30</span>
-                                            <span class="price old-price">$50</span>
+                                           {{--  <span class="price current-price">$30</span>
+                                            <span class="price old-price">$50</span> --}}
+
+                                            @if ($produit->inPromotion())
+                                                            <span class=" small">
+                                                               {{--  - {{ $produit->inPromotion()->pourcentage }} % --}}
+                                                            </span>
+                                                            <b class="">
+                                                                {{ $produit->getPrice() }} <x-devise></x-devise>
+                                                            </b>
+                                                            <br>
+                                                            <strike>
+                                                                <span class="text-danger small">
+                                                                    {{ $produit->prix }} <x-devise></x-devise>
+                                                                </span>
+                                                            </strike>
+                                                        @else
+                                                            {{ $produit->getPrice() }} <x-devise></x-devise>
+                                                        @endif
                                         </div>
                                     </div>
                                 </div>

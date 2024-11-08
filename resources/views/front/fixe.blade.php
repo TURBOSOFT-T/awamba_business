@@ -448,12 +448,14 @@ $produit = DB::table('produits')->get();
                 <div class="row">
                     <!-- Exclusif Section -->
                     <div class="col-md-3 mb-3">
-                        <h6 class="footer-title">Exclusif</h6>
-                        <p>S'abonner</p>
-                        <p>Bénéficiez de 10€ de réduction sur votre première commande</p>
+                        <h6 class="footer-title">  {!! \App\Helpers\TranslationHelper::TranslateText('Exclusif') !!}</h6>
+                        <p>
+                            {!! \App\Helpers\TranslationHelper::TranslateText('S\'abonner') !!}
+                        </p>
+                        <p>  {!! \App\Helpers\TranslationHelper::TranslateText('Bénéficiez de 1000 XCFA de réduction sur votre première commande') !!}</p>
 
                         <div class="input-group w-75">
-                            <input type="email" class="form-control" placeholder="Entrez votre Email">
+                            <input type="email" class="form-control" placeholder="  {!! \App\Helpers\TranslationHelper::TranslateText('Entrez votre mail') !!}">
                             <span class="input-group-text">
                                 <i class="far fa-send fa-2x"></i>
                             </span>
@@ -462,28 +464,38 @@ $produit = DB::table('produits')->get();
 
                     <!-- Support Section -->
                     <div class="col-md-3 mb-3">
-                        <h6 class="footer-title">Support</h6>
-                        <p>111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.</p>
-                        <p>exclusive@gmail.com</p>
-                        <p>+88015-88888-9999</p>
+                        <h6 class="footer-title">  {!! \App\Helpers\TranslationHelper::TranslateText('Support') !!}</h6>
+                        <p>{{ $config->addresse ?? '' }}</p>
+                        <p>{{ $config->email ?? ' ' }}</p>
+                        <p>{{ $config->telephone ?? '' }}</p>
                     </div>
 
                     <!-- Compte Section -->
                     <div class="col-md-2 mb-3">
-                        <h6 class="footer-title">Compte</h6>
-                        <a href="#">Mon Compte</a>
-                        <a href="/login">Se connecter / S'inscrire</a>
-                        <a href="#">Panier</a>
-                        <a href="#">Favoris</a>
-                        <a href="#">Boutique</a>
+                        <h6 class="footer-title">{{ __('compte') }}</h6>
+                        @if (auth()->user())
+                                        <a href="{{ route('profile') }}">{{ __('parametres') }}
+                                            </a>
+                                        <a href="{{ route('comptes') }}">{{ __('commandes') }}
+                                            </a>
+                                        <a href="{{ route('favories') }}">{{ __('favoris') }}
+                                            </a>
+                                    @else
+                                      
+                                            <a href="{{ route('register') }}">{{ __('inscription') }}</a>
+                                     
+                                            <a href="{{ url('login') }}">{{ __('connexion') }}</a>
+                                    
+                                    @endif
                     </div>
 
                     <!-- Quick Link Section -->
                     <div class="col-md-2 mb-3">
-                        <h6 class="footer-title">Quick Link</h6>
-                        <a href="#">Confidentialité</a>
-                        <a href="/conditions">Conditions</a>
-                        <a href="/contact">Contacts</a>
+                        <h6 class="footer-title">{{ __('liens') }}</h6>
+                      <a href="{{ route('home') }}">{{ __('accueil') }} </a>
+                       
+                        <a href="{{ route('shop') }}">{{ __('boutique') }}</a>
+                        <a href="{{ route('contact') }}">Contact</a>
                     </div>
 
                     <!-- Download App Section -->
@@ -498,10 +510,11 @@ $produit = DB::table('produits')->get();
                             </div>
                         </div>
                         <div class="social-icons d-flex flex-wrap mt-3">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="{{ $config->facebook ?? ' ' }}"><i class="fab fa-facebook-f"></i></a>
+                            <a href="{{ $config->twitter }}"><i class="fab fa-twitter"></i></a>
+                            <a href="{{ $config->instagram ?? ' ' }}"><i class="fab fa-instagram"></i></a>
+                            <a href="{{ $config->linkedin ?? ' ' }}"><i class="fab fa-linkedin-in"></i></a>
+                    
                         </div>
                     </div>
 
@@ -518,10 +531,6 @@ $produit = DB::table('produits')->get();
                     </a>
                 </p>
 
-                {{-- Copyright awamba {{ date('Y') }}. Designd By
-                <a href="https://turbosoft-techno.com" style="color: #dc3545">
-                    TURBOSOFT
-                </a> --}}
             </div>
         </footer>
     </div>
@@ -664,16 +673,16 @@ $produit = DB::table('produits')->get();
                                                 - {{ $produit->inPromotion()->pourcentage }} %
                                             </span>
                                             <b class="text-success">
-                                                {{ $produit->getPrice() }} DT
+                                                {{ $produit->getPrice() }} <x-devise></x-devise>
                                             </b>
                                             <br>
                                             <strike>
                                                 <span class="text-danger small">
-                                                    {{ $produit->prix }} DT
+                                                    {{ $produit->prix }} <x-devise></x-devise>
                                                 </span>
                                             </strike>
                                             @else
-                                            {{ $produit->getPrice() }} DT
+                                            {{ $produit->getPrice() }} <x-devise></x-devise>
                                             @endif
                                         </span>
                                         <ul class="product-meta">
@@ -836,16 +845,16 @@ $produit = DB::table('produits')->get();
                             <div class="product-price-variant">
                                 @if ($produit->inPromotion())
                                 <span class="price current-price"><b class="text-success" style="color: #4169E1">
-                                        {{ $produit->getPrice() }} DT
+                                        {{ $produit->getPrice() }} <x-devise></x-devise>
                                     </b></span>
                                 <span class="price old-price">
                                     <span class="price old-price" style="position: relative; font-size: 1.2rem; color: #dc3545; font-weight: bold;">
-                                        {{ $produit->prix }} DT
+                                        {{ $produit->prix }} <x-devise></x-devise>
                                         <span style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background-color: black;"></span>
                                     </span>
                                 </span>
                                 @else
-                                {{ $produit->getPrice() }}DT
+                                {{ $produit->getPrice() }} <x-devise></x-devise>
                                 @endif
 
                             </div>

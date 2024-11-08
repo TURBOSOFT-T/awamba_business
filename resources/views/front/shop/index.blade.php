@@ -24,26 +24,26 @@
                             <div class="col-lg-6 col-md-8">
                                 <div class="inner">
                                     <ul class="axil-breadcrumb">
-                                        <li class="axil-breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
+                                        <li class="axil-breadcrumb-item"><a href="{{ route('home') }}">{{ __('accueil') }}</a></li>
                                         <li class="separator"></li>
-                                        <li class="axil-breadcrumb-item1 active" aria-current="page">Boutique</li>
+                                        <li class="axil-breadcrumb-item1 active" aria-current="page">{{ __('boutique') }}</li>
                                     </ul>
 
                                     <style>
                                         .axil-breadcrumb-item1 {
                 font-size: 14px;
-                color: #EFB121; /* Default breadcrumb color */
+                color: #ea0f0f; /* Default breadcrumb color */
             }
             
             .axil-breadcrumb-item.active {
                 font-weight: bold;
-                color: #EFB121; /* Distinct color for active item */
+                color: #eb1434; /* Distinct color for active item */
             }
             
 
             
                                     </style>
-                                    <h1 class="title">Explorez tous les produits</h1>
+                                    <h1 class="title">  {!! \App\Helpers\TranslationHelper::TranslateText('Explorez nos produits') !!}</h1>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-4">
@@ -68,10 +68,10 @@
                                         <button class="sidebar-close filter-close-btn"><i class="fas fa-times"></i></button>
                                     </div>
                                     <div class="toggle-list product-categories active">
-                                        <h6 class="title">CATEGORIES</h6>
+                                        <h6 class="title">  {!! \App\Helpers\TranslationHelper::TranslateText('CATEGORIES') !!}</h6>
                                         <div class="shop-submenu">
                                             <ul>
-                                                <li class="current-cat"><a href="/shop">Tous les produits</a></li>
+                                                <li class="current-cat"><a href="/shop">  {!! \App\Helpers\TranslationHelper::TranslateText('Tous les produits') !!}</a></li>
 
                                                 @foreach ($categories as $category)
                                                     <li><a href="/category/{{ $category->id }}"
@@ -82,8 +82,8 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    {{--   <div class="toggle-list product-categories product-gender active">
-                                        <h6 class="title">MARQUES</h6>
+                                      <div class="toggle-list product-categories product-gender active">
+                                        <h6 class="title">  {!! \App\Helpers\TranslationHelper::TranslateText('Marques') !!}</h6>
                                         <div class="shop-submenu">
                                             <ul>
                                                 @foreach ($marques as $marque)
@@ -93,7 +93,7 @@
                                                 @endforeach
                                             </ul>
                                         </div>
-                                    </div> --}}
+                                    </div> 
 
 
 
@@ -107,20 +107,21 @@
                                             <div
                                                 class="category-select align-items-center justify-content-lg-end justify-content-between">
                                                 <!-- Start Single Select  -->
-                                                <span class="filter-results">Filtrez</span>
+                                                <span class="filter-results"> {{ \App\Helpers\TranslationHelper::TranslateText("Filtrer par") }}:</span>
                                                 <select class="single-select" name="sort_by" id="sort_by"
                                                     onchange="window.location.href=this.value;">
 
-                                                    <option value="{{ url('shop') }}">Default</option>
-                                                    <option value="{{ url('croissant') }}">Croissant</option>
+                                                    <option value="{{ url('shop') }}">  {{ \App\Helpers\TranslationHelper::TranslateText("Defaut") }}</option>
+                                                    <option value="{{ url('croissant') }}">  {{ \App\Helpers\TranslationHelper::TranslateText("Croissant") }}</option>
 
-                                                    <option value="{{ url('decroissant') }}">Décroissant</option>
+                                                    <option value="{{ url('decroissant') }}">  {{ \App\Helpers\TranslationHelper::TranslateText("Décroissant") }}</option>
+
                                                 </select>
                                                 <!-- End Single Select  -->
                                             </div>
                                             <div class="d-lg-none">
                                                 <button class="product-filter-mobile filter-toggle"><i
-                                                        class="fas fa-filter"></i> FILTER</button>
+                                                        class="fas fa-filter"></i> {{ \App\Helpers\TranslationHelper::TranslateText("Filtrer") }}:</button>
                                             </div>
                                         </div>
                                     </div>
@@ -163,11 +164,12 @@
                                                                                 class="far fa-heart"></i></a></li>
                                                                 @endif
                                                                 <li class="select-option2"><a
-                                                                        onclick="AddToCart( {{ $produit->id }} )">Ajouter
-                                                                        au panier</a></li>
+                                                                        onclick="AddToCart( {{ $produit->id }} )">
+                                                                        {{ \App\Helpers\TranslationHelper::TranslateText("Ajouter au panier") }}:
+                                                                      </a></li>
                                                                             <style>
                                                                     .select-option2 {
-                                                                        background-color: #5EA13C;
+                                                                        background-color: #ed1a2f;
                                                                         color: #ffffff;
                                                                         border: none;
                                                                         padding: 10px 20px;
@@ -197,7 +199,7 @@
 
                                                                                 <b class="text-success"
                                                                                     style="color: #4169E1">
-                                                                                    {{ $produit->getPrice() }} DT
+                                                                                    {{ $produit->getPrice() }} <x-devise></x-devise>
                                                                                 </b>
                                                                             </div>
 
@@ -210,7 +212,7 @@
                                                                 </span> --}}
                                                                                 <span class="price old-price"
                                                                                     style="position: relative; font-size: 1.5rem; color: #dc3545; font-weight: bold;">
-                                                                                    {{ $produit->prix }} DT
+                                                                                    {{ $produit->prix }} <x-devise></x-devise>
                                                                                     <span
                                                                                         style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background-color: black;"></span>
                                                                                 </span>
@@ -218,7 +220,7 @@
 
                                                                             </div>
                                                                         @else
-                                                                            {{ $produit->getPrice() }}DT
+                                                                            {{ $produit->getPrice() }}<x-devise></x-devise>
                                                                     @endif
 
 
@@ -369,7 +371,7 @@
                                                         <span class="price-amount">
                                                             @if ($produit->inPromotion())
                                                                 <b class="text-success" style="color: #4169E1">
-                                                                    {{ $produit->getPrice() }} DT
+                                                                    {{ $produit->getPrice() }} <x-devise></x-devise>
                                                                 </b>
 
 
@@ -378,12 +380,12 @@
 
                                                                 <span
                                                                     style="position: relative; font-size: 1.2rem; color: #dc3545; font-weight: bold;">
-                                                                    {{ $produit->prix }} DT
+                                                                    {{ $produit->prix }} <x-devise></x-devise>
                                                                     <span
                                                                         style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background-color: black;"></span>
                                                                 </span>
                                                             @else
-                                                                {{ $produit->getPrice() }}DT
+                                                                {{ $produit->getPrice() }} <x-devise></x-devise>
                                                             @endif
                                                         </span>
                                                         <ul class="product-meta">
