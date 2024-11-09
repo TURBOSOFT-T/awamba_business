@@ -132,7 +132,6 @@ $produit = DB::table('produits')->get();
                                     padding: 0px;
                                 }
 
-                                /* Style pour l'image du logo */
                                 .nav-brand img {
                                     height: 90px;
                                     width: 80px;
@@ -161,12 +160,12 @@ $produit = DB::table('produits')->get();
                                     margin-left: auto;
                                 }
 
-                                /* Effet de survol pour le logo */
+                              
                                 .nav-brand:hover img {
                                     transform: scale(1.1);
                                 }
 
-                                /* Ajustements pour le logo dans différents contextes */
+                             
                                 .navbar .nav-brand {
                                     padding: 5px;
                                 }
@@ -176,9 +175,7 @@ $produit = DB::table('produits')->get();
                                 }
 
                             </style>
-                            {{-- <a href="{{ route('home') }}" class="logo logo-light">
-                            <img href="{{ Storage::url($config->logo ?? '') }}" alt="Site Logo">
-                            </a> --}}
+                         
                         </div>
                         <div class="header-main-nav">
 

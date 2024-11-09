@@ -79,7 +79,7 @@
                                 padding: 0px;
                             }
 
-                            /* Style pour l'image du logo */
+                            
                             .nav-brand img {
                                 height: 90px;
                                 width: 80px;
@@ -108,12 +108,11 @@
                                 margin-left: auto;
                             }
 
-                            /* Effet de survol pour le logo */
+                         
                             .nav-brand:hover img {
                                 transform: scale(1.1);
                             }
 
-                            /* Ajustements pour le logo dans différents contextes */
                             .navbar .nav-brand {
                                 padding: 5px;
                             }
@@ -355,7 +354,6 @@
                                         background-color: #839184;
                                     }
 
-                                    /* Responsive adjustments */
                                     @media (max-width: 600px) {
                                         .dropbtn {
                                             font-size: 14px;
@@ -380,7 +378,6 @@
             </div>
         </div>
 
-        <!-- Cart -->
         <div class="w3-ch-sideBar w3-bar-block w3-card-2 w3-animate-right" style="display:none;right:0;"
             id="Cart">
             <div class="rightMenu-scroll">
@@ -417,7 +414,7 @@
                 </div>
             </div>
         </div>
-        <!-------------end cart-->
+   
 
         <!-- End Navigation -->
         <div class="clearfix"></div>
