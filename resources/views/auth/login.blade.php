@@ -19,7 +19,7 @@
         
         .form-group .custom-input {
 			border:none;
-            border-bottom: 4px solid #f9f9f9; /* Red border */
+            border-bottom: 4px solid #999; /* Red border */
             border-radius: 0;
             padding: 12px 15px;
             font-size: 1.5rem;
@@ -81,11 +81,11 @@
 
 		
 		<div class="bg-color-white mb--30">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="mb--30">
                     <div class="row row--30 vh-100">
         <!-- Left Section - Promo Section -->
-       <div class="col-lg-6 d-md-none d-sm-none d-lg-block d-flex align-items-center justify-content-center promo-section">
+       <div class="col-lg-6 d-none d-lg-block d-flex align-items-center justify-content-center promo-section">
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
 		

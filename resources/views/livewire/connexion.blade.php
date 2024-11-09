@@ -1,4 +1,4 @@
-<div class="w-50">
+<div class="w-75">
 <form   wire:submit='connexion' id="multiStepForm">
 <h3 class="d-flex flex-column">
 <span>Connexion</span>
@@ -33,8 +33,9 @@
         @enderror
             </div>
        
-   
-
+   <div class="text-end mb-3">
+<a href="{{ route('forgot_password') }}" class="forgot-btn">Mot de passe oublié?</a>
+   </div>  
     
     
     <script>
@@ -57,27 +58,16 @@
     </script>
     
     
-  {{--   <div class="form-group position-relative">
-        <label>Mot de passe</label>
-        <input type="password" id="password" class="form-control" wire:model="password" placeholder="Votre mot de passe">
-        <span class="position-absolute" style="right: 10px; top: 35px; cursor: pointer;" onclick="togglePassword()">
-            <i id="toggleIcon" class="ri-eye-line"></i>
-        </span>
-        @error('password')
-        <span class="text-danger small">
-            {{ $message }}
-        </span>
-        @enderror
-    </div> --}}
- 
-    <div class="form-group d-flex align-items-center justify-content-between gap-4">
-        <button type="submit" class="axil-btn btn-bg-primary2 submit-btn w-50">
-            <span wire:loading>
+  
+        
+    <div class="form-group d-flex flex-column flex-wrap align-items-center justify-content-center  gap-4">
+	    <button type="submit" class="axil-btn btn-bg-primary2 submit-btn w-100">
+            <span style="height:2px" wire:loading>
                 <img src="https://i.gifer.com/ZKZg.gif" height="5" alt="" srcset="">
             </span>
             <i class="ri-git-repository-private-line"></i>
             Connexion</button>
-        <a href="{{ route('forgot_password') }}" class="forgot-btn">Mot de passe oublié?</a>
+
     </div>
 	<div class="">
         <span>Vous n'avez pas un Compte? </span><a href="/register" class="text-decoration-none">Inscrivez-vous</a>

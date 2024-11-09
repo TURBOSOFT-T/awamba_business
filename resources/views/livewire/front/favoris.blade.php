@@ -1,52 +1,147 @@
-<div class="col-12 col-md-12 col-lg-8 col-xl-8 text-center">
-    <!-- row -->
-    <div class="row align-items-center">
-    
-        <!-- Single -->
+<div class="w-100 text-center">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+  <style>
+    .product-card {
+      position: relative;
+      border: none;
+      text-align: center;
+      background-color: #fbecec;
+      padding: 2rem;
+      overflow: hidden;
+	  flex-direction: column;
+      justify-content: space-between;
+      height: 250px; /* Hauteur fixe pour toutes les cartes */
+    }
+
+    .product-card img {
+		
+      width:100%;
+	  height:100px;
+      display: block;
+      object-fit: contain; /* Garde les proportions de l'image */
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #ff4a4a;
+      color: #fff;
+      padding: 5px 10px;
+      font-size: 1.3rem;
+      border-radius: 5px;
+    }
+
+    .delete-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.2rem;
+      color: #888;
+      cursor: pointer;
+	  background-color:#fff;
+	  width:3.5rem;
+	  height:3.2rem;
+	  border-radius:50%;
+    }
+	.view-icon {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+      font-size: 1.2rem;
+	  text-align:center;
+      color: #888;
+      cursor: pointer;
+	  background-color:#fff;
+	  width:3.5rem;
+	  height:3.2rem;
+	  border-radius:50%;
+    }
+
+    .add-to-cart-btn {
+      background-color: #ff4a4a;
+      color: #fff;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 1.7rem;
+      border: none;
+      border-radius: 0 0 10px 10px;
+      padding: 10px;
+    }
+  </style>
+    <!-- row -->
+    <div class="row  mb-7 g-3">
+        <!-- Single -->
+		
         @foreach ( $favoris as $key => $favo )
             
       
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-            <div class="product_grid card b-0">
-                {{-- <div class="badge bg-success text-white position-absolute ft-regular ab-left text-upper">Sale</div> --}}
-               {{--  <button class="btn btn_love position-absolute ab-right theme-cl"><i class="fas fa-times"></i></button>  --}}
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
+            <div class="product_grid card border-0 b-0">
+               
                 
-                <form method="GET" action="{{ url('favoris', $favo->id) }}">
+                <div class="card-body product-card" style="background-color: #fbecec;
+      color: #fff;">
+	  
+	   @if ($favo->produit->inPromotion())
+                                      <div class="discount-badge">              
+                                                        - {{ $favo->produit->inPromotion()->pourcentage }} %
+                                                    </div>
+													@endif
+	 
+	  
+	   <div class="view-icon fw-bolder">
+	   <a href="{{ route('details-produits', ['id' => $favo->produit->id, 'slug'=>Str::slug(Str::limit($favo->produit->nom, 10))]) , }}" class="fs-3 ft-medium">
+				 <i class="far fa-eye mr-1"></i></a>
+                   </div>    
+	  <form class="delete-icon fw-bolder method="GET" action="{{ url('favoris', $favo->id) }}">
                     @csrf
                     <input name="_method" type="hidden" value="DELETE">
-                    <button type="submit" class="btn btn_love position-absolute ab-right theme-cl show_confirm" data-toggle="tooltip" title='Delete'>
-                        <i class="fas fa-times"></i>
+                    <button type="submit" class="btn btn_love btn-white  theme-cl show_confirm" data-toggle="tooltip" title='Delete'>
+                       <a href="#" class="fs-3 ft-medium">
+						<i class="bi bi-trash"></i>
+						</a>
                     </button>
-                </form>
-                <div class="card-body p-0">
-                    <div class="shop_thumb position-relative">
-                        <a class="card-img-top d-block overflow-hidden" href="{{ route('details-produits', ['id' => $favo->produit->id, 'slug'=>Str::slug(Str::limit($favo->produit->nom, 10))]) , }}"><img class="card-img-top"   src="{{ Storage::url($favo->produit->photo) }}" alt="..."></a>
-                        <div class="product-hover-overlay bg-dark d-flex align-items-center justify-content-center">
-                            <div class="edlio"><a href="#" data-toggle="modal" data-target="#{{ $favo->produit->id }}" class="text-white fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>{{ \App\Helpers\TranslationHelper::TranslateText("Voir plus") }}</a></div>
-                        </div>
+                </form> 
+				 
+				
+                    <div class="shop_thumb p-4 mt--40 mb-2"  >
+                        <a style="margin:0 auto;" class="card-img-top d-block overflow-hidden" href="{{ route('details-produits', ['id' => $favo->produit->id, 'slug'=>Str::slug(Str::limit($favo->produit->nom, 10))]) , }}"><img class="card-img-top"   src="{{ Storage::url($favo->produit->photo) }}" alt="..."></a>
+
                     </div>
+					<button type="button" class="add-to-cart-btn"
+                                                                onclick="AddToCart( {{ $favo->produit->id }} )">
+                                                                <i class="flaticon-shopping-cart"></i>&nbsp;Ajouter au Panier
+                                                            </button>
                 </div>
-                <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
+                <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-start">
                     <div class="text-left">
-                        <div class="text-center">
+                        <div class="text-start">
                             <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="{{ route('details-produits', ['id' => $favo->produit->id, 'slug'=>Str::slug(Str::limit($favo->produit->nom, 10))]) , }}">{{ $favo->produit->nom ?? ' ' }}</a></h5>
-                            <div class="elis_rty"><span class="ft-bold fs-md text-dark"> @if ($favo->produit->inPromotion())
-                                <span class=" small">
-                                    - {{ $favo->produit->inPromotion()->pourcentage }} %
+                            <div class="elis_rty">
+							<span class="ft-bold fs-md text-dark d-flex justify-content-start align-items-start gap-4"> @if ($favo->produit->inPromotion())
+                               
+                                <span class="text-success">
+                                    {{ $favo->produit->getPrice() }} XAF
                                 </span>
-                                <b class="text-success">
-                                    {{ $favo->produit->getPrice() }} DT
-                                </b>
-                                <br>
                                 <strike>
                                     <span class="text-danger small">
-                                        {{ $favo->produit->prix }} DT
+                                        {{ $favo->produit->prix }} XAF
                                     </span>
                                 </strike>
                             @else
-                                {{ $favo->produit->getPrice() }} DT
-                            @endif</span></div>
+                                {{ $favo->produit->prix }} XAF
+                            @endif
+							
+							
+							 
+    
+							</span>
+							
+							</div>
                         </div>
                     </div>
                 </div>
@@ -259,6 +354,255 @@
         
     </div>
     <!-- row -->
+	
+	
+	<div class="row g-3 mt-5 my-5">
+	<div class="mb-4 col-12 d-flex justify-content-between align-items-center">
+                    <h4 class="title">Juste pour vous</h4>
+					<div>
+					 <a href="/shop" class="btn btn-outline-white border fs-4 p-3 mb-3 ">Voir plus</a>
+ 
+                </div>
+                </div>
+    <div class="col-md-4 col-lg-3">
+      <div class="product-card">
+        <div class="discount-badge">-25%</div>
+		   
+        <div class="delete-icon fw-bolder">
+		<a href="#" class="fs-3 ft-medium">
+				 <i class="far fa-eye mr-1"></i></a>
+		</div>
+		<div class="mt-4 p-5" style="margin:0 auto;" >
+        <img src="" alt="Sac de Voyage Gucci" class="product-image">
+        </div>
+        <button class="add-to-cart-btn"><i class="flaticon-shopping-cart"></i>&nbsp;Ajouter au Panier</button>
+      </div>
+	  <div class="d-flex flex-column">
+	  <span class="mt-2 fs-2 fw-bolder text-start">RGB Refroidisseur PC</span>
+        <span class="fw-bold fs-4 text-start text-danger d-flex justify-content-between align-items-center">
+		
+		 <span class="text-success">
+                                    20 XAF
+                                </span>
+                                <strike>
+                                    <span class="text-danger small">
+                                       10 XAF
+                                    </span>
+                                </strike>
+		</span>
+		<div class="rate text-start"><i class="fas text-warning fa-star"></i><i
+                                                        class="fas text-warning fa-star"></i><i class="fas text-warning fa-star"></i><i
+                                                        class="fas fa-star text-warning"></i><i class="far fa-star"></i>
+														(8)
+                                                </div>
+	  </div>
+    </div>
+
+ <div class="col-md-4 col-lg-3">
+      <div class="product-card">
+        <div class="discount-badge">-25%</div>
+		   
+        <div class="delete-icon fw-bolder">
+		<a href="#" class="fs-3 ft-medium">
+				 <i class="far fa-eye mr-1"></i></a>
+		</div>
+		<div class="mt-4 p-5" style="margin:0 auto;" >
+        <img src="" alt="Sac de Voyage Gucci" class="product-image">
+        </div>
+        <button class="add-to-cart-btn"><i class="flaticon-shopping-cart"></i>&nbsp;Ajouter au Panier</button>
+      </div>
+	  <div class="d-flex flex-column">
+	  <span class="mt-2 fs-2 fw-bolder text-start">RGB Refroidisseur PC</span>
+        <span class="fw-bold fs-4 text-start text-danger d-flex justify-content-between align-items-center">
+		
+		 <span class="text-success">
+                                    20 XAF
+                                </span>
+                                <strike>
+                                    <span class="text-danger small">
+                                       10 XAF
+                                    </span>
+                                </strike>
+		</span>
+		<div class="rate text-start"><i class="fas text-warning fa-star"></i><i
+                                                        class="fas text-warning fa-star"></i><i class="fas text-warning fa-star"></i><i
+                                                        class="fas fa-star text-warning"></i><i class="far fa-star"></i>
+														(8)
+                                                </div>
+	  </div>
+    </div>
+
+ <div class="col-md-4 col-lg-3">
+      <div class="product-card">
+        <div class="discount-badge">-25%</div>
+		   
+        <div class="delete-icon fw-bolder">
+		<a href="#" class="fs-3 ft-medium">
+				 <i class="far fa-eye mr-1"></i></a>
+		</div>
+		<div class="mt-4 p-5" style="margin:0 auto;" >
+        <img src="" alt="Sac de Voyage Gucci" class="product-image">
+        </div>
+        <button class="add-to-cart-btn"><i class="flaticon-shopping-cart"></i>&nbsp;Ajouter au Panier</button>
+      </div>
+	  <div class="d-flex flex-column">
+	  <span class="mt-2 fs-2 fw-bolder text-start">RGB Refroidisseur PC</span>
+        <span class="fw-bold fs-4 text-start text-danger d-flex justify-content-between align-items-center">
+		
+		 <span class="text-success">
+                                    20 XAF
+                                </span>
+                                <strike>
+                                    <span class="text-danger small">
+                                       10 XAF
+                                    </span>
+                                </strike>
+		</span>
+		<div class="rate text-start"><i class="fas text-warning fa-star"></i><i
+                                                        class="fas text-warning fa-star"></i><i class="fas text-warning fa-star"></i><i
+                                                        class="fas fa-star text-warning"></i><i class="far fa-star"></i>
+														(8)
+                                                </div>
+	  </div>
+    </div>
+
+ <div class="col-md-4 col-lg-3">
+      <div class="product-card">
+        <div class="discount-badge">-25%</div>
+		   
+        <div class="delete-icon fw-bolder">
+		<a href="#" class="fs-3 ft-medium">
+				 <i class="far fa-eye mr-1"></i></a>
+		</div>
+		<div class="mt-4 p-5" style="margin:0 auto;" >
+        <img src="" alt="Sac de Voyage Gucci" class="product-image">
+        </div>
+        <button class="add-to-cart-btn"><i class="flaticon-shopping-cart"></i>&nbsp;Ajouter au Panier</button>
+      </div>
+	  <div class="d-flex flex-column">
+	  <span class="mt-2 fs-2 fw-bolder text-start">RGB Refroidisseur PC</span>
+        <span class="fw-bold fs-4 text-start text-danger d-flex justify-content-between align-items-center">
+		
+		 <span class="text-success">
+                                    20 XAF
+                                </span>
+                                <strike>
+                                    <span class="text-danger small">
+                                       10 XAF
+                                    </span>
+                                </strike>
+		</span>
+		<div class="rate text-start"><i class="fas text-warning fa-star"></i><i
+                                                        class="fas text-warning fa-star"></i><i class="fas text-warning fa-star"></i><i
+                                                        class="fas fa-star text-warning"></i><i class="far fa-star"></i>
+														(8)
+                                                </div>
+	  </div>
+    </div>
+
+ <div class="col-md-4 col-lg-3">
+      <div class="product-card">
+        <div class="discount-badge">-25%</div>
+		   
+        <div class="delete-icon fw-bolder">
+		<a href="#" class="fs-3 ft-medium">
+				 <i class="far fa-eye mr-1"></i></a>
+		</div>
+		<div class="mt-4 p-5" style="margin:0 auto;" >
+        <img src="" alt="Sac de Voyage Gucci" class="product-image">
+        </div>
+        <button class="add-to-cart-btn"><i class="flaticon-shopping-cart"></i>&nbsp;Ajouter au Panier</button>
+      </div>
+	  <div class="d-flex flex-column">
+	  <span class="mt-2 fs-2 fw-bolder text-start">RGB Refroidisseur PC</span>
+        <span class="fw-bold fs-4 text-start text-danger d-flex justify-content-between align-items-center">
+		
+		 <span class="text-success">
+                                    20 XAF
+                                </span>
+                                <strike>
+                                    <span class="text-danger small">
+                                       10 XAF
+                                    </span>
+                                </strike>
+		</span>
+		<div class="rate text-start"><i class="fas text-warning fa-star"></i><i
+                                                        class="fas text-warning fa-star"></i><i class="fas text-warning fa-star"></i><i
+                                                        class="fas fa-star text-warning"></i><i class="far fa-star"></i>
+														(8)
+                                                </div>
+	  </div>
+    </div>
+
+ <div class="col-md-4 col-lg-3">
+      <div class="product-card">
+        <div class="discount-badge">-25%</div>
+		   
+        <div class="delete-icon fw-bolder">
+		<a href="#" class="fs-3 ft-medium">
+				 <i class="far fa-eye mr-1"></i></a>
+		</div>
+		<div class="mt-4 p-5" style="margin:0 auto;" >
+        <img src="" alt="Sac de Voyage Gucci" class="product-image">
+        </div>
+        <button class="add-to-cart-btn"><i class="flaticon-shopping-cart"></i>&nbsp;Ajouter au Panier</button>
+      </div>
+	  <div class="d-flex flex-column">
+	  <span class="mt-2 fs-2 fw-bolder text-start">RGB Refroidisseur PC</span>
+        <span class="fw-bold fs-4 text-start text-danger d-flex justify-content-between align-items-center">
+		
+		 <span class="text-success">
+                                    20 XAF
+                                </span>
+                                <strike>
+                                    <span class="text-danger small">
+                                       10 XAF
+                                    </span>
+                                </strike>
+		</span>
+		<div class="rate text-start"><i class="fas text-warning fa-star"></i><i
+                                                        class="fas text-warning fa-star"></i><i class="fas text-warning fa-star"></i><i
+                                                        class="fas fa-star text-warning"></i><i class="far fa-star"></i>
+														(8)
+                                                </div>
+	  </div>
+    </div>
+
+ <div class="col-md-4 col-lg-3">
+      <div class="product-card">
+        <div class="discount-badge">-25%</div>
+		   
+        <div class="delete-icon fw-bolder">
+		<a href="#" class="fs-3 ft-medium">
+				 <i class="far fa-eye mr-1"></i></a>
+		</div>
+		<div class="mt-4 p-5" style="margin:0 auto;" >
+        <img src="" alt="Sac de Voyage Gucci" class="product-image">
+        </div>
+        <button class="add-to-cart-btn"><i class="flaticon-shopping-cart"></i>&nbsp;Ajouter au Panier</button>
+      </div>
+	  <div class="d-flex flex-column">
+	  <span class="mt-2 fs-2 fw-bolder text-start">RGB Refroidisseur PC</span>
+        <span class="fw-bold fs-4 text-start text-danger d-flex justify-content-between align-items-center">
+		
+		 <span class="text-success">
+                                    20 XAF
+                                </span>
+                                <strike>
+                                    <span class="text-danger small">
+                                       10 XAF
+                                    </span>
+                                </strike>
+		</span>
+		<div class="rate text-start"><i class="fas text-warning fa-star"></i><i
+                                                        class="fas text-warning fa-star"></i><i class="fas text-warning fa-star"></i><i
+                                                        class="fas fa-star text-warning"></i><i class="far fa-star"></i>
+														(8)
+                                                </div>
+	  </div>
+    </div>
+
+
 </div>
 
 
